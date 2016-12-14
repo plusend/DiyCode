@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_new_topic"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    tools:context="com.plusend.diycode.view.activity.NewTopicActivity"
+    >
+
+  <TextView
+      android:id="@+id/node_id_prefix"
+      android:layout_width="wrap_content"
+      android:layout_height="53dp"
+      android:gravity="center_vertical"
+      android:paddingStart="20dp"
+      android:text="发帖节点："
+      android:textColor="#999999"
+      android:textSize="15sp"
+      />
+  <Spinner
+      android:id="@+id/section_name"
+      android:layout_width="125dp"
+      android:layout_height="53dp"
+      android:layout_toEndOf="@id/node_id_prefix"
+      android:gravity="center_vertical"
+      />
+
+  <Spinner
+      android:id="@+id/node_name"
+      android:layout_width="125dp"
+      android:layout_height="53dp"
+      android:layout_toEndOf="@id/section_name"
+      android:gravity="center_vertical"
+      />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_below="@id/node_name"
+      android:background="#999999"
+      />
+
+  <TextView
+      android:id="@+id/title_prefix"
+      android:layout_width="wrap_content"
+      android:layout_height="53dp"
+      android:layout_below="@id/node_name"
+      android:gravity="center_vertical"
+      android:paddingStart="20dp"
+      android:text="标题："
+      android:textColor="#999999"
+      android:textSize="15sp"
+      />
+
+  <EditText
+      android:id="@+id/title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/node_name"
+      android:layout_toEndOf="@id/title_prefix"
+      android:background="@null"
+      android:gravity="center_vertical"
+      android:hint="请输入标题"
+      android:minHeight="53dp"
+      android:paddingEnd="20dp"
+      android:textSize="15sp"
+      />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_below="@id/title"
+      android:background="#999999"
+      />
+  <EditText
+      android:id="@+id/content"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/title"
+      android:layout_marginTop="8dp"
+      android:background="@null"
+      android:hint="在此输入发帖内容"
+      android:minHeight="53dp"
+      android:paddingEnd="20dp"
+      android:paddingStart="20dp"
+      android:textSize="15sp"
+      />
+
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/fab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_margin="@dimen/fab_margin"
+      app:srcCompat="@android:drawable/ic_input_add"
+      />
+
+</RelativeLayout>

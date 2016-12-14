@@ -1,0 +1,34 @@
+<resources>
+
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">#ffffff</item>
+    <item name="colorPrimaryDark">#ffffff</item>
+    <item name="colorAccent">@android:color/holo_red_light</item>
+  </style>
+
+  <style name="AppTheme.NoActionBar">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="drawerArrowStyle">@style/DrawerArrow</item>
+  </style>
+
+  <style name="DrawerArrow" parent="Base.Widget.AppCompat.DrawerArrowToggle">
+    <item name="color">#62646c</item>
+  </style>
+
+  <style name="ThemeToolbar" parent="Theme.AppCompat.Light">
+
+    <!-- navigation icon color -->
+    <item name="colorControlNormal">#62646c</item>
+
+    <!-- color of the menu overflow icon -->
+    <item name="android:textColorSecondary">#62646c</item>
+  </style>
+
+  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+</resources>

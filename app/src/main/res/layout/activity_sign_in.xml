@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_sign_in"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/toolbar_padding_top"
+    tools:context="com.plusend.diycode.view.activity.SignInActivity"
+    >
+
+  <ImageView
+      android:id="@+id/close"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_marginStart="13dp"
+      android:layout_marginTop="16dp"
+      android:scaleType="center"
+      android:src="@mipmap/sign_close"
+      />
+
+  <ImageView
+      android:id="@+id/logo"
+      android:layout_width="140dp"
+      android:layout_height="69dp"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="44dp"
+      android:src="@mipmap/logo"
+      />
+  <EditText
+      android:id="@+id/name"
+      android:layout_width="match_parent"
+      android:layout_height="36dp"
+      android:layout_alignStart="@+id/imageView"
+      android:layout_below="@+id/logo"
+      android:layout_marginTop="20dp"
+      android:background="@null"
+      android:hint="Email / 用户名"
+      android:textColor="#c8c8ce"
+      android:textSize="16sp"
+      />
+  <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="313dp"
+      android:layout_height="2dp"
+      android:layout_below="@id/name"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="4dp"
+      android:src="@drawable/sign_divider"
+      />
+
+  <EditText
+      android:id="@+id/password"
+      android:layout_width="match_parent"
+      android:layout_height="36dp"
+      android:layout_below="@id/logo"
+      android:layout_marginEnd="24dp"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="88dp"
+      android:background="@null"
+      android:hint="密码"
+      android:inputType="textPassword"
+      android:textColor="#c8c8ce"
+      android:textSize="16sp"
+      />
+  <ImageView
+      android:layout_width="313dp"
+      android:layout_height="2dp"
+      android:layout_below="@id/password"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="4dp"
+      android:src="@drawable/sign_divider"
+      />
+
+  <Button
+      android:id="@+id/sign_in"
+      android:layout_width="312dp"
+      android:layout_height="44dp"
+      android:layout_below="@id/logo"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="156dp"
+      android:background="@drawable/sign"
+      android:text="登  录"
+      android:textColor="#ffffff"
+      android:textSize="17sp"
+      />
+
+  <ImageView
+      android:id="@+id/sign_github"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:layout_below="@id/sign_in"
+      android:layout_marginStart="90dp"
+      android:layout_marginTop="40dp"
+      android:src="@mipmap/sign_github"
+      />
+  <ImageView
+      android:id="@+id/sign_weibo"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:layout_below="@id/sign_in"
+      android:layout_marginStart="210dp"
+      android:layout_marginTop="40dp"
+      android:src="@mipmap/sign_weibo"
+      />
+  <TextView
+      android:id="@+id/sign_up"
+      android:layout_width="75dp"
+      android:layout_height="23dp"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="25dp"
+      android:layout_marginStart="90dp"
+      android:text="新用户注册"
+      android:textColor="#4d4d4d"
+      android:textSize="15sp"
+      />
+
+  <TextView
+      android:id="@+id/forget_password"
+      android:layout_width="60dp"
+      android:layout_height="23dp"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="25dp"
+      android:layout_marginStart="201dp"
+      android:text="忘记密码"
+      android:textColor="#4d4d4d"
+      android:textSize="15sp"
+      />
+
+</RelativeLayout>
