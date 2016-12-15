@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
 
   @BindView(R.id.tab_layout) TabLayout tabLayout;
   @BindView(R.id.view_pager) ViewPager viewPager;
+  private MenuItem search;
   ImageView avatar;
   TextView email;
 
@@ -124,10 +125,11 @@ public class MainActivity extends AppCompatActivity
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
+    search = menu.findItem(R.id.action_search);
+    SearchView searchView = (SearchView) search.getActionView();
     SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-    searchView.setSubmitButtonEnabled(true);
     searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+    searchView.setImeOptions(3);
     return true;
   }
 
@@ -136,7 +138,6 @@ public class MainActivity extends AppCompatActivity
       case R.id.action_settings:
         break;
       case R.id.action_search:
-        //startActivity(new Intent(MainActivity.this, SearchActivity.class));
         break;
       case R.id.action_notification:
         startActivity(new Intent(MainActivity.this, NotificationActivity.class));
@@ -200,6 +201,10 @@ public class MainActivity extends AppCompatActivity
     super.onStart();
     if (userPresenter != null) {
       userPresenter.start();
+    }
+    // 从别的页面回来的时候，不保留之前的搜索状态
+    if (search != null) {
+      search.collapseActionView();
     }
   }
 
