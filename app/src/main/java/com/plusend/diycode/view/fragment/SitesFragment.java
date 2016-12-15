@@ -38,7 +38,7 @@ public class SitesFragment extends Fragment implements SiteView {
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.activity_site, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_site, container, false);
     ButterKnife.bind(this, rootView);
 
     GridLayoutManager layoutManager = new GridLayoutManager(getContext(), SPAN_COUNT);

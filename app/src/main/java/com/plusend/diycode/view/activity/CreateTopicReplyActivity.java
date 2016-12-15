@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
   @BindView(R.id.title) TextView title;
   @BindView(R.id.body) EditText body;
   @BindView(R.id.fab) FloatingActionButton fab;
+  @BindView(R.id.toolbar) Toolbar toolbar;
 
   private CreateTopicReplyPresenter createTopicReplyPresenter;
   private int id;
@@ -32,11 +34,7 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_create_topic_reply);
     ButterKnife.bind(this);
-
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+    initActionBar(toolbar);
 
     Intent intent = getIntent();
     id = intent.getIntExtra(Constant.TOPIC_ID, 0);
@@ -50,6 +48,14 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
         createTopicReplyPresenter.createTopicReply(id, body.getText().toString());
       }
     });
+  }
+
+  private void initActionBar(Toolbar toolbar) {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+    }
   }
 
   @Override public void getResult(boolean isSuccessful) {
@@ -75,7 +81,7 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()){
+    switch (item.getItemId()) {
       case android.R.id.home:
         finish();
         break;

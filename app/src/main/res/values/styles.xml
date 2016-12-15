@@ -3,9 +3,10 @@
   <!-- Base application theme. -->
   <style name="AppTheme" parent="Theme.AppCompat.Light">
     <!-- Customize your theme here. -->
-    <item name="colorPrimary">#ffffff</item>
-    <item name="colorPrimaryDark">#ffffff</item>
-    <item name="colorAccent">@android:color/holo_red_light</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowBackground">@color/windowBackground</item>
   </style>
 
   <style name="AppTheme.NoActionBar">
@@ -18,7 +19,7 @@
     <item name="color">#62646c</item>
   </style>
 
-  <style name="ThemeToolbar" parent="Theme.AppCompat.Light">
+  <style name="ThemeToolbar" parent="ThemeOverlay.AppCompat.Light">
 
     <!-- navigation icon color -->
     <item name="colorControlNormal">#62646c</item>

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +40,7 @@ public class TopicActivity extends AppCompatActivity
 
   @BindView(R.id.rv) RecyclerView rv;
   @BindView(R.id.fab) FloatingActionButton fab;
+  @BindView(R.id.toolbar) Toolbar toolbar;
 
   private int id;
   private TopicDetail topicDetail;
@@ -55,9 +58,8 @@ public class TopicActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_topic);
     ButterKnife.bind(this);
-    if (getSupportActionBar() != null) {
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+    initActionBar(toolbar);
+
     Intent intent = getIntent();
     id = intent.getIntExtra(ID, 0);
     Log.d(TAG, "id: " + id);
@@ -98,6 +100,14 @@ public class TopicActivity extends AppCompatActivity
         startActivity(intent);
       }
     });
+  }
+
+  private void initActionBar(Toolbar toolbar) {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+    }
   }
 
   @Override public void showTopic(TopicDetail topicDetail) {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,6 +39,7 @@ public class NewTopicActivity extends AppCompatActivity implements NewTopicView,
   @BindView(R.id.section_name) Spinner sectionName;
   @BindView(R.id.node_name) Spinner nodeName;
   @BindView(R.id.fab) FloatingActionButton fab;
+  @BindView(R.id.toolbar) Toolbar toolbar;
 
   private List<Node> nodeList;
   private String[] sectionNames;
@@ -50,11 +52,8 @@ public class NewTopicActivity extends AppCompatActivity implements NewTopicView,
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_new_topic);
     ButterKnife.bind(this);
+    initActionBar(toolbar);
 
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
     nodesPresenter = new NodesPresenter(this);
     newTopicPresenter = new NewTopicPresenter(this);
 
@@ -70,6 +69,14 @@ public class NewTopicActivity extends AppCompatActivity implements NewTopicView,
         newTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
       }
     });
+  }
+
+  private void initActionBar(Toolbar toolbar) {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+    }
   }
 
   @Override public void getNewTopic(TopicDetail topicDetail) {

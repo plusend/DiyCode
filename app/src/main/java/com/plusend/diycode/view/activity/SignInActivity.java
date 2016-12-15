@@ -2,7 +2,9 @@ package com.plusend.diycode.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +34,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   @BindView(R.id.sign_weibo) ImageView signWeibo;
   @BindView(R.id.sign_up) TextView signUp;
   @BindView(R.id.forget_password) TextView forgetPassword;
+  @BindView(R.id.toolbar) Toolbar toolbar;
 
   private SignInPresenter signInPresenter;
 
@@ -39,6 +42,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sign_in);
     ButterKnife.bind(this);
+    initActionBar(toolbar);
 
     signInPresenter = new SignInPresenter(this);
 
@@ -55,6 +59,14 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
         finish();
       }
     });
+  }
+
+  private void initActionBar(Toolbar toolbar) {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+    }
   }
 
   @Override public void getToken(Token token) {

@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +28,7 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
   private static final String TYPE_REPLY = "TopicReply";
   private static final String TYPE_MENTION = "Mention";
   @BindView(R.id.activity_notification) RecyclerView recyclerView;
+  @BindView(R.id.toolbar) Toolbar toolbar;
 
   private MultiTypeAdapter adapter;
   private LinearLayoutManager linearLayoutManager;
@@ -38,11 +40,7 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_notification);
     ButterKnife.bind(this);
-
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+    initActionBar(toolbar);
 
     presenter = new NotificationsPresenter(this);
     items = new Items();
@@ -71,6 +69,14 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
         lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
       }
     });
+  }
+
+  private void initActionBar(Toolbar toolbar) {
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+    }
   }
 
   @Override public void showNotifications(List<Notification> notificationList) {
