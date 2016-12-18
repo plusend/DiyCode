@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.plusend.diycode.view.activity.NotificationActivity"
+    tools:context="com.plusend.diycode.view.activity.MyRepliesActivity"
     >
   <include
       layout="@layout/toolbar"
@@ -17,7 +17,8 @@
       android:layout_height="match_parent"
       >
     <com.plusend.diycode.view.adapter.EmptyRecyclerView
-        android:id="@+id/activity_notification"
+        android:id="@+id/rv_replies"
+        android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
@@ -26,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="通知为空"
+        android:text="评论为空"
         android:textSize="24sp"
         />
   </FrameLayout>

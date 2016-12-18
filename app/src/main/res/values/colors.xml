@@ -4,4 +4,5 @@
   <color name="colorPrimaryDark">#ffffff</color>
   <color name="colorAccent">#FF4081</color>
   <color name="windowBackground">#F0F0F0</color>
+  <color name="replyTips">#ff0099cc</color>
 </resources>

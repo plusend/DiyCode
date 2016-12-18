@@ -9,6 +9,7 @@ import com.plusend.diycode.mvp.model.entity.NotificationDelete;
 import com.plusend.diycode.mvp.model.entity.NotificationsDelete;
 import com.plusend.diycode.mvp.model.entity.NotificationsRead;
 import com.plusend.diycode.mvp.model.entity.NotificationsUnreadCount;
+import com.plusend.diycode.mvp.model.entity.Reply;
 import com.plusend.diycode.mvp.model.entity.Site;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.entity.Topic;
@@ -112,6 +113,17 @@ public interface DiyCodeService {
    * @param limit 默认 20 范围 [1..150]
    */
   @GET("users/{login}/favorites.json") Call<List<Topic>> getUserFavoriteTopics(
+      @Path("login") String loginName, @Query("offset") Integer offset,
+      @Query("limit") Integer limit);
+
+  /**
+   * 获取用户创建的回帖列表
+   *
+   * @param loginName 用户的登录名
+   * @param offset 默认 0，从第 21 条开始就传 20
+   * @param limit 默认 20 范围 [1..150]
+   */
+  @GET("users/{login}/replies.json") Call<List<Reply>> getUserReplies(
       @Path("login") String loginName, @Query("offset") Integer offset,
       @Query("limit") Integer limit);
 

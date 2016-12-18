@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity
   private MenuItem search;
   ImageView avatar;
   TextView email;
+  private User me;
 
   private UserPresenter userPresenter;
 
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity
     Token token = PrefUtil.getToken(this);
     if (!TextUtils.isEmpty(token.getAccessToken())) {
       Constant.VALUE_TOKEN = token.getAccessToken();
-      User me = PrefUtil.getMe(this);
+      me = PrefUtil.getMe(this);
       if (!TextUtils.isEmpty(me.getLogin())
           && !TextUtils.isEmpty(me.getAvatarUrl())
           && !TextUtils.isEmpty(me.getEmail())) {
@@ -161,7 +162,9 @@ public class MainActivity extends AppCompatActivity
       intent.putExtra(MyTopicsActivity.TYPE, TopicFragment.TYPE_FAVORITE);
       startActivity(intent);
     } else if (id == R.id.nav_comment) {
-
+      Intent intent = new Intent(MainActivity.this, MyRepliesActivity.class);
+      intent.putExtra(MyRepliesActivity.LOGIN_NAME, me.getLogin());
+      startActivity(intent);
     } else if (id == R.id.nav_share) {
 
     } else if (id == R.id.nav_about) {
@@ -181,11 +184,12 @@ public class MainActivity extends AppCompatActivity
       return;
     }
     PrefUtil.saveMe(this, user);
+    me = user;
     showMe(user);
   }
 
   @Override public void getUser(User user) {
-    
+
   }
 
   private void showMe(User user) {

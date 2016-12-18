@@ -66,6 +66,15 @@ public interface Data {
   void getUserFavoriteTopics(String loginName, Integer offset, Integer limit);
 
   /**
+   * 获取用户创建的回帖列表
+   *
+   * @param loginName 用户的登录名
+   * @param offset 默认 0，从第 21 条开始就传 20
+   * @param limit 默认 20 范围 [1..150]
+   */
+  void getUserReplies(String loginName, Integer offset, Integer limit);
+
+  /**
    * 创建话题
    *
    * @param title 话题标题

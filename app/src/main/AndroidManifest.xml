@@ -72,6 +72,10 @@
         android:name=".view.activity.TestActivity"
         android:label="测试">
     </activity>
+    <activity
+        android:name=".view.activity.MyRepliesActivity"
+        android:label="我的评论">
+    </activity>
   </application>
 
 </manifest>

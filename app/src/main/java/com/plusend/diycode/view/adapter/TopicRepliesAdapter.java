@@ -71,7 +71,7 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             .inflate(R.layout.item_topic_footer, parent, false));
       case ITEM_REPLY:
         return new ReplyViewHolder(
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reply, parent, false));
+            LayoutInflater.from(parent.getContext()).inflate(R.layout.item_topic_reply, parent, false));
       default:
         return null;
     }

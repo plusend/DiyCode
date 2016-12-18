@@ -12,6 +12,7 @@ import com.plusend.diycode.event.NewsEvent;
 import com.plusend.diycode.event.NodesEvent;
 import com.plusend.diycode.event.NotificationDeleteEvent;
 import com.plusend.diycode.event.NotificationsEvent;
+import com.plusend.diycode.event.RepliesEvent;
 import com.plusend.diycode.event.SiteEvent;
 import com.plusend.diycode.event.TokenEvent;
 import com.plusend.diycode.event.TopicDetailEvent;
@@ -29,6 +30,7 @@ import com.plusend.diycode.mvp.model.entity.News;
 import com.plusend.diycode.mvp.model.entity.Node;
 import com.plusend.diycode.mvp.model.entity.Notification;
 import com.plusend.diycode.mvp.model.entity.NotificationDelete;
+import com.plusend.diycode.mvp.model.entity.Reply;
 import com.plusend.diycode.mvp.model.entity.Site;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.entity.Topic;
@@ -263,6 +265,27 @@ public class NetworkData implements Data {
       @Override public void onFailure(Call<List<Topic>> call, Throwable t) {
         Log.e(TAG, t.getMessage());
         EventBus.getDefault().post(new TopicsEvent(null));
+      }
+    });
+  }
+
+  @Override public void getUserReplies(String loginName, Integer offset, Integer limit) {
+    Call<List<Reply>> call = service.getUserReplies(loginName, offset, limit);
+    call.enqueue(new Callback<List<Reply>>() {
+      @Override public void onResponse(Call<List<Reply>> call, Response<List<Reply>> response) {
+        if (response.isSuccessful()) {
+          List<Reply> replyList = response.body();
+          Log.v(TAG, "replyList: " + replyList);
+          EventBus.getDefault().post(new RepliesEvent(replyList));
+        } else {
+          Log.e(TAG, "getUserReplies STATUS: " + response.code());
+          EventBus.getDefault().post(new RepliesEvent(null));
+        }
+      }
+
+      @Override public void onFailure(Call<List<Reply>> call, Throwable t) {
+        Log.e(TAG, t.getMessage());
+        EventBus.getDefault().post(new RepliesEvent(null));
       }
     });
   }
