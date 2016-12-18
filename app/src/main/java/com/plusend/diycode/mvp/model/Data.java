@@ -8,7 +8,7 @@ public interface Data {
   /**
    * 验证账号
    */
-  void getToken();
+  void getToken(String username, String password);
 
   /**
    * 获取当然登录者的资料

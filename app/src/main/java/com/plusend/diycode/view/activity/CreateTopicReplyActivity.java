@@ -18,6 +18,7 @@ import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.presenter.CreateTopicReplyPresenter;
 import com.plusend.diycode.mvp.view.CreateTopicReplyView;
 import com.plusend.diycode.util.Constant;
+import com.plusend.diycode.util.ToastUtil;
 
 public class CreateTopicReplyActivity extends AppCompatActivity implements CreateTopicReplyView {
 
@@ -62,7 +63,7 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
     if (isSuccessful) {
       finish();
     } else {
-      Toast.makeText(this, "发布失败", Toast.LENGTH_SHORT).show();
+      ToastUtil.showText(this, "发布失败");
     }
   }
 

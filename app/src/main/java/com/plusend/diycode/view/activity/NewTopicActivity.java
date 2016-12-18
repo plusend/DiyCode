@@ -23,6 +23,7 @@ import com.plusend.diycode.mvp.presenter.NewTopicPresenter;
 import com.plusend.diycode.mvp.presenter.NodesPresenter;
 import com.plusend.diycode.mvp.view.NewTopicView;
 import com.plusend.diycode.mvp.view.NodesView;
+import com.plusend.diycode.util.ToastUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -84,7 +85,7 @@ public class NewTopicActivity extends AppCompatActivity implements NewTopicView,
       startActivity(new Intent(NewTopicActivity.this, TopicActivity.class));
       finish();
     } else {
-      Toast.makeText(this, "发布失败", Toast.LENGTH_SHORT).show();
+      ToastUtil.showText(this, "发布失败");
     }
   }
 

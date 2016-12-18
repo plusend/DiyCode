@@ -27,8 +27,8 @@ public class SignInPresenter extends Presenter {
     signInView.getToken(tokenEvent.getToken());
   }
 
-  public void getToken() {
-    data.getToken();
+  public void getToken(String username, String password) {
+    data.getToken(username, password);
   }
 
   @Override public void start() {

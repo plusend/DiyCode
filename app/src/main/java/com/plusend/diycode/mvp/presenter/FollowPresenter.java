@@ -1,7 +1,6 @@
 package com.plusend.diycode.mvp.presenter;
 
 import android.util.Log;
-import android.widget.Toast;
 import com.plusend.diycode.event.FavoriteEvent;
 import com.plusend.diycode.event.FollowEvent;
 import com.plusend.diycode.event.UnFavoriteEvent;
@@ -9,6 +8,7 @@ import com.plusend.diycode.event.UnFollowEvent;
 import com.plusend.diycode.mvp.model.Data;
 import com.plusend.diycode.mvp.model.network.NetworkData;
 import com.plusend.diycode.mvp.view.FollowView;
+import com.plusend.diycode.util.ToastUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -52,7 +52,7 @@ public class FollowPresenter extends Presenter {
     if (followEvent.isResult()) {
       followView.setFollow(true);
     } else {
-      Toast.makeText(followView.getContext(), "关注失败", Toast.LENGTH_SHORT).show();
+      ToastUtil.showText(followView.getContext(), "关注失败");
       followView.setFollow(false);
     }
   }
@@ -61,7 +61,7 @@ public class FollowPresenter extends Presenter {
     if (unFollowEvent.isResult()) {
       followView.setFollow(false);
     } else {
-      Toast.makeText(followView.getContext(), "取消关注失败", Toast.LENGTH_SHORT).show();
+      ToastUtil.showText(followView.getContext(), "取消关注失败");
       followView.setFollow(true);
     }
   }
@@ -70,7 +70,7 @@ public class FollowPresenter extends Presenter {
     if (favoriteEvent.isResult()) {
       followView.setFavorite(true);
     } else {
-      Toast.makeText(followView.getContext(), "收藏失败", Toast.LENGTH_SHORT).show();
+      ToastUtil.showText(followView.getContext(), "收藏失败");
       followView.setFavorite(false);
     }
   }
@@ -79,7 +79,7 @@ public class FollowPresenter extends Presenter {
     if (unFavoriteEvent.isResult()) {
       followView.setFavorite(false);
     } else {
-      Toast.makeText(followView.getContext(), "取消收藏失败", Toast.LENGTH_SHORT).show();
+      ToastUtil.showText(followView.getContext(), "取消收藏失败");
       followView.setFavorite(true);
     }
   }

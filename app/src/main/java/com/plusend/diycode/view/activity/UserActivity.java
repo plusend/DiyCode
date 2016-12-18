@@ -65,7 +65,10 @@ public class UserActivity extends AppCompatActivity implements UserView {
   }
 
   @Override public void getMe(User user) {
-    Log.d(TAG, "getMe: " + user);
+  }
+
+  @Override public void getUser(User user) {
+    Log.d(TAG, "getUser: " + user);
     name.setText(user.getName());
     topicNum.setText(String.valueOf(user.getTopicsCount()));
     followNum.setText(String.valueOf(user.getFollowingCount()));

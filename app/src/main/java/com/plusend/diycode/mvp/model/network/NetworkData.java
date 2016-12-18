@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.plusend.diycode.event.CreateTopicReplyEvent;
 import com.plusend.diycode.event.FavoriteEvent;
 import com.plusend.diycode.event.FollowEvent;
+import com.plusend.diycode.event.MeEvent;
 import com.plusend.diycode.event.NewTopicEvent;
 import com.plusend.diycode.event.NewsEvent;
 import com.plusend.diycode.event.NodesEvent;
@@ -65,9 +66,9 @@ public class NetworkData implements Data {
     return networkData;
   }
 
-  @Override public void getToken() {
+  @Override public void getToken(String username, String password) {
     Call<Token> call = service.getToken(Constant.VALUE_CLIENT_ID, Constant.VALUE_CLIENT_SECRET,
-        Constant.VALUE_GRANT_TYPE, Constant.VALUE_USERNAME, Constant.VALUE_PASSWORD);
+        Constant.VALUE_GRANT_TYPE, username, password);
     call.enqueue(new Callback<Token>() {
       @Override public void onResponse(Call<Token> call, retrofit2.Response<Token> response) {
         if (response.isSuccessful()) {
@@ -88,29 +89,29 @@ public class NetworkData implements Data {
   }
 
   @Override public void getMe() {
-    Log.d(TAG, "getMe TOKEN: " + Constant.VALUE_TOKEN);
     Call<User> call = service.getMe(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN);
     call.enqueue(new Callback<User>() {
       @Override public void onResponse(Call<User> call, retrofit2.Response<User> response) {
         if (response.isSuccessful()) {
           User user = response.body();
           Log.d(TAG, "user: " + user);
-          EventBus.getDefault().post(new UserEvent(user));
+          EventBus.getDefault().post(new MeEvent(user));
         } else {
           Log.e(TAG, "getMe STATUS: " + response.code());
-          EventBus.getDefault().post(new UserEvent(null));
+          EventBus.getDefault().post(new MeEvent(null));
         }
       }
 
       @Override public void onFailure(Call<User> call, Throwable t) {
         Log.e(TAG, t.getMessage());
-        EventBus.getDefault().post(new UserEvent(null));
+        EventBus.getDefault().post(new MeEvent(null));
       }
     });
   }
 
   @Override public void getUser(String loginName) {
-    Call<User> call = service.getUser(loginName);
+    Call<User> call =
+        service.getUser(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, loginName);
     call.enqueue(new Callback<User>() {
       @Override public void onResponse(Call<User> call, retrofit2.Response<User> response) {
         if (response.isSuccessful()) {

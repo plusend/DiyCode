@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity
       @Override public void onClick(View view) {
         if (!TextUtils.isEmpty(Constant.VALUE_TOKEN)) {
           Intent intent = new Intent(MainActivity.this, UserActivity.class);
-          // TODO
           intent.putExtra(UserActivity.LOGIN_NAME, PrefUtil.getMe(MainActivity.this).getLogin());
           startActivity(intent);
         } else {
@@ -166,7 +165,7 @@ public class MainActivity extends AppCompatActivity
     } else if (id == R.id.nav_share) {
 
     } else if (id == R.id.nav_about) {
-
+      startActivity(new Intent(MainActivity.this, TestActivity.class));
     } else if (id == R.id.nav_setting) {
 
     }
@@ -177,11 +176,16 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override public void getMe(User user) {
+    Log.d(TAG, "getMe: " + user);
     if (user == null) {
       return;
     }
     PrefUtil.saveMe(this, user);
     showMe(user);
+  }
+
+  @Override public void getUser(User user) {
+    
   }
 
   private void showMe(User user) {

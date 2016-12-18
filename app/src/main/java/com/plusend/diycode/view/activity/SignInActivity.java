@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,9 +18,22 @@ import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.presenter.SignInPresenter;
-import com.plusend.diycode.util.Constant;
-import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.mvp.view.SignInView;
+import com.plusend.diycode.util.Constant;
+import com.plusend.diycode.util.KeyStoreHelper;
+import com.plusend.diycode.util.PrefUtil;
+import com.plusend.diycode.util.ToastUtil;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
+import static com.plusend.diycode.util.KeyStoreHelper.encrypt;
 
 public class SignInActivity extends AppCompatActivity implements SignInView {
 
@@ -26,7 +41,6 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   public static final int RESULT_OK = 200;
   public static final int RESULT_ERROR = 401;
 
-  @BindView(R.id.close) ImageView close;
   @BindView(R.id.name) EditText name;
   @BindView(R.id.password) EditText password;
   @BindView(R.id.sign_in) Button signIn;
@@ -48,15 +62,13 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
 
     signIn.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-        Constant.VALUE_USERNAME = name.getText().toString();
-        Constant.VALUE_PASSWORD = password.getText().toString();
-        signInPresenter.getToken();
-      }
-    });
-
-    close.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        finish();
+        String username = name.getText().toString();
+        String passwordString = password.getText().toString();
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(passwordString)) {
+          ToastUtil.showText(SignInActivity.this, "Email / 用户名或密码为空");
+          return;
+        }
+        signInPresenter.getToken(username, passwordString);
       }
     });
   }
@@ -71,15 +83,13 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
 
   @Override public void getToken(Token token) {
     if (token != null) {
-
-      PrefUtil.saveToken(this, token);
-
       Constant.VALUE_TOKEN = token.getAccessToken();
-      Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+      PrefUtil.saveToken(this, token);
+      ToastUtil.showText(this, "登录成功");
       setResult(RESULT_OK);
       finish();
     } else {
-      Toast.makeText(this, "Email / 用户名或密码错误，登录失败", Toast.LENGTH_SHORT).show();
+      ToastUtil.showText(this, "Email / 用户名或密码错误，登录失败");
     }
   }
 
@@ -95,5 +105,14 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   @Override protected void onStop() {
     signInPresenter.stop();
     super.onStop();
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        break;
+    }
+    return super.onOptionsItemSelected(item);
   }
 }

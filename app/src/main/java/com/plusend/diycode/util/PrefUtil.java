@@ -5,6 +5,15 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.entity.User;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  * 偏好参数存储工具类
@@ -113,6 +122,15 @@ public class PrefUtil {
    * 存储登录 Token
    */
   public static void saveToken(Context context, Token token) {
+    try {
+      token.setAccessToken(
+          KeyStoreHelper.encrypt(Constant.KEYSTORE_KEY_ALIAS, token.getAccessToken()));
+      token.setTokenType(KeyStoreHelper.encrypt(Constant.KEYSTORE_KEY_ALIAS, token.getTokenType()));
+      token.setRefreshToken(
+          KeyStoreHelper.encrypt(Constant.KEYSTORE_KEY_ALIAS, token.getRefreshToken()));
+    } catch (InvalidKeyException | BadPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException | UnrecoverableEntryException | KeyStoreException | IOException | NoSuchPaddingException | CertificateException e) {
+      e.printStackTrace();
+    }
     PrefUtil prefUtil = PrefUtil.getInstance(context, Constant.Token.SHARED_PREFERENCES_NAME);
     prefUtil.putString(Constant.Token.ACCESS_TOKEN, token.getAccessToken());
     prefUtil.putString(Constant.Token.TOKEN_TYPE, token.getTokenType());
@@ -132,6 +150,15 @@ public class PrefUtil {
     token.setExpiresIn(prefUtil.getInt(Constant.Token.EXPIRES_IN, 0));
     token.setRefreshToken(prefUtil.getString(Constant.Token.REFRESH_TOKEN, ""));
     token.setCreatedAt(prefUtil.getInt(Constant.Token.CREATED_AT, 0));
+    try {
+      token.setAccessToken(
+          KeyStoreHelper.decrypt(Constant.KEYSTORE_KEY_ALIAS, token.getAccessToken()));
+      token.setTokenType(KeyStoreHelper.decrypt(Constant.KEYSTORE_KEY_ALIAS, token.getTokenType()));
+      token.setRefreshToken(
+          KeyStoreHelper.decrypt(Constant.KEYSTORE_KEY_ALIAS, token.getRefreshToken()));
+    } catch (InvalidKeyException | BadPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException | UnrecoverableEntryException | KeyStoreException | IOException | NoSuchPaddingException | CertificateException e) {
+      e.printStackTrace();
+    }
     return token;
   }
 

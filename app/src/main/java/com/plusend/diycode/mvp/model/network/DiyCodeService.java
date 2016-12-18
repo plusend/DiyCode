@@ -58,7 +58,8 @@ public interface DiyCodeService {
    *
    * @param loginName 用户登录名
    */
-  @GET("users/{loginName}.json") Call<User> getUser(@Path("loginName") String loginName);
+  @GET("users/{loginName}.json") Call<User> getUser(@Header(Constant.KEY_TOKEN) String token,
+      @Path("loginName") String loginName);
 
   /**
    * 获取话题列表
