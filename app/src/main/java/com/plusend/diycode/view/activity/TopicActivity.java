@@ -24,14 +24,10 @@ import com.plusend.diycode.mvp.view.FollowView;
 import com.plusend.diycode.mvp.view.TopicRepliesView;
 import com.plusend.diycode.mvp.view.TopicView;
 import com.plusend.diycode.util.Constant;
-import com.plusend.diycode.view.adapter.MyDecoration;
+import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.TopicRepliesAdapter;
-import com.plusend.diycode.view.adapter.TopicsAdapter;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.offset;
-import static android.os.Build.VERSION_CODES.N;
 
 public class TopicActivity extends AppCompatActivity
     implements TopicView, TopicRepliesView, FollowView {
@@ -67,7 +63,7 @@ public class TopicActivity extends AppCompatActivity
     rv.setLayoutManager(linearLayoutManager);
     topicRepliesAdapter = new TopicRepliesAdapter(topicReplyList, null);
     rv.setAdapter(topicRepliesAdapter);
-    rv.addItemDecoration(new MyDecoration(this));
+    rv.addItemDecoration(new DividerListItemDecoration(this));
     rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
       private int lastVisibleItem;
 

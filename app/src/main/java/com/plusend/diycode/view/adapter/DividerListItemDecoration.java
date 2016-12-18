@@ -11,18 +11,16 @@ import com.plusend.diycode.R;
  * Created by plusend on 2016/12/4.
  */
 
-public class MyDecoration extends RecyclerView.ItemDecoration {
+public class DividerListItemDecoration extends RecyclerView.ItemDecoration {
 
-  private Context context;
   private Drawable divider;
 
-  public MyDecoration(Context context) {
-    this.context = context;
-    divider = context.getResources().getDrawable(R.drawable.item_divider);
+  public DividerListItemDecoration(Context context) {
+    divider = context.getResources().getDrawable(R.drawable.item_divider_vertical);
   }
 
   @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
       RecyclerView.State state) {
-    outRect.set(0,0,0,divider.getIntrinsicHeight());
+    outRect.set(0, 0, 0, divider.getIntrinsicHeight());
   }
 }

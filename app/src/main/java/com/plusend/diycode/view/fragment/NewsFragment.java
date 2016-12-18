@@ -11,13 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.News;
 import com.plusend.diycode.mvp.presenter.NewsPresenter;
 import com.plusend.diycode.mvp.view.NewsView;
-import com.plusend.diycode.view.adapter.MyDecoration;
+import com.plusend.diycode.view.adapter.DividerListItemDecoration;
+import com.plusend.diycode.view.adapter.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.NewsAdapter;
 import com.plusend.diycode.view.adapter.TopicsAdapter;
 import java.util.ArrayList;
@@ -30,7 +32,8 @@ import java.util.List;
 public class NewsFragment extends Fragment implements NewsView {
   private static final String TAG = "NewsFragment";
 
-  @BindView(R.id.rv_news) RecyclerView rv;
+  @BindView(R.id.rv_news) EmptyRecyclerView rv;
+  @BindView(R.id.empty_view) TextView emptyView;
   private List<News> newsList = new ArrayList<>();
   private NewsAdapter newsAdapter;
   private LinearLayoutManager linearLayoutManager;
@@ -44,6 +47,7 @@ public class NewsFragment extends Fragment implements NewsView {
     ButterKnife.bind(this, rootView);
     linearLayoutManager = new LinearLayoutManager(this.getContext());
     rv.setLayoutManager(linearLayoutManager);
+    rv.setEmptyView(emptyView);
     newsAdapter = new NewsAdapter(newsList);
     newsAdapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
       @Override public void onItemClick(View view, int position) {
@@ -53,7 +57,7 @@ public class NewsFragment extends Fragment implements NewsView {
       }
     });
     rv.setAdapter(newsAdapter);
-    rv.addItemDecoration(new MyDecoration(getContext()));
+    rv.addItemDecoration(new DividerListItemDecoration(getContext()));
     rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
       private int lastVisibleItem;
 

@@ -9,12 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Site;
 import com.plusend.diycode.mvp.presenter.SitePresenter;
 import com.plusend.diycode.mvp.view.SiteView;
+import com.plusend.diycode.view.adapter.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.site.SiteName;
 import com.plusend.diycode.view.adapter.site.SiteNameViewProvider;
 import com.plusend.diycode.view.adapter.site.SitesName;
@@ -31,10 +33,12 @@ public class SitesFragment extends Fragment implements SiteView {
   private static final String TAG = "SitesFragment";
 
   private final static int SPAN_COUNT = 2;
-  @BindView(R.id.rv_site_category) RecyclerView rvSiteCategory;
+  @BindView(R.id.rv_site_category) EmptyRecyclerView rvSiteCategory;
+  @BindView(R.id.empty_view) TextView emptyView;
 
   private SitePresenter sitePresenter;
-  private Items items;
+  private Items items = new Items();
+  private MultiTypeAdapter adapter;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -48,7 +52,17 @@ public class SitesFragment extends Fragment implements SiteView {
       }
     });
     rvSiteCategory.setLayoutManager(layoutManager);
+
+    adapter = new MultiTypeAdapter(items);
+
+    adapter.register(SiteName.class, new SiteNameViewProvider());
+    adapter.register(SitesName.class, new SitesNameViewProvider());
+    rvSiteCategory.setAdapter(adapter);
+    rvSiteCategory.setEmptyView(emptyView);
+
+    //rvSiteCategory.addItemDecoration(new DividerGridItemDecoration(getContext()));
     sitePresenter = new SitePresenter(this);
+
     return rootView;
   }
 
@@ -58,12 +72,6 @@ public class SitesFragment extends Fragment implements SiteView {
       return;
     }
 
-    items = new Items();
-    MultiTypeAdapter adapter = new MultiTypeAdapter(items);
-
-    adapter.register(SiteName.class, new SiteNameViewProvider());
-    adapter.register(SitesName.class, new SitesNameViewProvider());
-
     for (Site site : siteList) {
       items.add(new SiteName(site.getName(), site.getId()));
       for (Site.Sites sites : site.getSites()) {
@@ -71,7 +79,7 @@ public class SitesFragment extends Fragment implements SiteView {
       }
     }
 
-    rvSiteCategory.setAdapter(adapter);
+    adapter.notifyDataSetChanged();
   }
 
   @Override public void onStart() {

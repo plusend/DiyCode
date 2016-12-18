@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
@@ -19,7 +20,8 @@ import com.plusend.diycode.mvp.presenter.TopicsPresenter;
 import com.plusend.diycode.mvp.view.TopicsView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.view.activity.TopicActivity;
-import com.plusend.diycode.view.adapter.MyDecoration;
+import com.plusend.diycode.view.adapter.DividerListItemDecoration;
+import com.plusend.diycode.view.adapter.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.TopicsAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,8 @@ public class TopicFragment extends Fragment implements TopicsView {
   public static final int TYPE_CREATE = 2;
   public static final int TYPE_FAVORITE = 3;
 
-  @BindView(R.id.rv) RecyclerView rv;
+  @BindView(R.id.rv) EmptyRecyclerView rv;
+  @BindView(R.id.empty_view) TextView emptyView;
   private List<Topic> mTopicList = new ArrayList<>();
   private TopicsAdapter topicsAdapter;
   private LinearLayoutManager linearLayoutManager;
@@ -63,7 +66,7 @@ public class TopicFragment extends Fragment implements TopicsView {
     rv.setLayoutManager(linearLayoutManager);
     topicsAdapter = new TopicsAdapter(mTopicList);
     rv.setAdapter(topicsAdapter);
-    rv.addItemDecoration(new MyDecoration(getContext()));
+    rv.addItemDecoration(new DividerListItemDecoration(getContext()));
     rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
       private int lastVisibleItem;
 
@@ -88,6 +91,7 @@ public class TopicFragment extends Fragment implements TopicsView {
         lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
       }
     });
+    rv.setEmptyView(emptyView);
     topicsPresenter = new TopicsPresenter(this);
     return rootView;
   }

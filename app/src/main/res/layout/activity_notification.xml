@@ -11,9 +11,23 @@
   <include
       layout="@layout/toolbar"
       />
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/activity_notification"
+  <FrameLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      />
+      >
+    <com.plusend.diycode.view.adapter.EmptyRecyclerView
+        android:id="@+id/activity_notification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="通知为空"
+        android:textSize="24sp"
+        />
+  </FrameLayout>
 </LinearLayout>

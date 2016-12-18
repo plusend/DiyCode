@@ -8,13 +8,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Notification;
 import com.plusend.diycode.mvp.presenter.NotificationsPresenter;
 import com.plusend.diycode.mvp.view.NotificationsView;
-import com.plusend.diycode.view.adapter.MyDecoration;
+import com.plusend.diycode.view.adapter.DividerListItemDecoration;
+import com.plusend.diycode.view.adapter.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.notification.NotificationMention;
 import com.plusend.diycode.view.adapter.notification.NotificationMentionViewProvider;
 import com.plusend.diycode.view.adapter.notification.NotificationReply;
@@ -27,8 +29,9 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
 
   private static final String TYPE_REPLY = "TopicReply";
   private static final String TYPE_MENTION = "Mention";
-  @BindView(R.id.activity_notification) RecyclerView recyclerView;
+  @BindView(R.id.activity_notification) EmptyRecyclerView recyclerView;
   @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.empty_view) TextView emptyView;
 
   private MultiTypeAdapter adapter;
   private LinearLayoutManager linearLayoutManager;
@@ -50,7 +53,8 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
     linearLayoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(linearLayoutManager);
     recyclerView.setAdapter(adapter);
-    recyclerView.addItemDecoration(new MyDecoration(getContext()));
+    recyclerView.setEmptyView(emptyView);
+    recyclerView.addItemDecoration(new DividerListItemDecoration(getContext()));
     recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       private int lastVisibleItem;
 
