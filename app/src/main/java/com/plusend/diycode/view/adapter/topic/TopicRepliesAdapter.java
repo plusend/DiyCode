@@ -1,4 +1,4 @@
-package com.plusend.diycode.view.adapter;
+package com.plusend.diycode.view.adapter.topic;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -21,7 +21,10 @@ import com.plusend.diycode.util.GlideImageGetter;
 import com.plusend.diycode.util.LinkMovementMethodExt;
 import com.plusend.diycode.util.SpanClickListener;
 import com.plusend.diycode.util.TimeUtil;
+import com.plusend.diycode.view.activity.CreateTopicReplyActivity;
+import com.plusend.diycode.view.activity.UserActivity;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by plusend on 2016/11/24.
@@ -70,8 +73,8 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return new FooterViewHolder(LayoutInflater.from(parent.getContext())
             .inflate(R.layout.item_topic_footer, parent, false));
       case ITEM_REPLY:
-        return new ReplyViewHolder(
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.item_topic_reply, parent, false));
+        return new ReplyViewHolder(LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.item_topic_reply, parent, false));
       default:
         return null;
     }
@@ -81,8 +84,12 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     if (holder instanceof ReplyViewHolder) {
       final ReplyViewHolder rHolder = (ReplyViewHolder) holder;
       position--;
-      rHolder.name.setText(topicReplyList.get(position).getUser().getName());
-      rHolder.position.setText((position + 1) + "楼");
+      rHolder.topicDetail = topicDetail;
+      rHolder.topicReply = topicReplyList.get(position);
+      Log.d(TAG, "topicReply: " + rHolder.topicReply);
+      rHolder.name.setText(topicReplyList.get(position).getUser().getLogin());
+      String floor = String.format(Locale.CHINESE, "%d楼", position + 1);
+      rHolder.position.setText(floor);
       Glide.with(rHolder.avatar.getContext())
           .load(topicReplyList.get(position).getUser().getAvatarUrl())
           .crossFade()
@@ -93,12 +100,20 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @Override public void onClick(int type, String url) {
           Log.d(TAG, "url: " + url);
           if (url.startsWith("/")) {
-            // TODO goto user's page
             // url: "/plusend"
+            Log.d(TAG, "username: " + url.substring(1));
+            Intent intent = new Intent(rHolder.content.getContext(), UserActivity.class);
+            intent.putExtra(UserActivity.LOGIN_NAME, url.substring(1));
+            rHolder.content.getContext().startActivity(intent);
+          } else if (url.startsWith("#")) {
+            // url: "#reply1"
+            Log.d(TAG, "楼");
+            // TODO
+          } else {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            rHolder.content.getContext().startActivity(intent);
           }
-          Uri uri = Uri.parse(url);
-          Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-          rHolder.content.getContext().startActivity(intent);
         }
       }));
     } else if (holder instanceof HeaderReplyViewHolder) {
@@ -106,6 +121,7 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return;
       }
       final HeaderReplyViewHolder header = (HeaderReplyViewHolder) holder;
+      header.topicDetail = topicDetail;
       header.name.setText(topicDetail.getUser().getLogin());
       header.time.setText(TimeUtil.computePastTime(topicDetail.getUpdatedAt()));
       header.title.setText(topicDetail.getTitle());
@@ -121,6 +137,9 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
           new GlideImageGetter(header.content.getContext(), header.content), null));
       header.content.setMovementMethod(new LinkMovementMethodExt(new SpanClickListener() {
         @Override public void onClick(int type, String url) {
+          if (!url.startsWith("http")) {
+            url = "https://".concat(url);
+          }
           Uri uri = Uri.parse(url);
           Intent intent = new Intent(Intent.ACTION_VIEW, uri);
           header.content.getContext().startActivity(intent);
@@ -171,13 +190,37 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @BindView(R.id.avatar) ImageView avatar;
     @BindView(R.id.name) TextView name;
     @BindView(R.id.position) TextView position;
-    @BindView(R.id.thumb) ImageView thumb;
+    //@BindView(R.id.thumb) ImageView thumb;
     @BindView(R.id.reply) ImageView reply;
     @BindView(R.id.content) TextView content;
+    private TopicReply topicReply;
+    private TopicDetail topicDetail;
 
     ReplyViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);
+
+      reply.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View view) {
+          Intent intent = new Intent(view.getContext(), CreateTopicReplyActivity.class);
+          intent.putExtra(CreateTopicReplyActivity.TOPIC_ID, topicDetail.getId());
+          intent.putExtra(CreateTopicReplyActivity.TOPIC_TITLE, topicDetail.getTitle());
+          // #2楼 @plusend
+          intent.putExtra(CreateTopicReplyActivity.TO,
+              "#" + position.getText().toString() + " @" + topicReply.getUser().getLogin() + " ");
+          view.getContext().startActivity(intent);
+        }
+      });
+
+      View.OnClickListener listener = new View.OnClickListener() {
+        @Override public void onClick(View view) {
+          Intent intent = new Intent(view.getContext(), UserActivity.class);
+          intent.putExtra(UserActivity.LOGIN_NAME, topicReply.getUser().getLogin());
+          view.getContext().startActivity(intent);
+        }
+      };
+      avatar.setOnClickListener(listener);
+      name.setOnClickListener(listener);
     }
   }
 
@@ -191,6 +234,7 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     //@BindView(R.id.thumb) ImageView thumb;
     //@BindView(R.id.favorite) ImageView favorite;
     @BindView(R.id.replies_count) TextView repliesCount;
+    private TopicDetail topicDetail;
 
     HeaderReplyViewHolder(View view) {
       super(view);
@@ -203,6 +247,16 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
       //    }
       //  }
       //});
+
+      View.OnClickListener listener = new View.OnClickListener() {
+        @Override public void onClick(View view) {
+          Intent intent = new Intent(view.getContext(), UserActivity.class);
+          intent.putExtra(UserActivity.LOGIN_NAME, topicDetail.getUser().getLogin());
+          view.getContext().startActivity(intent);
+        }
+      };
+      avatar.setOnClickListener(listener);
+      name.setOnClickListener(listener);
     }
   }
 

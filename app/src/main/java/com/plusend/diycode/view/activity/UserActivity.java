@@ -54,12 +54,11 @@ public class UserActivity extends AppCompatActivity implements UserView {
       }
     });
 
-    TopicFragment topicFragment = TopicFragment.newInstance(PrefUtil.getMe(this).getLogin(), 2);
-    //bundle.putString(Constant.User.LOGIN, PrefUtil.getMe(this).getLogin());
-    getSupportFragmentManager().beginTransaction().add(R.id.container, topicFragment).commit();
-
     Intent intent = getIntent();
     loginName = intent.getStringExtra(LOGIN_NAME);
+
+    TopicFragment topicFragment = TopicFragment.newInstance(loginName, 2);
+    getSupportFragmentManager().beginTransaction().add(R.id.container, topicFragment).commit();
 
     userPresenter = new UserPresenter(this);
   }
@@ -69,7 +68,7 @@ public class UserActivity extends AppCompatActivity implements UserView {
 
   @Override public void getUser(User user) {
     Log.d(TAG, "getUser: " + user);
-    name.setText(user.getName());
+    name.setText(user.getLogin());
     topicNum.setText(String.valueOf(user.getTopicsCount()));
     followNum.setText(String.valueOf(user.getFollowingCount()));
     favoriteNum.setText(String.valueOf(user.getFavoritesCount()));

@@ -13,6 +13,7 @@
       android:layout_width="24dp"
       android:layout_height="24dp"
       android:layout_marginStart="4dp"
+      android:layout_marginTop="4dp"
       />
   <TextView
       android:id="@+id/name"
@@ -28,19 +29,19 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="36dp"
-      android:layout_marginTop="13dp"
+      android:layout_marginTop="16dp"
       android:text="1楼"
       android:textColor="#c8c8ce"
       android:textSize="12sp"
       />
-  <ImageView
-      android:id="@+id/thumb"
-      android:layout_width="22dp"
-      android:layout_height="22dp"
-      android:layout_alignParentEnd="true"
-      android:layout_marginEnd="56dp"
-      android:src="@drawable/iv_thumb"
-      />
+  <!--<ImageView-->
+  <!--android:id="@+id/thumb"-->
+  <!--android:layout_width="22dp"-->
+  <!--android:layout_height="22dp"-->
+  <!--android:layout_alignParentEnd="true"-->
+  <!--android:layout_marginEnd="56dp"-->
+  <!--android:src="@drawable/iv_thumb"-->
+  <!--/>-->
   <ImageView
       android:id="@+id/reply"
       android:layout_width="22dp"

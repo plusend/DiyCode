@@ -126,6 +126,15 @@ public class TopicReply {
     public void setAvatarUrl(String avatarUrl) {
       this.avatarUrl = avatarUrl;
     }
+
+    @Override public String toString() {
+      return "User{" +
+          "id=" + id +
+          ", login='" + login + '\'' +
+          ", name='" + name + '\'' +
+          ", avatarUrl='" + avatarUrl + '\'' +
+          '}';
+    }
   }
 
   public static class Abilities {
@@ -147,5 +156,26 @@ public class TopicReply {
     public void setDestroy(boolean destroy) {
       this.destroy = destroy;
     }
+
+    @Override public String toString() {
+      return "Abilities{" +
+          "update=" + update +
+          ", destroy=" + destroy +
+          '}';
+    }
+  }
+
+  @Override public String toString() {
+    return "TopicReply{" +
+        "id=" + id +
+        ", bodyHtml='" + bodyHtml + '\'' +
+        ", createdAt='" + createdAt + '\'' +
+        ", updatedAt='" + updatedAt + '\'' +
+        ", deleted=" + deleted +
+        ", topicId=" + topicId +
+        ", user=" + user +
+        ", likesCount=" + likesCount +
+        ", abilities=" + abilities +
+        '}';
   }
 }

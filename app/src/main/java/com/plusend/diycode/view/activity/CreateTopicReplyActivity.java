@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -26,10 +27,12 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
   @BindView(R.id.body) EditText body;
   @BindView(R.id.fab) FloatingActionButton fab;
   @BindView(R.id.toolbar) Toolbar toolbar;
+  public static final String TO = "toSb";
+  public static final String TOPIC_ID = "topicId";
+  public static final String TOPIC_TITLE = "topicTitle";
 
   private CreateTopicReplyPresenter createTopicReplyPresenter;
   private int id;
-  private String titleString;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -38,9 +41,15 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
     initActionBar(toolbar);
 
     Intent intent = getIntent();
-    id = intent.getIntExtra(Constant.TOPIC_ID, 0);
-    titleString = intent.getStringExtra(Constant.TOPIC_TITLE);
+    id = intent.getIntExtra(TOPIC_ID, 0);
+    String titleString = intent.getStringExtra(TOPIC_TITLE);
     title.setText(titleString);
+    String contentPrefix = intent.getStringExtra(TO);
+    if (!TextUtils.isEmpty(contentPrefix)) {
+      body.setText(contentPrefix);
+      body.setSelection(contentPrefix.length());
+    }
+    body.requestFocus();
 
     createTopicReplyPresenter = new CreateTopicReplyPresenter(this);
 

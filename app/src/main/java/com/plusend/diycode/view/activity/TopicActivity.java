@@ -25,7 +25,7 @@ import com.plusend.diycode.mvp.view.TopicRepliesView;
 import com.plusend.diycode.mvp.view.TopicView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
-import com.plusend.diycode.view.adapter.TopicRepliesAdapter;
+import com.plusend.diycode.view.adapter.topic.TopicRepliesAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,8 +91,8 @@ public class TopicActivity extends AppCompatActivity
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         Intent intent = new Intent(TopicActivity.this, CreateTopicReplyActivity.class);
-        intent.putExtra(Constant.TOPIC_ID, topicDetail.getId());
-        intent.putExtra(Constant.TOPIC_TITLE, topicDetail.getTitle());
+        intent.putExtra(CreateTopicReplyActivity.TOPIC_ID, topicDetail.getId());
+        intent.putExtra(CreateTopicReplyActivity.TOPIC_TITLE, topicDetail.getTitle());
         startActivity(intent);
       }
     });

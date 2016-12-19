@@ -1,4 +1,4 @@
-package com.plusend.diycode.view.adapter;
+package com.plusend.diycode.view.adapter.topic;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

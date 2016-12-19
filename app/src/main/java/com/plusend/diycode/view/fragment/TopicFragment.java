@@ -22,7 +22,7 @@ import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.view.activity.TopicActivity;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.EmptyRecyclerView;
-import com.plusend.diycode.view.adapter.TopicsAdapter;
+import com.plusend.diycode.view.adapter.topic.TopicsAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
