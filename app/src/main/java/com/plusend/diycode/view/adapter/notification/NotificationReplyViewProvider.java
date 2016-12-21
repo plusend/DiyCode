@@ -34,7 +34,9 @@ public class NotificationReplyViewProvider
       @NonNull NotificationReply notificationReply) {
     holder.reply = notificationReply;
     Glide.with(holder.avatar.getContext())
-        .load(notificationReply.getAvatarUrl())
+        .load(notificationReply.getAvatarUrl().replace("large_", ""))
+        .centerCrop()
+        .crossFade()
         .into(holder.avatar);
     String header = notificationReply.getLogin()
         + "<font color='#9e9e9e'> 在帖子 </font>"

@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.plusend.diycode.view.activity.MyTopicsActivity"
+    tools:context="com.plusend.diycode.view.activity.WebActivity"
     >
   <include
       layout="@layout/toolbar"
       />
-  <RelativeLayout
-      android:id="@+id/activity_my_topics"
+  <ProgressBar
+      android:id="@+id/progress_bar"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-  </RelativeLayout>
+      android:layout_height="2dp"
+      style="@android:style/Widget.ProgressBar.Horizontal"
+      />
+  <WebView
+      android:id="@+id/webview"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
 </LinearLayout>

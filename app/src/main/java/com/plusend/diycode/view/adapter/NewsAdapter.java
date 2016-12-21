@@ -1,5 +1,7 @@
 package com.plusend.diycode.view.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.News;
 import com.plusend.diycode.util.TimeUtil;
 import com.plusend.diycode.util.UrlUtil;
+import com.plusend.diycode.view.activity.WebActivity;
 import java.util.List;
 
 /**
@@ -59,6 +62,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     if (holder instanceof NewsViewHolder) {
       NewsViewHolder topicViewHolder = (NewsViewHolder) holder;
+      topicViewHolder.news = newsList.get(position);
       topicViewHolder.name.setText(newsList.get(position).getUser().getLogin());
       topicViewHolder.topic.setText(newsList.get(position).getNodeName());
       topicViewHolder.title.setText(newsList.get(position).getTitle());
@@ -73,6 +77,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
       Glide.with(topicViewHolder.avatar.getContext())
           .load(newsList.get(position).getUser().getAvatarUrl())
           .crossFade()
+          .centerCrop()
           .into(topicViewHolder.avatar);
     } else if (holder instanceof FooterViewHolder) {
       FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
@@ -107,16 +112,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     this.status = status;
   }
 
-  private static OnItemClickListener mOnItemClickListener;
-
-  public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-    mOnItemClickListener = onItemClickListener;
-  }
-
-  public interface OnItemClickListener {
-    void onItemClick(View view, int position);
-  }
-
   static class NewsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.avatar) ImageView avatar;
     @BindView(R.id.name) TextView name;
@@ -128,16 +123,19 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //@BindView(R.id.image) ImageView image;
     //@BindView(R.id.thumb) ImageView thumb;
     //@BindView(R.id.favorite) ImageView favorite;
+    private News news;
+    private Context context;
 
     NewsViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);
+      context = view.getContext();
 
       view.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
-          if (mOnItemClickListener != null) {
-            mOnItemClickListener.onItemClick(v, getAdapterPosition());
-          }
+          Intent intent = new Intent(context, WebActivity.class);
+          intent.putExtra(WebActivity.URL, news.getAddress());
+          context.startActivity(intent);
         }
       });
     }

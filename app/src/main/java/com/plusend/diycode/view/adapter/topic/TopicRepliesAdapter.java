@@ -1,13 +1,19 @@
 package com.plusend.diycode.view.adapter.topic;
 
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.res.AssetManager;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,10 +27,17 @@ import com.plusend.diycode.util.GlideImageGetter;
 import com.plusend.diycode.util.LinkMovementMethodExt;
 import com.plusend.diycode.util.SpanClickListener;
 import com.plusend.diycode.util.TimeUtil;
+import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.activity.CreateTopicReplyActivity;
 import com.plusend.diycode.view.activity.UserActivity;
+import com.plusend.diycode.view.activity.WebActivity;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Created by plusend on 2016/11/24.
@@ -44,6 +57,7 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
   private List<TopicReply> topicReplyList;
   private TopicDetail topicDetail;
+  private final Set<String> offlineResources = new HashSet<>();
 
   public TopicRepliesAdapter(List<TopicReply> topicReplyList, TopicDetail topicDetail) {
     this.topicReplyList = topicReplyList;
@@ -86,13 +100,14 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
       position--;
       rHolder.topicDetail = topicDetail;
       rHolder.topicReply = topicReplyList.get(position);
-      Log.d(TAG, "topicReply: " + rHolder.topicReply);
+      Log.v(TAG, "topicReply: " + rHolder.topicReply);
       rHolder.name.setText(topicReplyList.get(position).getUser().getLogin());
       String floor = String.format(Locale.CHINESE, "%d楼", position + 1);
       rHolder.position.setText(floor);
       Glide.with(rHolder.avatar.getContext())
           .load(topicReplyList.get(position).getUser().getAvatarUrl())
           .crossFade()
+          .centerCrop()
           .into(rHolder.avatar);
       rHolder.content.setText(Html.fromHtml(topicReplyList.get(position).getBodyHtml(),
           new GlideImageGetter(rHolder.content.getContext(), rHolder.content), null));
@@ -110,8 +125,8 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Log.d(TAG, "楼");
             // TODO
           } else {
-            Uri uri = Uri.parse(url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            Intent intent = new Intent(rHolder.content.getContext(), WebActivity.class);
+            intent.putExtra(WebActivity.URL, url);
             rHolder.content.getContext().startActivity(intent);
           }
         }
@@ -128,26 +143,63 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
       Glide.with(header.avatar.getContext())
           .load(topicDetail.getUser().getAvatarUrl())
           .crossFade()
+          .centerCrop()
           .into(header.avatar);
       //header.favorite.setSelected(isFavorited);
       //header.thumb.setSelected(isFollowed);
       header.topic.setText(topicDetail.getNodeName());
       header.repliesCount.setText("共收到 " + topicDetail.getRepliesCount() + " 条回复");
-      header.content.setText(Html.fromHtml(topicDetail.getBodyHtml(),
-          new GlideImageGetter(header.content.getContext(), header.content), null));
-      header.content.setMovementMethod(new LinkMovementMethodExt(new SpanClickListener() {
-        @Override public void onClick(int type, String url) {
-          if (!url.startsWith("http")) {
-            url = "https://".concat(url);
-          }
-          Uri uri = Uri.parse(url);
-          Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-          header.content.getContext().startActivity(intent);
+      if (offlineResources.isEmpty()) {
+        fetchOfflineResources(header.content.getContext());
+      }
+      header.content.setWebViewClient(new WebViewClient() {
+        public void onReceivedError(WebView view, int errorCode, String description,
+            String failingUrl) {
+          ToastUtil.showText(header.content.getContext(), "Oh no! " + description);
         }
-      }));
-      //header.content.loadDataWithBaseURL(null, topicDetail.getBodyHtml(),
-      //    "text/html", "utf-8", null);
 
+        @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+          Intent intent = new Intent(header.content.getContext(), WebActivity.class);
+          intent.putExtra(WebActivity.URL, url);
+          header.content.getContext().startActivity(intent);
+          return true;
+        }
+
+        @Override public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+          Log.d(TAG, "shouldInterceptRequest thread id: " + Thread.currentThread().getId());
+          int lastSlash = url.lastIndexOf("/");
+          if (lastSlash != -1) {
+            String suffix = url.substring(lastSlash + 1);
+            if (offlineResources.contains(suffix)) {
+              String mimeType;
+              if (suffix.endsWith(".js")) {
+                mimeType = "application/x-javascript";
+              } else if (suffix.endsWith(".css")) {
+                mimeType = "text/css";
+              } else {
+                mimeType = "text/html";
+              }
+              try {
+                InputStream is = view.getContext().getAssets().open("offline_res/" + suffix);
+                Log.i(TAG, "shouldInterceptRequest use offline resource for: " + url);
+                return new WebResourceResponse(mimeType, "UTF-8", is);
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            }
+          }
+          Log.i("shouldInterceptRequest", "load resource from internet, url: " + url);
+          return super.shouldInterceptRequest(view, url);
+        }
+      });
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        header.content.getSettings()
+            .setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+      } else {
+        header.content.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+      }
+      header.content.loadData(getHtmlData(topicDetail.getBodyHtml()), "text/html; charset=utf-8",
+          "utf-8");
     } else if (holder instanceof FooterViewHolder) {
       FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
       switch (status) {
@@ -166,6 +218,31 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         default:
           break;
       }
+    }
+  }
+
+  private String getHtmlData(String bodyHTML) {
+    String head = "<head>"
+        +
+        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> "
+        +
+        "<link rel=\"stylesheet\" media=\"screen\" href=\"https://diycode.b0.upaiyun.com/assets/front.css\" data-turbolinks-track=\"true\" />"
+        +
+        "<style>img{max-width: 100%; width:auto; height:auto;}</style>"
+        +
+        "</head>";
+    return "<html>" + head + "<body>" + bodyHTML + "</body></html>";
+  }
+
+  private void fetchOfflineResources(Context context) {
+    AssetManager am = context.getApplicationContext().getAssets();
+    try {
+      String[] res = am.list("offline_res");
+      if (res != null) {
+        Collections.addAll(offlineResources, res);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
@@ -230,7 +307,7 @@ public class TopicRepliesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @BindView(R.id.topic) TextView topic;
     @BindView(R.id.time) TextView time;
     @BindView(R.id.title) TextView title;
-    @BindView(R.id.content) TextView content;
+    @BindView(R.id.content) WebView content;
     //@BindView(R.id.thumb) ImageView thumb;
     //@BindView(R.id.favorite) ImageView favorite;
     @BindView(R.id.replies_count) TextView repliesCount;

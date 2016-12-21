@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/topic_header_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:descendantFocusability="afterDescendants"
+    android:descendantFocusability="blocksDescendants"
     android:paddingEnd="20dp"
     android:paddingStart="20dp"
+    tools:ignore="WebViewLayout"
     >
   <LinearLayout
       android:layout_width="wrap_content"
@@ -57,12 +59,13 @@
       android:textColor="#4d4d4d"
       android:textSize="22sp"
       />
-  <TextView
+  <WebView
       android:id="@+id/content"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@id/title"
       android:layout_marginTop="20dp"
+      android:scrollbars="none"
       />
   <!--<ImageView-->
   <!--android:id="@+id/thumb"-->

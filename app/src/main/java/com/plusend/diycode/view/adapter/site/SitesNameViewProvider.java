@@ -14,7 +14,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
+import com.plusend.diycode.view.activity.WebActivity;
 import me.drakeet.multitype.ItemViewProvider;
+
+import static com.plusend.diycode.R.id.header;
 
 /**
  * Created by plusend on 2016/12/13.
@@ -35,6 +38,7 @@ public class SitesNameViewProvider
     Glide.with(holder.icon.getContext())
         .load(sitesName.getAvatarUrl())
         .crossFade()
+        .centerCrop()
         .into(holder.icon);
   }
 
@@ -51,8 +55,8 @@ public class SitesNameViewProvider
 
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View view) {
-          Uri uri = Uri.parse(sitesName.getUrl());
-          Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+          Intent intent = new Intent(context, WebActivity.class);
+          intent.putExtra(WebActivity.URL, sitesName.getUrl());
           context.startActivity(intent);
         }
       });

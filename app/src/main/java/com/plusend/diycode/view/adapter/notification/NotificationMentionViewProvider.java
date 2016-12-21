@@ -34,7 +34,9 @@ public class NotificationMentionViewProvider
       @NonNull NotificationMention notificationMention) {
     holder.mention = notificationMention;
     Glide.with(holder.avatar.getContext())
-        .load(notificationMention.getAvatarUrl())
+        .load(notificationMention.getAvatarUrl().replace("large_", ""))
+        .crossFade()
+        .centerCrop()
         .into(holder.avatar);
     String header = notificationMention.getLogin()
         + "<font color='#9e9e9e'> 在 </font>"

@@ -1,7 +1,5 @@
 package com.plusend.diycode.view.fragment;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -49,13 +47,6 @@ public class NewsFragment extends Fragment implements NewsView {
     rv.setLayoutManager(linearLayoutManager);
     rv.setEmptyView(emptyView);
     newsAdapter = new NewsAdapter(newsList);
-    newsAdapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
-      @Override public void onItemClick(View view, int position) {
-        Uri uri = Uri.parse(newsList.get(position).getAddress());
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
-      }
-    });
     rv.setAdapter(newsAdapter);
     rv.addItemDecoration(new DividerListItemDecoration(getContext()));
     rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
