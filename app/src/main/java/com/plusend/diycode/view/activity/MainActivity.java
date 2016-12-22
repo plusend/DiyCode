@@ -164,11 +164,12 @@ public class MainActivity extends AppCompatActivity
       startActivity(intent);
     } else if (id == R.id.nav_comment) {
       Intent intent = new Intent(MainActivity.this, MyRepliesActivity.class);
-      intent.putExtra(MyRepliesActivity.LOGIN_NAME, me.getLogin());
+      //intent.putExtra(MyRepliesActivity.LOGIN_NAME, me.getLogin());
       startActivity(intent);
     } else if (id == R.id.nav_share) {
 
     } else if (id == R.id.nav_about) {
+      startActivity(new Intent(MainActivity.this, AboutActivity.class));
     } else if (id == R.id.nav_setting) {
       startActivity(new Intent(MainActivity.this, SettingsActivity.class));
     }

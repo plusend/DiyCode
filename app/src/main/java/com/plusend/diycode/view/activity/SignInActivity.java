@@ -60,8 +60,8 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     initActionBar(toolbar);
 
     Intent intent = getIntent();
-    if(intent.getAction().equals(getResources().getString(R.string.logout_intent_action))){
-
+    if (getResources().getString(R.string.logout_intent_action).equals(intent.getAction())) {
+      // TODO logout
     }
 
     signInPresenter = new SignInPresenter(this);

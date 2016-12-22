@@ -16,6 +16,7 @@ import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Reply;
 import com.plusend.diycode.mvp.presenter.RepliesPresenter;
 import com.plusend.diycode.mvp.view.RepliesView;
+import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.notification.NotificationMention;
@@ -48,8 +49,7 @@ public class MyRepliesActivity extends AppCompatActivity implements RepliesView 
     ButterKnife.bind(this);
     initActionBar(toolbar);
 
-    Intent intent = getIntent();
-    loginName = intent.getStringExtra(LOGIN_NAME);
+    loginName = PrefUtil.getMe(this).getLogin();
 
     presenter = new RepliesPresenter(this);
     items = new Items();

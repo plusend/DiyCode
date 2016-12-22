@@ -43,6 +43,7 @@ public class WebActivity extends AppCompatActivity {
     Intent intent = getIntent();
     mUrl = intent.getStringExtra(URL);
     Log.d(TAG, "mUrl: " + mUrl);
+    toolbar.setTitle(mUrl);
     webView.loadUrl(mUrl);
   }
 

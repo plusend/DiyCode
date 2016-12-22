@@ -93,6 +93,11 @@
         android:label="@string/title_activity_settings"
         android:theme="@style/AppTheme">
     </activity>
+    <activity
+        android:name=".view.activity.AboutActivity"
+        android:label="@string/title_activity_settings"
+        android:theme="@style/AppTheme.About">
+    </activity>
   </application>
 
 </manifest>
