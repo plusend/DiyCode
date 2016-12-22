@@ -1,7 +1,6 @@
 package com.plusend.diycode.view.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
@@ -21,20 +19,8 @@ import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.presenter.SignInPresenter;
 import com.plusend.diycode.mvp.view.SignInView;
 import com.plusend.diycode.util.Constant;
-import com.plusend.diycode.util.KeyStoreHelper;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableEntryException;
-import java.security.cert.CertificateException;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
-import static com.plusend.diycode.util.KeyStoreHelper.encrypt;
 
 public class SignInActivity extends AppCompatActivity implements SignInView {
 
@@ -58,11 +44,6 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     setContentView(R.layout.activity_sign_in);
     ButterKnife.bind(this);
     initActionBar(toolbar);
-
-    Intent intent = getIntent();
-    if (getResources().getString(R.string.logout_intent_action).equals(intent.getAction())) {
-      // TODO logout
-    }
 
     signInPresenter = new SignInPresenter(this);
 

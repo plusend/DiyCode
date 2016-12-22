@@ -35,6 +35,7 @@ import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.view.adapter.MainPagerAdapter;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener, UserView {
@@ -111,6 +112,19 @@ public class MainActivity extends AppCompatActivity
     } else {
       Log.d(TAG, "token is null");
       userPresenter = new UserPresenter(this);
+    }
+  }
+
+  @Override protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    if (getResources().getString(R.string.logout_intent_action).equals(intent.getAction())) {
+      // TODO logout
+      Constant.VALUE_TOKEN = "";
+      PrefUtil.saveToken(this, new Token());
+      PrefUtil.saveMe(this, new User());
+      User user = new User();
+      user.setEmail("点击图片登录");
+      showMe(user);
     }
   }
 
@@ -199,6 +213,7 @@ public class MainActivity extends AppCompatActivity
         .load(user.getAvatarUrl())
         .crossFade()
         .bitmapTransform(new CropCircleTransformation(this))
+        .error(R.mipmap.ic_launcher)
         .into(avatar);
   }
 

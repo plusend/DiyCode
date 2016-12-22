@@ -67,15 +67,17 @@ public class UserActivity extends AppCompatActivity implements UserView {
 
   @Override public void getUser(User user) {
     Log.d(TAG, "getUser: " + user);
-    name.setText(user.getLogin());
-    topicNum.setText(String.valueOf(user.getTopicsCount()));
-    followNum.setText(String.valueOf(user.getFollowingCount()));
-    favoriteNum.setText(String.valueOf(user.getFavoritesCount()));
-    Glide.with(this)
-        .load(user.getAvatarUrl())
-        .bitmapTransform(new CropCircleTransformation(this))
-        .crossFade()
-        .into(avatar);
+    if (user != null) {
+      name.setText(user.getLogin());
+      topicNum.setText(String.valueOf(user.getTopicsCount()));
+      followNum.setText(String.valueOf(user.getFollowingCount()));
+      favoriteNum.setText(String.valueOf(user.getFavoritesCount()));
+      Glide.with(this)
+          .load(user.getAvatarUrl())
+          .bitmapTransform(new CropCircleTransformation(this))
+          .crossFade()
+          .into(avatar);
+    }
   }
 
   @Override public Context getContext() {
