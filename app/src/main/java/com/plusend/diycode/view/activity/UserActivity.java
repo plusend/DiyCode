@@ -18,7 +18,6 @@ import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.User;
 import com.plusend.diycode.mvp.presenter.UserPresenter;
 import com.plusend.diycode.mvp.view.UserView;
-import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;

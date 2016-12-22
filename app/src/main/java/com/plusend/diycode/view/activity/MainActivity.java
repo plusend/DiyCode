@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_settings:
+        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         break;
       case R.id.action_search:
         break;
@@ -168,9 +169,8 @@ public class MainActivity extends AppCompatActivity
     } else if (id == R.id.nav_share) {
 
     } else if (id == R.id.nav_about) {
-      startActivity(new Intent(MainActivity.this, TestActivity.class));
     } else if (id == R.id.nav_setting) {
-
+      startActivity(new Intent(MainActivity.this, SettingsActivity.class));
     }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

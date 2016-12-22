@@ -47,6 +47,8 @@ public interface DiyCodeService {
       @Field("grant_type") String grant_type, @Field("username") String username,
       @Field("password") String password);
 
+  @DELETE("https://www.diycode.cc/oauth/authorize")
+
   /**
    * 获取当然登录者的资料
    *

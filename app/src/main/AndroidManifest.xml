@@ -31,6 +31,10 @@
     <activity
         android:name=".view.activity.SignInActivity"
         android:label="登录">
+      <intent-filter>
+        <action android:name="com.plusend.diycode.Logout"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
     </activity>
     <activity
         android:name=".view.activity.TopicActivity"
@@ -71,6 +75,10 @@
     <activity
         android:name=".view.activity.TestActivity"
         android:label="测试">
+      <intent-filter>
+        <action android:name="com.plusend.diycode.Test"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
     </activity>
     <activity
         android:name=".view.activity.MyRepliesActivity"
@@ -79,6 +87,11 @@
     <activity
         android:name=".view.activity.WebActivity"
         android:label="">
+    </activity>
+    <activity
+        android:name=".view.activity.SettingsActivity"
+        android:label="@string/title_activity_settings"
+        android:theme="@style/AppTheme">
     </activity>
   </application>
 

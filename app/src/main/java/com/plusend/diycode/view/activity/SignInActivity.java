@@ -1,6 +1,7 @@
 package com.plusend.diycode.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +58,11 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     setContentView(R.layout.activity_sign_in);
     ButterKnife.bind(this);
     initActionBar(toolbar);
+
+    Intent intent = getIntent();
+    if(intent.getAction().equals(getResources().getString(R.string.logout_intent_action))){
+
+    }
 
     signInPresenter = new SignInPresenter(this);
 

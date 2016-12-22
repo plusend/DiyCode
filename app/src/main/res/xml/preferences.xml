@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout="@layout/preference_item">
+
+  <PreferenceCategory
+      android:layout="@layout/preference_category_widget"
+      android:title="将来会有的各种配置">
+    <Preference
+        android:layout="@layout/preference_item"
+        android:title="测试">
+      <intent android:action="@string/test_intent_action"/>
+    </Preference>
+
+
+    <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="preference1"
+        android:layout="@layout/preference_item"
+        android:title="配置二"/>
+  </PreferenceCategory>
+  <PreferenceCategory
+      android:layout="@layout/preference_category_widget"
+      android:title="账户">
+    <Preference
+        android:layout="@layout/preference_item"
+        android:title="退出">
+      <intent android:action="@string/logout_intent_action"/>
+    </Preference>
+  </PreferenceCategory>
+
+</PreferenceScreen>
