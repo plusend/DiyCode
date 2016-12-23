@@ -6,7 +6,6 @@
 
   <application
       android:name=".app.DiyCodeApplication"
-      android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:supportsRtl="true"
@@ -17,10 +16,12 @@
         android:launchMode="singleTask">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
+
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
       <intent-filter>
         <action android:name="com.plusend.diycode.Logout"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
 
@@ -46,11 +47,13 @@
     </activity>
     <activity
         android:name=".view.activity.NewTopicActivity"
-        android:label="发起讨论">
+        android:label="发起讨论"
+        android:windowSoftInputMode="stateVisible|adjustResize">
     </activity>
     <activity
         android:name=".view.activity.CreateTopicReplyActivity"
-        android:label="评论">
+        android:label="评论"
+        android:windowSoftInputMode="stateVisible|adjustResize">
     </activity>
     <activity
         android:name=".view.activity.SearchActivity"
