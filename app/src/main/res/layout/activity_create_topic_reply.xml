@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.plusend.diycode.view.activity.CreateTopicReplyActivity"
     >
@@ -40,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_input_add"
         />
 

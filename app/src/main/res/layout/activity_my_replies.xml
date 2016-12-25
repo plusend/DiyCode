@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.plusend.diycode.view.activity.MyRepliesActivity"
     >
@@ -17,9 +18,9 @@
       >
     <com.plusend.diycode.view.adapter.EmptyRecyclerView
         android:id="@+id/rv_replies"
-        android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ffffff"
         />
     <TextView
         android:id="@+id/empty_view"
