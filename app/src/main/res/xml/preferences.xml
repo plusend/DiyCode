@@ -28,6 +28,12 @@
         android:title="退出">
       <intent android:action="@string/logout_intent_action"/>
     </Preference>
+
+    <Preference
+        android:key="@string/pref_key_check_update"
+        android:layout="@layout/preference_item"
+        android:title="检测更新">
+    </Preference>
   </PreferenceCategory>
 
 </PreferenceScreen>

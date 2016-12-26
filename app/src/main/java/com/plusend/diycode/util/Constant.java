@@ -14,6 +14,9 @@ public class Constant {
   public static final String KEY_TOKEN = "Authorization";
   public static final String VALUE_TOKEN_PREFIX = "Bearer ";
 
+  // BugHD
+  public static final String FIR_API_TOKEN = "a8eebfaf89fc20bbae23ffb2ddcd1703";
+  
   public static String VALUE_TOKEN = "";
 
   public static class Token {

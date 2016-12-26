@@ -3,6 +3,10 @@
     package="com.plusend.diycode">
 
   <uses-permission android:name="android.permission.INTERNET"/>
+  <!-- BugHD -->
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
   <application
       android:name=".app.DiyCodeApplication"
@@ -80,6 +84,7 @@
         android:label="测试">
       <intent-filter>
         <action android:name="com.plusend.diycode.Test"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
@@ -101,6 +106,16 @@
         android:label="@string/title_activity_settings"
         android:theme="@style/AppTheme.About">
     </activity>
+
+    <!-- BugHD -->
+    <meta-data
+        android:name="BUG_HD_SDK_GENERAL_KEY"
+        android:value="a8eebfaf89fc20bbae23ffb2ddcd1703"/>
+
+    <service
+        android:name=".view.service.MyIntentService"
+        android:exported="false">
+    </service>
   </application>
 
 </manifest>
