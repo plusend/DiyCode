@@ -76,7 +76,7 @@ public class NetworkData implements Data {
       @Override public void onResponse(Call<Token> call, retrofit2.Response<Token> response) {
         if (response.isSuccessful()) {
           Token token = response.body();
-          Log.d(TAG, "token: " + token);
+          //Log.d(TAG, "token: " + token);
           EventBus.getDefault().post(new TokenEvent(token));
         } else {
           EventBus.getDefault().post(new TokenEvent(null));

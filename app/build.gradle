@@ -1,23 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
-  compileSdkVersion 24
-  buildToolsVersion "24.0.2"
+  compileSdkVersion 25
+  buildToolsVersion "25.0.2"
   defaultConfig {
     applicationId "com.plusend.diycode"
     minSdkVersion 19
-    targetSdkVersion 24
-    versionCode 1
-    versionName "0.1.0"
+    targetSdkVersion 25
+    versionCode 2
+    versionName "0.2.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-
     vectorDrawables.useSupportLibrary = true
   }
   buildTypes {
     release {
-      minifyEnabled false
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      zipAlignEnabled true
+      shrinkResources true
     }
   }
 }
@@ -27,20 +27,12 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  // ButterKnife
-  // Gson
-  // Glide
-  // Glide Transform
-  // Retrofit
-  // EventBus
-  // StatusBarTint
-  // MultiType
   compile('me.drakeet.multitype:multitype:2.3.0', {
     exclude group: 'com.android.support'
   })
-  compile 'com.android.support:appcompat-v7:24.2.1'
-  compile 'com.android.support:preference-v7:24.2.1'
-  compile 'com.android.support:design:24.2.1'
+  compile 'com.android.support:appcompat-v7:25.1.0'
+  compile 'com.android.support:preference-v7:25.1.0'
+  compile 'com.android.support:design:25.1.0'
   compile 'com.jakewharton:butterknife:8.4.0'
   compile 'com.google.code.gson:gson:2.8.0'
   compile 'com.github.bumptech.glide:glide:3.7.0'
@@ -49,8 +41,8 @@ dependencies {
   compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
   compile 'org.greenrobot:eventbus:3.0.0'
   compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-  compile 'com.android.support:support-v4:24.2.1'
-  compile 'com.android.support:support-vector-drawable:24.2.1'
+  compile 'com.android.support:support-v4:25.1.0'
+  compile 'com.android.support:support-vector-drawable:25.1.0'
   testCompile 'junit:junit:4.12'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

@@ -1,5 +1,5 @@
 # Built application files
-#*.apk
+*.apk
 *.ap_
 
 # Files for the Dalvik VM
@@ -43,3 +43,9 @@ captures/
 
 # OSX files
 .DS_Store
+
+# 保存编译好供下载的 apk
+!apk/*.apk
+
+# 密钥
+*.jks

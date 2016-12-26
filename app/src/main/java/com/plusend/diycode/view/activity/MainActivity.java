@@ -175,8 +175,6 @@ public class MainActivity extends AppCompatActivity
       Intent intent = new Intent(MainActivity.this, MyRepliesActivity.class);
       //intent.putExtra(MyRepliesActivity.LOGIN_NAME, me.getLogin());
       startActivity(intent);
-    } else if (id == R.id.nav_share) {
-
     } else if (id == R.id.nav_about) {
       startActivity(new Intent(MainActivity.this, AboutActivity.class));
     } else if (id == R.id.nav_setting) {
