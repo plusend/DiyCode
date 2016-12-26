@@ -110,7 +110,7 @@
     <!-- BugHD -->
     <meta-data
         android:name="BUG_HD_SDK_GENERAL_KEY"
-        android:value="a8eebfaf89fc20bbae23ffb2ddcd1703"/>
+        android:value="8600c967b234c06eb9f1a15cbfbacc8d"/>
 
     <service
         android:name=".view.service.MyIntentService"
