@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity
     super.onNewIntent(intent);
     if (getResources().getString(R.string.logout_intent_action).equals(intent.getAction())) {
       PrefUtil.clearMe(this);
+      userPresenter = new UserPresenter(this);
       User user = new User();
       user.setEmail("点击图片登录");
       showMe(user);
