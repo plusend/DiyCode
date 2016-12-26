@@ -1,12 +1,14 @@
 package com.plusend.diycode.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -15,6 +17,8 @@ import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Notification;
 import com.plusend.diycode.mvp.presenter.NotificationsPresenter;
 import com.plusend.diycode.mvp.view.NotificationsView;
+import com.plusend.diycode.util.Constant;
+import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.notification.NotificationMention;
@@ -73,6 +77,13 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
         lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
       }
     });
+
+    if (TextUtils.isEmpty(Constant.VALUE_TOKEN)) {
+      startActivityForResult(new Intent(this, SignInActivity.class), SignInActivity.REQUEST_CODE);
+      ToastUtil.showText(this, "请先登录");
+    } else {
+      getNotifications();
+    }
   }
 
   private void initActionBar(Toolbar toolbar) {
@@ -107,6 +118,10 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
     adapter.notifyDataSetChanged();
   }
 
+  private void getNotifications() {
+    presenter.readNotifications(offset);
+  }
+
   @Override public Context getContext() {
     return this;
   }
@@ -114,7 +129,6 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
   @Override protected void onStart() {
     super.onStart();
     presenter.start();
-    presenter.readNotifications(offset);
   }
 
   @Override protected void onStop() {
@@ -129,5 +143,19 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
         break;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode) {
+      case SignInActivity.REQUEST_CODE:
+        if (resultCode == SignInActivity.RESULT_OK) {
+          getNotifications();
+        } else {
+          ToastUtil.showText(this, "放弃登录");
+          finish();
+        }
+        break;
+    }
   }
 }

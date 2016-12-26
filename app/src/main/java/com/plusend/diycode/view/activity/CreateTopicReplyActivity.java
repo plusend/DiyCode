@@ -21,6 +21,8 @@ import com.plusend.diycode.mvp.view.CreateTopicReplyView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.ToastUtil;
 
+import static android.os.Build.VERSION_CODES.M;
+
 public class CreateTopicReplyActivity extends AppCompatActivity implements CreateTopicReplyView {
 
   @BindView(R.id.title) TextView title;
@@ -58,6 +60,11 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
         createTopicReplyPresenter.createTopicReply(id, body.getText().toString());
       }
     });
+
+    if (TextUtils.isEmpty(Constant.VALUE_TOKEN)) {
+      startActivityForResult(new Intent(this, SignInActivity.class), SignInActivity.REQUEST_CODE);
+      ToastUtil.showText(this, "请先登录");
+    }
   }
 
   private void initActionBar(Toolbar toolbar) {
@@ -99,5 +106,17 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
         break;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode) {
+      case SignInActivity.REQUEST_CODE:
+        if (resultCode != SignInActivity.RESULT_OK) {
+          ToastUtil.showText(this, "放弃登录");
+          finish();
+        }
+        break;
+    }
   }
 }

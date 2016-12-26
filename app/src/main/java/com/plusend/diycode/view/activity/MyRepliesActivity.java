@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -17,12 +18,9 @@ import com.plusend.diycode.mvp.model.entity.Reply;
 import com.plusend.diycode.mvp.presenter.RepliesPresenter;
 import com.plusend.diycode.mvp.view.RepliesView;
 import com.plusend.diycode.util.PrefUtil;
+import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.EmptyRecyclerView;
-import com.plusend.diycode.view.adapter.notification.NotificationMention;
-import com.plusend.diycode.view.adapter.notification.NotificationMentionViewProvider;
-import com.plusend.diycode.view.adapter.notification.NotificationReply;
-import com.plusend.diycode.view.adapter.notification.NotificationReplyViewProvider;
 import com.plusend.diycode.view.adapter.reply.ReplyViewProvider;
 import java.util.List;
 import me.drakeet.multitype.Items;
@@ -48,8 +46,6 @@ public class MyRepliesActivity extends AppCompatActivity implements RepliesView 
     setContentView(R.layout.activity_my_replies);
     ButterKnife.bind(this);
     initActionBar(toolbar);
-
-    loginName = PrefUtil.getMe(this).getLogin();
 
     presenter = new RepliesPresenter(this);
     items = new Items();
@@ -78,6 +74,13 @@ public class MyRepliesActivity extends AppCompatActivity implements RepliesView 
         lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
       }
     });
+
+    loginName = PrefUtil.getMe(this).getLogin();
+    if (TextUtils.isEmpty(loginName)) {
+      startActivityForResult(new Intent(MyRepliesActivity.this, SignInActivity.class),
+          SignInActivity.REQUEST_CODE);
+      ToastUtil.showText(MyRepliesActivity.this, "请先登录");
+    }
   }
 
   private void initActionBar(Toolbar toolbar) {
@@ -108,6 +111,25 @@ public class MyRepliesActivity extends AppCompatActivity implements RepliesView 
     adapter.notifyDataSetChanged();
   }
 
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode) {
+      case SignInActivity.REQUEST_CODE:
+        if (resultCode == SignInActivity.RESULT_OK) {
+          getReplies();
+        } else {
+          ToastUtil.showText(MyRepliesActivity.this, "放弃登录");
+          finish();
+        }
+        break;
+    }
+  }
+
+  private void getReplies() {
+    loginName = PrefUtil.getMe(this).getLogin();
+    presenter.getReplies(loginName, offset);
+  }
+
   @Override public Context getContext() {
     return this;
   }
@@ -115,7 +137,7 @@ public class MyRepliesActivity extends AppCompatActivity implements RepliesView 
   @Override protected void onStart() {
     super.onStart();
     presenter.start();
-    presenter.getReplies(loginName, offset);
+    getReplies();
   }
 
   @Override protected void onStop() {

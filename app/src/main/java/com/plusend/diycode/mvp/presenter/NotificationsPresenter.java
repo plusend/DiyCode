@@ -25,7 +25,8 @@ public class NotificationsPresenter extends Presenter {
     data.readNotifications(offset, null);
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void showNotifications(NotificationsEvent event) {
+  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+  public void showNotifications(NotificationsEvent event) {
     view.showNotifications(event.getNotificationList());
   }
 

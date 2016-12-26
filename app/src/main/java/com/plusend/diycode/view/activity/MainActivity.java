@@ -35,7 +35,6 @@ import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.view.adapter.MainPagerAdapter;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener, UserView {
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity
 
     Token token = PrefUtil.getToken(this);
     if (!TextUtils.isEmpty(token.getAccessToken())) {
-      Constant.VALUE_TOKEN = token.getAccessToken();
       me = PrefUtil.getMe(this);
       if (!TextUtils.isEmpty(me.getLogin())
           && !TextUtils.isEmpty(me.getAvatarUrl())
@@ -118,10 +116,7 @@ public class MainActivity extends AppCompatActivity
   @Override protected void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
     if (getResources().getString(R.string.logout_intent_action).equals(intent.getAction())) {
-      // TODO logout
-      Constant.VALUE_TOKEN = "";
-      PrefUtil.saveToken(this, new Token());
-      PrefUtil.saveMe(this, new User());
+      PrefUtil.clearMe(this);
       User user = new User();
       user.setEmail("点击图片登录");
       showMe(user);
@@ -226,6 +221,11 @@ public class MainActivity extends AppCompatActivity
     if (userPresenter != null) {
       userPresenter.start();
     }
+
+    if (!TextUtils.isEmpty(PrefUtil.getMe(this).getEmail())) {
+      showMe(PrefUtil.getMe(this));
+    }
+
     // 从别的页面回来的时候，不保留之前的搜索状态
     if (search != null) {
       search.collapseActionView();

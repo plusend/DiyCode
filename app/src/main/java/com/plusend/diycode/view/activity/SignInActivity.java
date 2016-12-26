@@ -16,13 +16,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Token;
+import com.plusend.diycode.mvp.model.entity.User;
 import com.plusend.diycode.mvp.presenter.SignInPresenter;
+import com.plusend.diycode.mvp.presenter.UserPresenter;
 import com.plusend.diycode.mvp.view.SignInView;
+import com.plusend.diycode.mvp.view.UserView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
 
-public class SignInActivity extends AppCompatActivity implements SignInView {
+public class SignInActivity extends AppCompatActivity implements SignInView, UserView {
 
   public static final int REQUEST_CODE = 1;
   public static final int RESULT_OK = 200;
@@ -38,6 +41,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   @BindView(R.id.toolbar) Toolbar toolbar;
 
   private SignInPresenter signInPresenter;
+  private UserPresenter userPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -46,6 +50,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     initActionBar(toolbar);
 
     signInPresenter = new SignInPresenter(this);
+    userPresenter = new UserPresenter(this);
 
     signIn.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
@@ -70,11 +75,8 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
 
   @Override public void getToken(Token token) {
     if (token != null) {
-      Constant.VALUE_TOKEN = token.getAccessToken();
       PrefUtil.saveToken(this, token);
-      ToastUtil.showText(this, "登录成功");
-      setResult(RESULT_OK);
-      finish();
+      userPresenter.getMe();
     } else {
       ToastUtil.showText(this, "Email / 用户名或密码错误，登录失败");
     }
@@ -87,10 +89,12 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
   @Override protected void onStart() {
     super.onStart();
     signInPresenter.start();
+    userPresenter.start();
   }
 
   @Override protected void onStop() {
     signInPresenter.stop();
+    userPresenter.stop();
     super.onStop();
   }
 
@@ -101,5 +105,21 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
         break;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override public void getMe(User user) {
+    if (user == null) {
+      ToastUtil.showText(this, "网络出问题了，登录失败");
+      setResult(RESULT_ERROR);
+    } else {
+      PrefUtil.saveMe(this, user);
+      ToastUtil.showText(this, "登录成功");
+      setResult(RESULT_OK);
+    }
+    finish();
+  }
+
+  @Override public void getUser(User user) {
+
   }
 }

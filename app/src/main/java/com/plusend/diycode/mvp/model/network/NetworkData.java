@@ -42,6 +42,7 @@ import com.plusend.diycode.mvp.model.entity.User;
 import com.plusend.diycode.util.Constant;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -472,16 +473,16 @@ public class NetworkData implements Data {
         if (response.isSuccessful()) {
           List<Notification> notificationList = response.body();
           Log.v(TAG, "notificationList: " + notificationList);
-          EventBus.getDefault().post(new NotificationsEvent(notificationList));
+          EventBus.getDefault().postSticky(new NotificationsEvent(notificationList));
         } else {
           Log.e(TAG, "readNotifications STATUS: " + response.code());
-          EventBus.getDefault().post(new NotificationsEvent(null));
+          EventBus.getDefault().postSticky(new NotificationsEvent(null));
         }
       }
 
       @Override public void onFailure(Call<List<Notification>> call, Throwable t) {
         Log.e(TAG, t.getMessage());
-        EventBus.getDefault().post(new NotificationsEvent(null));
+        EventBus.getDefault().postSticky(new NotificationsEvent(null));
       }
     });
   }

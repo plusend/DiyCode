@@ -122,6 +122,7 @@ public class PrefUtil {
    * 存储登录 Token
    */
   public static void saveToken(Context context, Token token) {
+    Constant.VALUE_TOKEN = token.getAccessToken();
     try {
       token.setAccessToken(
           KeyStoreHelper.encrypt(Constant.KEYSTORE_KEY_ALIAS, token.getAccessToken()));
@@ -130,6 +131,8 @@ public class PrefUtil {
           KeyStoreHelper.encrypt(Constant.KEYSTORE_KEY_ALIAS, token.getRefreshToken()));
     } catch (InvalidKeyException | BadPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException | UnrecoverableEntryException | KeyStoreException | IOException | NoSuchPaddingException | CertificateException e) {
       e.printStackTrace();
+      Constant.VALUE_TOKEN = "";
+      return;
     }
     PrefUtil prefUtil = PrefUtil.getInstance(context, Constant.Token.SHARED_PREFERENCES_NAME);
     prefUtil.putString(Constant.Token.ACCESS_TOKEN, token.getAccessToken());
@@ -159,6 +162,7 @@ public class PrefUtil {
     } catch (InvalidKeyException | BadPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException | UnrecoverableEntryException | KeyStoreException | IOException | NoSuchPaddingException | CertificateException e) {
       e.printStackTrace();
     }
+    Constant.VALUE_TOKEN = token.getAccessToken();
     return token;
   }
 
@@ -182,5 +186,24 @@ public class PrefUtil {
     user.setAvatarUrl(prefUtil.getString(Constant.User.AVATAR_URL, ""));
     user.setEmail(prefUtil.getString(Constant.User.EMAIL, ""));
     return user;
+  }
+
+  /**
+   * 清理登录信息
+   */
+  public static void clearMe(Context context) {
+    PrefUtil prefUtil = PrefUtil.getInstance(context, Constant.Token.SHARED_PREFERENCES_NAME);
+    // User
+    prefUtil.putString(Constant.User.LOGIN, "");
+    prefUtil.putString(Constant.User.AVATAR_URL, "");
+    prefUtil.putString(Constant.User.EMAIL, "");
+
+    // Token
+    prefUtil.putString(Constant.Token.ACCESS_TOKEN, "");
+    prefUtil.putString(Constant.Token.TOKEN_TYPE, "");
+    prefUtil.putInt(Constant.Token.EXPIRES_IN, -1);
+    prefUtil.putString(Constant.Token.REFRESH_TOKEN, "");
+    prefUtil.putInt(Constant.Token.CREATED_AT, -1);
+    Constant.VALUE_TOKEN = "";
   }
 }
