@@ -1,12 +1,14 @@
 package com.plusend.diycode.view.service;
 
 import android.app.DownloadManager;
-import android.app.IntentService;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import com.plusend.diycode.R;
 import com.plusend.diycode.util.Constant;
@@ -17,30 +19,21 @@ import im.fir.sdk.VersionCheckCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MyIntentService extends IntentService {
+public class UpdateService extends Service {
   private static final String TAG = "MyIntentService";
 
-  private static final String ACTION_UPDATE = "com.plusend.diycode.update";
+  public static final String ACTION_UPDATE = "com.plusend.diycode.update";
 
   private CompleteReceiver mCompleteReceiver;
 
-  public MyIntentService() {
-    super("MyIntentService");
-  }
-
-  public static void startActionUpdate(Context context) {
-    Intent intent = new Intent(context, MyIntentService.class);
-    intent.setAction(ACTION_UPDATE);
-    context.startService(intent);
-  }
-
-  @Override protected void onHandleIntent(Intent intent) {
+  @Override public int onStartCommand(Intent intent, int flags, int startId) {
     if (intent != null) {
       final String action = intent.getAction();
       if (ACTION_UPDATE.equals(action)) {
         handleActionUpdate();
       }
     }
+    return super.onStartCommand(intent, flags, startId);
   }
 
   private void handleActionUpdate() {
@@ -62,7 +55,7 @@ public class MyIntentService extends IntentService {
           e.printStackTrace();
         }
 
-        if (PackageUtil.getVersionCode(MyIntentService.this) < versionCode) {
+        if (PackageUtil.getVersionCode(UpdateService.this) < versionCode) {
           // 下载新版本
           DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
           DownloadManager.Request request = new DownloadManager.Request(Uri.parse(updateUrl));
@@ -77,21 +70,22 @@ public class MyIntentService extends IntentService {
           registerReceiver(mCompleteReceiver,
               new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         } else {
-          ToastUtil.showText(MyIntentService.this,
+          ToastUtil.showText(UpdateService.this,
               getResources().getString(R.string.version_already));
         }
       }
 
       @Override public void onFail(Exception exception) {
         Log.i(TAG, "check fir.im fail! " + "\n" + exception.getMessage());
+        ToastUtil.showText(UpdateService.this, getResources().getString(R.string.version_failed));
       }
 
       @Override public void onStart() {
-        ToastUtil.showText(MyIntentService.this, getResources().getString(R.string.version_start));
+        ToastUtil.showText(UpdateService.this, getResources().getString(R.string.version_start));
       }
 
       @Override public void onFinish() {
-        ToastUtil.showText(MyIntentService.this, getResources().getString(R.string.version_finish));
+        //ToastUtil.showText(UpdateService.this, getResources().getString(R.string.version_finish));
       }
     });
   }
@@ -108,6 +102,7 @@ public class MyIntentService extends IntentService {
       installIntent.setDataAndType(downloadManager.getUriForDownloadedFile(completeDownloadId),
           "application/vnd.android.package-archive");
       startActivity(installIntent);
+      stopSelf();
     }
   }
 
@@ -116,5 +111,9 @@ public class MyIntentService extends IntentService {
       unregisterReceiver(mCompleteReceiver);
     }
     super.onDestroy();
+  }
+
+  @Nullable @Override public IBinder onBind(Intent intent) {
+    return null;
   }
 }

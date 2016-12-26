@@ -15,7 +15,7 @@ public class Constant {
   public static final String VALUE_TOKEN_PREFIX = "Bearer ";
 
   // BugHD
-  public static final String FIR_API_TOKEN = "a8eebfaf89fc20bbae23ffb2ddcd1703";
+  public static final String FIR_API_TOKEN = "4946cbf7fc67bf5b21be1debd106fe21";
   
   public static String VALUE_TOKEN = "";
 

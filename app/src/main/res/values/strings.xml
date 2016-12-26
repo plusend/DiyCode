@@ -14,6 +14,7 @@
 
   <string name="version_start">正在获取</string>
   <string name="version_finish">获取完成</string>
+  <string name="version_failed">更新过程出问题了</string>
   <string name="version_already">已经是最新版本啦!</string>
   <string name="pref_key_check_update">pref_key_check_update</string>
 </resources>

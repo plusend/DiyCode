@@ -113,7 +113,7 @@
         android:value="8600c967b234c06eb9f1a15cbfbacc8d"/>
 
     <service
-        android:name=".view.service.MyIntentService"
+        android:name=".view.service.UpdateService"
         android:exported="false">
     </service>
   </application>
