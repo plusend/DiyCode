@@ -1,7 +1,7 @@
 package com.plusend.diycode.mvp.model.network;
 
-import com.plusend.diycode.mvp.model.entity.Favorite;
-import com.plusend.diycode.mvp.model.entity.Follow;
+import com.plusend.diycode.mvp.model.entity.FavoriteTopic;
+import com.plusend.diycode.mvp.model.entity.FollowTopic;
 import com.plusend.diycode.mvp.model.entity.News;
 import com.plusend.diycode.mvp.model.entity.Node;
 import com.plusend.diycode.mvp.model.entity.Notification;
@@ -15,13 +15,12 @@ import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.entity.Topic;
 import com.plusend.diycode.mvp.model.entity.TopicDetail;
 import com.plusend.diycode.mvp.model.entity.TopicReply;
-import com.plusend.diycode.mvp.model.entity.UnFavorite;
-import com.plusend.diycode.mvp.model.entity.UnFollow;
-import com.plusend.diycode.mvp.model.entity.User;
+import com.plusend.diycode.mvp.model.entity.UnFavoriteTopic;
+import com.plusend.diycode.mvp.model.entity.UnFollowTopic;
+import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
 import com.plusend.diycode.util.Constant;
 import java.util.List;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -31,14 +30,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-import static android.R.attr.offset;
-import static android.R.attr.type;
-
-/**
- * Created by plusend on 2016/11/28.
- */
-
-public interface DiyCodeService {
+interface DiyCodeService {
   /**
    * 登录获取 Token
    */
@@ -46,20 +38,20 @@ public interface DiyCodeService {
       @Field("client_id") String client_id, @Field("client_secret") String client_secret,
       @Field("grant_type") String grant_type, @Field("username") String username,
       @Field("password") String password);
-  
+
   /**
    * 获取当然登录者的资料
    *
    * @param token 当然登录者的 Token
    */
-  @GET("users/me.json") Call<User> getMe(@Header(Constant.KEY_TOKEN) String token);
+  @GET("users/me.json") Call<UserDetailInfo> getMe(@Header(Constant.KEY_TOKEN) String token);
 
   /**
    * 获取用户详细资料
    *
    * @param loginName 用户登录名
    */
-  @GET("users/{loginName}.json") Call<User> getUser(@Header(Constant.KEY_TOKEN) String token,
+  @GET("users/{loginName}.json") Call<UserDetailInfo> getUser(@Header(Constant.KEY_TOKEN) String token,
       @Path("loginName") String loginName);
 
   /**
@@ -141,25 +133,25 @@ public interface DiyCodeService {
   /**
    * 收藏话题
    */
-  @POST("topics/{id}/favorite.json") Call<Favorite> favorite(
+  @POST("topics/{id}/favorite.json") Call<FavoriteTopic> favorite(
       @Header(Constant.KEY_TOKEN) String token, @Path("id") int id);
 
   /**
    * 取消收藏话题
    */
-  @POST("topics/{id}/unfavorite.json") Call<UnFavorite> unFavorite(
+  @POST("topics/{id}/unfavorite.json") Call<UnFavoriteTopic> unFavorite(
       @Header(Constant.KEY_TOKEN) String token, @Path("id") int id);
 
   /**
    * 关注话题
    */
-  @POST("topics/{id}/follow.json") Call<Follow> follow(@Header(Constant.KEY_TOKEN) String token,
+  @POST("topics/{id}/follow.json") Call<FollowTopic> follow(@Header(Constant.KEY_TOKEN) String token,
       @Path("id") int id);
 
   /**
    * 取消关注话题
    */
-  @POST("topics/{id}/unfollow.json") Call<UnFollow> unFollow(
+  @POST("topics/{id}/unfollow.json") Call<UnFollowTopic> unFollow(
       @Header(Constant.KEY_TOKEN) String token, @Path("id") int id);
 
   /**

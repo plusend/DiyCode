@@ -16,12 +16,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Token;
-import com.plusend.diycode.mvp.model.entity.User;
+import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
 import com.plusend.diycode.mvp.presenter.SignInPresenter;
 import com.plusend.diycode.mvp.presenter.UserPresenter;
 import com.plusend.diycode.mvp.view.SignInView;
 import com.plusend.diycode.mvp.view.UserView;
-import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
 
@@ -107,19 +106,19 @@ public class SignInActivity extends AppCompatActivity implements SignInView, Use
     return super.onOptionsItemSelected(item);
   }
 
-  @Override public void getMe(User user) {
-    if (user == null) {
+  @Override public void getMe(UserDetailInfo userDetailInfo) {
+    if (userDetailInfo == null) {
       ToastUtil.showText(this, "网络出问题了，登录失败");
       setResult(RESULT_ERROR);
     } else {
-      PrefUtil.saveMe(this, user);
+      PrefUtil.saveMe(this, userDetailInfo);
       ToastUtil.showText(this, "登录成功");
       setResult(RESULT_OK);
     }
     finish();
   }
 
-  @Override public void getUser(User user) {
+  @Override public void getUser(UserDetailInfo userDetailInfo) {
 
   }
 }

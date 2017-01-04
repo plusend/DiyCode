@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import com.plusend.diycode.mvp.model.entity.Token;
-import com.plusend.diycode.mvp.model.entity.User;
+import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.KeyStoreException;
@@ -169,23 +169,23 @@ public class PrefUtil {
   /**
    * 存储登录信息
    */
-  public static void saveMe(Context context, User user) {
+  public static void saveMe(Context context, UserDetailInfo userDetailInfo) {
     PrefUtil prefUtil = PrefUtil.getInstance(context, Constant.Token.SHARED_PREFERENCES_NAME);
-    prefUtil.putString(Constant.User.LOGIN, user.getLogin());
-    prefUtil.putString(Constant.User.AVATAR_URL, user.getAvatarUrl());
-    prefUtil.putString(Constant.User.EMAIL, user.getEmail());
+    prefUtil.putString(Constant.User.LOGIN, userDetailInfo.getLogin());
+    prefUtil.putString(Constant.User.AVATAR_URL, userDetailInfo.getAvatarUrl());
+    prefUtil.putString(Constant.User.EMAIL, userDetailInfo.getEmail());
   }
 
   /**
    * 获取登录信息
    */
-  public static User getMe(Context context) {
+  public static UserDetailInfo getMe(Context context) {
     PrefUtil prefUtil = PrefUtil.getInstance(context, Constant.Token.SHARED_PREFERENCES_NAME);
-    User user = new User();
-    user.setLogin(prefUtil.getString(Constant.User.LOGIN, ""));
-    user.setAvatarUrl(prefUtil.getString(Constant.User.AVATAR_URL, ""));
-    user.setEmail(prefUtil.getString(Constant.User.EMAIL, ""));
-    return user;
+    UserDetailInfo userDetailInfo = new UserDetailInfo();
+    userDetailInfo.setLogin(prefUtil.getString(Constant.User.LOGIN, ""));
+    userDetailInfo.setAvatarUrl(prefUtil.getString(Constant.User.AVATAR_URL, ""));
+    userDetailInfo.setEmail(prefUtil.getString(Constant.User.EMAIL, ""));
+    return userDetailInfo;
   }
 
   /**

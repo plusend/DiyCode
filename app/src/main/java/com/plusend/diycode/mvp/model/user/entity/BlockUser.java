@@ -1,12 +1,9 @@
-package com.plusend.diycode.mvp.model.entity;
+package com.plusend.diycode.mvp.model.user.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by plusend on 2016/12/6.
- */
+public class BlockUser {
 
-public class Follow {
   @SerializedName("ok") private int ok;
 
   public int getOk() {

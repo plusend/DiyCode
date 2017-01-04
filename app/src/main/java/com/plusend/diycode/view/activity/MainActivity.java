@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Token;
-import com.plusend.diycode.mvp.model.entity.User;
+import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
 import com.plusend.diycode.mvp.presenter.UserPresenter;
 import com.plusend.diycode.mvp.view.UserView;
 import com.plusend.diycode.util.Constant;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
   private MenuItem search;
   ImageView avatar;
   TextView email;
-  private User me;
+  private UserDetailInfo me;
 
   private UserPresenter userPresenter;
 
@@ -118,9 +118,9 @@ public class MainActivity extends AppCompatActivity
     if (getResources().getString(R.string.logout_intent_action).equals(intent.getAction())) {
       PrefUtil.clearMe(this);
       userPresenter = new UserPresenter(this);
-      User user = new User();
-      user.setEmail("点击图片登录");
-      showMe(user);
+      UserDetailInfo userDetailInfo = new UserDetailInfo();
+      userDetailInfo.setEmail("点击图片登录");
+      showMe(userDetailInfo);
     }
   }
 
@@ -187,24 +187,24 @@ public class MainActivity extends AppCompatActivity
     return true;
   }
 
-  @Override public void getMe(User user) {
-    Log.d(TAG, "getMe: " + user);
-    if (user == null) {
+  @Override public void getMe(UserDetailInfo userDetailInfo) {
+    Log.d(TAG, "getMe: " + userDetailInfo);
+    if (userDetailInfo == null) {
       return;
     }
-    PrefUtil.saveMe(this, user);
-    me = user;
-    showMe(user);
+    PrefUtil.saveMe(this, userDetailInfo);
+    me = userDetailInfo;
+    showMe(userDetailInfo);
   }
 
-  @Override public void getUser(User user) {
+  @Override public void getUser(UserDetailInfo userDetailInfo) {
 
   }
 
-  private void showMe(User user) {
-    email.setText(user.getEmail());
+  private void showMe(UserDetailInfo userDetailInfo) {
+    email.setText(userDetailInfo.getEmail());
     Glide.with(this)
-        .load(user.getAvatarUrl())
+        .load(userDetailInfo.getAvatarUrl())
         .crossFade()
         .bitmapTransform(new CropCircleTransformation(this))
         .error(R.mipmap.ic_launcher)

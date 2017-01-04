@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.entity.User;
+import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
 import com.plusend.diycode.mvp.presenter.UserPresenter;
 import com.plusend.diycode.mvp.view.UserView;
 import com.plusend.diycode.view.fragment.TopicFragment;
@@ -62,18 +62,18 @@ public class UserActivity extends AppCompatActivity implements UserView {
     userPresenter = new UserPresenter(this);
   }
 
-  @Override public void getMe(User user) {
+  @Override public void getMe(UserDetailInfo userDetailInfo) {
   }
 
-  @Override public void getUser(User user) {
-    Log.d(TAG, "getUser: " + user);
-    if (user != null) {
-      name.setText(user.getLogin());
-      topicNum.setText(String.valueOf(user.getTopicsCount()));
-      followNum.setText(String.valueOf(user.getFollowingCount()));
-      favoriteNum.setText(String.valueOf(user.getFavoritesCount()));
+  @Override public void getUser(UserDetailInfo userDetailInfo) {
+    Log.d(TAG, "getUser: " + userDetailInfo);
+    if (userDetailInfo != null) {
+      name.setText(userDetailInfo.getLogin());
+      topicNum.setText(String.valueOf(userDetailInfo.getTopicsCount()));
+      followNum.setText(String.valueOf(userDetailInfo.getFollowingCount()));
+      favoriteNum.setText(String.valueOf(userDetailInfo.getFavoritesCount()));
       Glide.with(this)
-          .load(user.getAvatarUrl())
+          .load(userDetailInfo.getAvatarUrl())
           .bitmapTransform(new CropCircleTransformation(this))
           .crossFade()
           .into(avatar);

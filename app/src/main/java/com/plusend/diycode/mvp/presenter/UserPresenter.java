@@ -2,7 +2,7 @@ package com.plusend.diycode.mvp.presenter;
 
 import android.util.Log;
 import com.plusend.diycode.event.MeEvent;
-import com.plusend.diycode.event.UserEvent;
+import com.plusend.diycode.event.UserDetailInfoEvent;
 import com.plusend.diycode.mvp.model.Data;
 import com.plusend.diycode.mvp.model.network.NetworkData;
 import com.plusend.diycode.mvp.view.UserView;
@@ -25,11 +25,11 @@ public class UserPresenter extends Presenter {
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN) public void getMe(MeEvent event) {
-    userView.getMe(event.getUser());
+    userView.getMe(event.getUserDetailInfo());
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void getMe(UserEvent userEvent) {
-    userView.getUser(userEvent.getUser());
+  @Subscribe(threadMode = ThreadMode.MAIN) public void getMe(UserDetailInfoEvent userDetailInfoEvent) {
+    userView.getUser(userDetailInfoEvent.getUserDetailInfo());
   }
 
   public void getMe() {

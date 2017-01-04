@@ -1,6 +1,7 @@
 package com.plusend.diycode.mvp.model.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
 
 /**
  * Created by plusend on 2016/12/12.
@@ -153,7 +154,7 @@ public class Notification {
     @SerializedName("updated_at") private String updatedAt;
     @SerializedName("deleted") private boolean deleted;
     @SerializedName("topic_id") private int topicId;
-    @SerializedName("user") private User user;
+    @SerializedName("user") private UserDetailInfo userDetailInfo;
     @SerializedName("likes_count") private int likesCount;
     @SerializedName("abilities") private Abilities abilities;
 
@@ -205,12 +206,12 @@ public class Notification {
       this.topicId = topicId;
     }
 
-    public User getUser() {
-      return user;
+    public UserDetailInfo getUserDetailInfo() {
+      return userDetailInfo;
     }
 
-    public void setUser(User user) {
-      this.user = user;
+    public void setUserDetailInfo(UserDetailInfo userDetailInfo) {
+      this.userDetailInfo = userDetailInfo;
     }
 
     public int getLikesCount() {

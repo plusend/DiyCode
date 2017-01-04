@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by plusend on 2016/12/6.
  */
 
-public class Favorite {
+public class FavoriteTopic {
   @SerializedName("ok") private int ok;
 
   public int getOk() {

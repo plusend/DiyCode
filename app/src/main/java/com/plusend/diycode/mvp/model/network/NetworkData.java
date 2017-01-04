@@ -1,8 +1,6 @@
 package com.plusend.diycode.mvp.model.network;
 
 import android.util.Log;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.plusend.diycode.event.CreateTopicReplyEvent;
 import com.plusend.diycode.event.FavoriteEvent;
 import com.plusend.diycode.event.FollowEvent;
@@ -20,12 +18,10 @@ import com.plusend.diycode.event.TopicRepliesEvent;
 import com.plusend.diycode.event.TopicsEvent;
 import com.plusend.diycode.event.UnFavoriteEvent;
 import com.plusend.diycode.event.UnFollowEvent;
-import com.plusend.diycode.event.UserEvent;
-import com.plusend.diycode.event.UserFavoriteTopicsEvent;
-import com.plusend.diycode.event.UserTopicsEvent;
+import com.plusend.diycode.event.UserDetailInfoEvent;
 import com.plusend.diycode.mvp.model.Data;
-import com.plusend.diycode.mvp.model.entity.Favorite;
-import com.plusend.diycode.mvp.model.entity.Follow;
+import com.plusend.diycode.mvp.model.entity.FavoriteTopic;
+import com.plusend.diycode.mvp.model.entity.FollowTopic;
 import com.plusend.diycode.mvp.model.entity.News;
 import com.plusend.diycode.mvp.model.entity.Node;
 import com.plusend.diycode.mvp.model.entity.Notification;
@@ -36,26 +32,23 @@ import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.entity.Topic;
 import com.plusend.diycode.mvp.model.entity.TopicDetail;
 import com.plusend.diycode.mvp.model.entity.TopicReply;
-import com.plusend.diycode.mvp.model.entity.UnFavorite;
-import com.plusend.diycode.mvp.model.entity.UnFollow;
-import com.plusend.diycode.mvp.model.entity.User;
+import com.plusend.diycode.mvp.model.entity.UnFavoriteTopic;
+import com.plusend.diycode.mvp.model.entity.UnFollowTopic;
+import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
+import com.plusend.diycode.mvp.model.user.network.UserInfoService;
 import com.plusend.diycode.util.Constant;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-/**
- * Created by plusend on 2016/11/24.
- */
-
 public class NetworkData implements Data {
   private static final String TAG = "NetworkData";
   private DiyCodeService service;
+  private UserInfoService userInfoService;
   private static NetworkData networkData = new NetworkData();
 
   private NetworkData() {
@@ -63,6 +56,7 @@ public class NetworkData implements Data {
         .addConverterFactory(GsonConverterFactory.create())
         .build();
     service = retrofit.create(DiyCodeService.class);
+    userInfoService = retrofit.create(UserInfoService.class);
   }
 
   public static NetworkData getInstance() {
@@ -92,20 +86,21 @@ public class NetworkData implements Data {
   }
 
   @Override public void getMe() {
-    Call<User> call = service.getMe(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN);
-    call.enqueue(new Callback<User>() {
-      @Override public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+    Call<UserDetailInfo> call = service.getMe(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN);
+    call.enqueue(new Callback<UserDetailInfo>() {
+      @Override public void onResponse(Call<UserDetailInfo> call,
+          retrofit2.Response<UserDetailInfo> response) {
         if (response.isSuccessful()) {
-          User user = response.body();
-          Log.d(TAG, "user: " + user);
-          EventBus.getDefault().post(new MeEvent(user));
+          UserDetailInfo userDetailInfo = response.body();
+          Log.d(TAG, "user: " + userDetailInfo);
+          EventBus.getDefault().post(new MeEvent(userDetailInfo));
         } else {
           Log.e(TAG, "getMe STATUS: " + response.code());
           EventBus.getDefault().post(new MeEvent(null));
         }
       }
 
-      @Override public void onFailure(Call<User> call, Throwable t) {
+      @Override public void onFailure(Call<UserDetailInfo> call, Throwable t) {
         Log.e(TAG, t.getMessage());
         EventBus.getDefault().post(new MeEvent(null));
       }
@@ -113,21 +108,22 @@ public class NetworkData implements Data {
   }
 
   @Override public void getUser(String loginName) {
-    Call<User> call =
+    Call<UserDetailInfo> call =
         service.getUser(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, loginName);
-    call.enqueue(new Callback<User>() {
-      @Override public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+    call.enqueue(new Callback<UserDetailInfo>() {
+      @Override public void onResponse(Call<UserDetailInfo> call,
+          retrofit2.Response<UserDetailInfo> response) {
         if (response.isSuccessful()) {
-          User user = response.body();
-          Log.d(TAG, "user: " + user);
-          EventBus.getDefault().post(new UserEvent(user));
+          UserDetailInfo userDetailInfo = response.body();
+          Log.d(TAG, "user: " + userDetailInfo);
+          EventBus.getDefault().post(new UserDetailInfoEvent(userDetailInfo));
         } else {
           Log.e(TAG, "getUser STATUS: " + response.code());
-          EventBus.getDefault().post(new UserEvent(null));
+          EventBus.getDefault().post(new UserDetailInfoEvent(null));
         }
       }
 
-      @Override public void onFailure(Call<User> call, Throwable t) {
+      @Override public void onFailure(Call<UserDetailInfo> call, Throwable t) {
         Log.e(TAG, t.getMessage());
       }
     });
@@ -315,20 +311,21 @@ public class NetworkData implements Data {
   }
 
   @Override public void favorite(int id) {
-    Call<Favorite> call = service.favorite(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
-    call.enqueue(new Callback<Favorite>() {
-      @Override public void onResponse(Call<Favorite> call, Response<Favorite> response) {
+    Call<FavoriteTopic> call =
+        service.favorite(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
+    call.enqueue(new Callback<FavoriteTopic>() {
+      @Override public void onResponse(Call<FavoriteTopic> call, Response<FavoriteTopic> response) {
         if (response.isSuccessful()) {
-          Favorite favorite = response.body();
-          Log.v(TAG, "favorite: " + favorite);
-          EventBus.getDefault().post(new FavoriteEvent(favorite.getOk() == 1));
+          FavoriteTopic favoriteTopic = response.body();
+          Log.v(TAG, "favorite: " + favoriteTopic);
+          EventBus.getDefault().post(new FavoriteEvent(favoriteTopic.getOk() == 1));
         } else {
           Log.e(TAG, "favorite STATUS: " + response.code());
           EventBus.getDefault().post(new FavoriteEvent(false));
         }
       }
 
-      @Override public void onFailure(Call<Favorite> call, Throwable t) {
+      @Override public void onFailure(Call<FavoriteTopic> call, Throwable t) {
         Log.e(TAG, t.getMessage());
         EventBus.getDefault().post(new FavoriteEvent(false));
       }
@@ -336,21 +333,22 @@ public class NetworkData implements Data {
   }
 
   @Override public void unFavorite(int id) {
-    Call<UnFavorite> call =
+    Call<UnFavoriteTopic> call =
         service.unFavorite(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
-    call.enqueue(new Callback<UnFavorite>() {
-      @Override public void onResponse(Call<UnFavorite> call, Response<UnFavorite> response) {
+    call.enqueue(new Callback<UnFavoriteTopic>() {
+      @Override
+      public void onResponse(Call<UnFavoriteTopic> call, Response<UnFavoriteTopic> response) {
         if (response.isSuccessful()) {
-          UnFavorite unFavorite = response.body();
-          Log.v(TAG, "unFavorite: " + unFavorite);
-          EventBus.getDefault().post(new UnFavoriteEvent(unFavorite.getOk() == 1));
+          UnFavoriteTopic unFavoriteTopic = response.body();
+          Log.v(TAG, "unFavorite: " + unFavoriteTopic);
+          EventBus.getDefault().post(new UnFavoriteEvent(unFavoriteTopic.getOk() == 1));
         } else {
           Log.e(TAG, "unFavorite STATUS: " + response.code());
           EventBus.getDefault().post(new UnFavoriteEvent(false));
         }
       }
 
-      @Override public void onFailure(Call<UnFavorite> call, Throwable t) {
+      @Override public void onFailure(Call<UnFavoriteTopic> call, Throwable t) {
         Log.e(TAG, t.getMessage());
         EventBus.getDefault().post(new UnFavoriteEvent(false));
       }
@@ -358,20 +356,20 @@ public class NetworkData implements Data {
   }
 
   @Override public void follow(int id) {
-    Call<Follow> call = service.follow(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
-    call.enqueue(new Callback<Follow>() {
-      @Override public void onResponse(Call<Follow> call, Response<Follow> response) {
+    Call<FollowTopic> call = service.follow(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
+    call.enqueue(new Callback<FollowTopic>() {
+      @Override public void onResponse(Call<FollowTopic> call, Response<FollowTopic> response) {
         if (response.isSuccessful()) {
-          Follow follow = response.body();
-          Log.v(TAG, "follow: " + follow);
-          EventBus.getDefault().post(new FollowEvent(follow.getOk() == 1));
+          FollowTopic followTopic = response.body();
+          Log.v(TAG, "follow: " + followTopic);
+          EventBus.getDefault().post(new FollowEvent(followTopic.getOk() == 1));
         } else {
           Log.e(TAG, "follow STATUS: " + response.code());
           EventBus.getDefault().post(new FollowEvent(false));
         }
       }
 
-      @Override public void onFailure(Call<Follow> call, Throwable t) {
+      @Override public void onFailure(Call<FollowTopic> call, Throwable t) {
         Log.e(TAG, t.getMessage());
         EventBus.getDefault().post(new FollowEvent(false));
       }
@@ -379,20 +377,21 @@ public class NetworkData implements Data {
   }
 
   @Override public void unFollow(int id) {
-    Call<UnFollow> call = service.unFollow(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
-    call.enqueue(new Callback<UnFollow>() {
-      @Override public void onResponse(Call<UnFollow> call, Response<UnFollow> response) {
+    Call<UnFollowTopic> call =
+        service.unFollow(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
+    call.enqueue(new Callback<UnFollowTopic>() {
+      @Override public void onResponse(Call<UnFollowTopic> call, Response<UnFollowTopic> response) {
         if (response.isSuccessful()) {
-          UnFollow unFollow = response.body();
-          Log.v(TAG, "unFollow: " + unFollow);
-          EventBus.getDefault().post(new UnFollowEvent(unFollow.getOk() == 1));
+          UnFollowTopic unFollowTopic = response.body();
+          Log.v(TAG, "unFollow: " + unFollowTopic);
+          EventBus.getDefault().post(new UnFollowEvent(unFollowTopic.getOk() == 1));
         } else {
           Log.e(TAG, "unFollow STATUS: " + response.code());
           EventBus.getDefault().post(new UnFollowEvent(false));
         }
       }
 
-      @Override public void onFailure(Call<UnFollow> call, Throwable t) {
+      @Override public void onFailure(Call<UnFollowTopic> call, Throwable t) {
         Log.e(TAG, t.getMessage());
         EventBus.getDefault().post(new UnFollowEvent(false));
       }
