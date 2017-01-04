@@ -12,7 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.view.CreateTopicReplyView;
+import com.plusend.diycode.mvp.model.topic.view.CreateTopicReplyView;
 import com.plusend.diycode.util.Constant;
 
 /**

@@ -15,15 +15,13 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.entity.TopicDetail;
-import com.plusend.diycode.mvp.model.entity.TopicReply;
-import com.plusend.diycode.mvp.presenter.FollowPresenter;
-import com.plusend.diycode.mvp.presenter.TopicPresenter;
-import com.plusend.diycode.mvp.presenter.TopicRepliesPresenter;
-import com.plusend.diycode.mvp.view.FollowView;
-import com.plusend.diycode.mvp.view.TopicRepliesView;
-import com.plusend.diycode.mvp.view.TopicView;
-import com.plusend.diycode.util.Constant;
+import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
+import com.plusend.diycode.mvp.model.topic.entity.TopicReply;
+import com.plusend.diycode.mvp.model.topic.presenter.TopicPresenter;
+import com.plusend.diycode.mvp.model.topic.presenter.TopicRepliesPresenter;
+import com.plusend.diycode.mvp.model.user.view.FollowView;
+import com.plusend.diycode.mvp.model.topic.view.TopicRepliesView;
+import com.plusend.diycode.mvp.model.topic.view.TopicView;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.topic.TopicRepliesAdapter;
 import java.util.ArrayList;
@@ -44,7 +42,6 @@ public class TopicActivity extends AppCompatActivity
   private TopicRepliesAdapter topicRepliesAdapter;
   private TopicPresenter topicPresenter;
   private TopicRepliesPresenter topicRepliesPresenter;
-  private FollowPresenter followPresenter;
   private LinearLayoutManager linearLayoutManager;
   private int offset;
   private boolean noMoreReplies;
@@ -109,13 +106,6 @@ public class TopicActivity extends AppCompatActivity
   @Override public void showTopic(TopicDetail topicDetail) {
     this.topicDetail = topicDetail;
     topicRepliesAdapter.setTopicDetail(topicDetail);
-    followPresenter = new FollowPresenter(this, topicDetail.getId());
-    followPresenter.start();
-    topicRepliesAdapter.setOnFavoriteItemClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        followPresenter.serFavorite(true);
-      }
-    });
     topicRepliesAdapter.notifyDataSetChanged();
     requestReplies();
   }
@@ -139,9 +129,6 @@ public class TopicActivity extends AppCompatActivity
     topicPresenter.stop();
     if (topicRepliesPresenter != null) {
       topicRepliesPresenter.stop();
-    }
-    if (followPresenter != null) {
-      followPresenter.stop();
     }
     super.onStop();
   }

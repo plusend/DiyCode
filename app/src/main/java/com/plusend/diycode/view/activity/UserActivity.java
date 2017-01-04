@@ -16,8 +16,8 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
-import com.plusend.diycode.mvp.presenter.UserPresenter;
-import com.plusend.diycode.mvp.view.UserView;
+import com.plusend.diycode.mvp.model.user.presenter.UserPresenter;
+import com.plusend.diycode.mvp.model.user.view.UserView;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -56,7 +56,7 @@ public class UserActivity extends AppCompatActivity implements UserView {
     Intent intent = getIntent();
     loginName = intent.getStringExtra(LOGIN_NAME);
 
-    TopicFragment topicFragment = TopicFragment.newInstance(loginName, 2);
+    TopicFragment topicFragment = TopicFragment.newInstance(loginName, TopicFragment.TYPE_CREATE);
     getSupportFragmentManager().beginTransaction().add(R.id.container, topicFragment).commit();
 
     userPresenter = new UserPresenter(this);

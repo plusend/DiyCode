@@ -15,9 +15,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.entity.Topic;
-import com.plusend.diycode.mvp.presenter.TopicsPresenter;
-import com.plusend.diycode.mvp.view.TopicsView;
+import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.topic.entity.Topic;
+import com.plusend.diycode.mvp.model.topic.presenter.TopicsPresenter;
+import com.plusend.diycode.mvp.model.topic.view.TopicsView;
+import com.plusend.diycode.mvp.model.user.presenter.UserTopicsPresenter;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.view.activity.TopicActivity;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
@@ -25,10 +27,6 @@ import com.plusend.diycode.view.adapter.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.topic.TopicsAdapter;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by plusend on 2016/11/22.
- */
 
 public class TopicFragment extends Fragment implements TopicsView {
   private static final String TAG = "TopicFragment";
@@ -43,12 +41,13 @@ public class TopicFragment extends Fragment implements TopicsView {
   private List<Topic> mTopicList = new ArrayList<>();
   private TopicsAdapter topicsAdapter;
   private LinearLayoutManager linearLayoutManager;
-  private TopicsPresenter topicsPresenter;
+  private Presenter topicsPresenter;
   private int offset = 0;
   private int type = 0;
   private String loginName;
 
   public static TopicFragment newInstance(String loginName, int type) {
+    Log.v(TAG, "newInstance type: " + type);
     TopicFragment topicFragment = new TopicFragment();
     Bundle b = new Bundle();
     b.putString(Constant.User.LOGIN, loginName);
@@ -77,11 +76,11 @@ public class TopicFragment extends Fragment implements TopicsView {
           topicsAdapter.setStatus(TopicsAdapter.STATUS_LOADING);
           topicsAdapter.notifyDataSetChanged();
           if (type == TYPE_ALL) {
-            topicsPresenter.getTopics(offset);
+            ((TopicsPresenter) topicsPresenter).getTopics(offset);
           } else if (type == TYPE_CREATE) {
-            topicsPresenter.getUserCreateTopics(loginName, offset);
+            ((UserTopicsPresenter) topicsPresenter).getUserCreateTopics(loginName, offset);
           } else if (type == TYPE_FAVORITE) {
-            topicsPresenter.getUserFavoriteTopics(loginName, offset);
+            ((UserTopicsPresenter) topicsPresenter).getUserFavoriteTopics(loginName, offset);
           }
         }
       }
@@ -92,12 +91,11 @@ public class TopicFragment extends Fragment implements TopicsView {
       }
     });
     rv.setEmptyView(emptyView);
-    topicsPresenter = new TopicsPresenter(this);
+
     return rootView;
   }
 
   @Override public void showTopics(List<Topic> topicList) {
-
     if (topicList == null) {
       Log.v(TAG, "showTopics: null");
       return;
@@ -115,8 +113,9 @@ public class TopicFragment extends Fragment implements TopicsView {
   }
 
   @Override public void onStart() {
+    Log.d(TAG, "onStart");
     super.onStart();
-    topicsPresenter.start();
+
     topicsAdapter.setOnItemClickListener(new TopicsAdapter.OnItemClickListener() {
       @Override public void onItemClick(View view, int position) {
         Intent intent = new Intent(getActivity(), TopicActivity.class);
@@ -131,14 +130,23 @@ public class TopicFragment extends Fragment implements TopicsView {
       Log.d(TAG, "loginName: " + loginName + " type: " + type);
     }
 
+    Log.d(TAG, "type: " + type);
+    if (type == TYPE_ALL) {
+      topicsPresenter = new TopicsPresenter(this);
+    } else if (type == TYPE_CREATE) {
+      topicsPresenter = new UserTopicsPresenter(this);
+    } else if (type == TYPE_FAVORITE) {
+      topicsPresenter = new UserTopicsPresenter(this);
+    }
+    topicsPresenter.start();
     if (!TextUtils.isEmpty(loginName)) {
       if (type != TYPE_FAVORITE) {
-        topicsPresenter.getUserCreateTopics(loginName, offset);
+        ((UserTopicsPresenter) topicsPresenter).getUserCreateTopics(loginName, offset);
       } else {
-        topicsPresenter.getUserFavoriteTopics(loginName, offset);
+        ((UserTopicsPresenter) topicsPresenter).getUserFavoriteTopics(loginName, offset);
       }
     } else {
-      topicsPresenter.getTopics(offset);
+      ((TopicsPresenter) topicsPresenter).getTopics(offset);
     }
   }
 

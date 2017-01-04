@@ -12,16 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.presenter.CreateTopicReplyPresenter;
-import com.plusend.diycode.mvp.view.CreateTopicReplyView;
+import com.plusend.diycode.mvp.model.topic.presenter.CreateTopicReplyPresenter;
+import com.plusend.diycode.mvp.model.topic.view.CreateTopicReplyView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.ToastUtil;
-
-import static android.os.Build.VERSION_CODES.M;
 
 public class CreateTopicReplyActivity extends AppCompatActivity implements CreateTopicReplyView {
 

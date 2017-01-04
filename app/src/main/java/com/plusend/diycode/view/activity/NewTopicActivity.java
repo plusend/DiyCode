@@ -13,25 +13,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.entity.Node;
-import com.plusend.diycode.mvp.model.entity.TopicDetail;
-import com.plusend.diycode.mvp.presenter.NewTopicPresenter;
-import com.plusend.diycode.mvp.presenter.NodesPresenter;
-import com.plusend.diycode.mvp.view.NewTopicView;
-import com.plusend.diycode.mvp.view.NodesView;
+import com.plusend.diycode.mvp.model.node.entity.Node;
+import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
+import com.plusend.diycode.mvp.model.topic.presenter.NewTopicPresenter;
+import com.plusend.diycode.mvp.model.node.presenter.NodesPresenter;
+import com.plusend.diycode.mvp.model.topic.view.NewTopicView;
+import com.plusend.diycode.mvp.model.node.view.NodesView;
 import com.plusend.diycode.util.ToastUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import static android.R.id.list;
-import static android.os.Build.VERSION_CODES.N;
 
 public class NewTopicActivity extends AppCompatActivity implements NewTopicView, NodesView {
 

@@ -11,7 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.entity.Topic;
+import com.plusend.diycode.mvp.model.topic.entity.Topic;
 import com.plusend.diycode.util.TimeUtil;
 import java.util.List;
 

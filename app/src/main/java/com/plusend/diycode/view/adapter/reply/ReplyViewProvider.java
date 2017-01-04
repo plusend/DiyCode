@@ -12,13 +12,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.entity.Reply;
+import com.plusend.diycode.mvp.model.topic.entity.Reply;
 import com.plusend.diycode.util.GlideImageGetter;
 import com.plusend.diycode.util.TimeUtil;
 import com.plusend.diycode.view.activity.TopicActivity;
 import me.drakeet.multitype.ItemViewProvider;
-
-import static com.plusend.diycode.R.id.reply;
 
 /**
  * Created by plusend on 2016/12/18.

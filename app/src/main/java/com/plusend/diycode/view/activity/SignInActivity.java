@@ -17,10 +17,10 @@ import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
-import com.plusend.diycode.mvp.presenter.SignInPresenter;
-import com.plusend.diycode.mvp.presenter.UserPresenter;
-import com.plusend.diycode.mvp.view.SignInView;
-import com.plusend.diycode.mvp.view.UserView;
+import com.plusend.diycode.mvp.model.user.presenter.SignInPresenter;
+import com.plusend.diycode.mvp.model.user.presenter.UserPresenter;
+import com.plusend.diycode.mvp.model.user.view.SignInView;
+import com.plusend.diycode.mvp.model.user.view.UserView;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
 
