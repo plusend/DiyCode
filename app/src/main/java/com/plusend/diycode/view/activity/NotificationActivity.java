@@ -21,6 +21,10 @@ import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.EmptyRecyclerView;
+import com.plusend.diycode.view.adapter.notification.NotificationElse;
+import com.plusend.diycode.view.adapter.notification.NotificationElseViewProvider;
+import com.plusend.diycode.view.adapter.notification.NotificationFollow;
+import com.plusend.diycode.view.adapter.notification.NotificationFollowViewProvider;
 import com.plusend.diycode.view.adapter.notification.NotificationMention;
 import com.plusend.diycode.view.adapter.notification.NotificationMentionViewProvider;
 import com.plusend.diycode.view.adapter.notification.NotificationReply;
@@ -33,6 +37,8 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
 
   private static final String TYPE_REPLY = "TopicReply";
   private static final String TYPE_MENTION = "Mention";
+  private static final String TYPE_FOLLOW = "Follow";
+  private static final String TYPE_NODE_CHANGED = "NodeChanged";
   @BindView(R.id.activity_notification) EmptyRecyclerView recyclerView;
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.empty_view) TextView emptyView;
@@ -54,6 +60,8 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
     adapter = new MultiTypeAdapter(items);
     adapter.register(NotificationReply.class, new NotificationReplyViewProvider());
     adapter.register(NotificationMention.class, new NotificationMentionViewProvider());
+    adapter.register(NotificationFollow.class, new NotificationFollowViewProvider());
+    adapter.register(NotificationElse.class, new NotificationElseViewProvider());
     linearLayoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(linearLayoutManager);
     recyclerView.setAdapter(adapter);
@@ -112,6 +120,13 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
                 String.valueOf(notification.getMention().getId()),
                 notification.getMention().getBodyHtml(), notification.getMention().getTopicId());
         items.add(mention);
+      } else if (TYPE_FOLLOW.equals(notification.getType())) {
+        NotificationFollow follow = new NotificationFollow(notification.getActor().getAvatarUrl(),
+            notification.getActor().getLogin());
+        items.add(follow);
+      } else {
+        NotificationElse notificationElse = new NotificationElse(notification.getType());
+        items.add(notificationElse);
       }
     }
     offset = items.size();

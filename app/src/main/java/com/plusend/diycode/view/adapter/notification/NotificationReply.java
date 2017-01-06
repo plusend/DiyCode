@@ -1,8 +1,5 @@
 package com.plusend.diycode.view.adapter.notification;
 
-/**
- * Created by plusend on 2016/12/13.
- */
 public class NotificationReply {
   private String avatarUrl;
   private String login;

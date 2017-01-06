@@ -1,11 +1,6 @@
 package com.plusend.diycode.mvp.model.notification.entity;
 
 import com.google.gson.annotations.SerializedName;
-import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
-
-/**
- * Created by plusend on 2016/12/12.
- */
 
 public class Notification {
   @SerializedName("id") private int id;
@@ -16,7 +11,7 @@ public class Notification {
   @SerializedName("mention") private Mention mention;
   @SerializedName("topic") private Object topic;
   @SerializedName("reply") private Reply reply;
-  @SerializedName("node") private Object node;
+  @SerializedName("node") private Node node;
   @SerializedName("created_at") private String createdAt;
   @SerializedName("updated_at") private String updatedAt;
 
@@ -88,7 +83,7 @@ public class Notification {
     return node;
   }
 
-  public void setNode(Object node) {
+  public void setNode(Node node) {
     this.node = node;
   }
 
@@ -154,7 +149,7 @@ public class Notification {
     @SerializedName("updated_at") private String updatedAt;
     @SerializedName("deleted") private boolean deleted;
     @SerializedName("topic_id") private int topicId;
-    @SerializedName("user") private UserDetailInfo userDetailInfo;
+    @SerializedName("user") private User user;
     @SerializedName("likes_count") private int likesCount;
     @SerializedName("abilities") private Abilities abilities;
 
@@ -206,12 +201,12 @@ public class Notification {
       this.topicId = topicId;
     }
 
-    public UserDetailInfo getUserDetailInfo() {
-      return userDetailInfo;
+    public User getUser() {
+      return user;
     }
 
-    public void setUserDetailInfo(UserDetailInfo userDetailInfo) {
-      this.userDetailInfo = userDetailInfo;
+    public void setUser(User user) {
+      this.user = user;
     }
 
     public int getLikesCount() {
@@ -229,7 +224,47 @@ public class Notification {
     public void setAbilities(Abilities abilities) {
       this.abilities = abilities;
     }
+
+    public static class User {
+      @SerializedName("id") private int id;
+      @SerializedName("login") private String login;
+      @SerializedName("name") private String name;
+      @SerializedName("avatar_url") private String avatarUrl;
+
+      public int getId() {
+        return id;
+      }
+
+      public void setId(int id) {
+        this.id = id;
+      }
+
+      public String getLogin() {
+        return login;
+      }
+
+      public void setLogin(String login) {
+        this.login = login;
+      }
+
+      public String getName() {
+        return name;
+      }
+
+      public void setName(String name) {
+        this.name = name;
+      }
+
+      public String getAvatarUrl() {
+        return avatarUrl;
+      }
+
+      public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+      }
+    }
   }
+
   public static class Reply {
     @SerializedName("id") private int id;
     @SerializedName("body_html") private String bodyHtml;
@@ -368,6 +403,81 @@ public class Notification {
       public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
       }
+    }
+  }
+
+  public static class Node {
+    @SerializedName("id") private int id;
+    @SerializedName("name") private String name;
+    @SerializedName("topics_count") private int topicsCount;
+    @SerializedName("summary") private String summary;
+    @SerializedName("section_id") private int sectionId;
+    @SerializedName("sort") private int sort;
+    @SerializedName("section_name") private String sectionName;
+    @SerializedName("updated_at") private String updatedAt;
+
+    public int getId() {
+      return id;
+    }
+
+    public void setId(int id) {
+      this.id = id;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+
+    public int getTopicsCount() {
+      return topicsCount;
+    }
+
+    public void setTopicsCount(int topicsCount) {
+      this.topicsCount = topicsCount;
+    }
+
+    public String getSummary() {
+      return summary;
+    }
+
+    public void setSummary(String summary) {
+      this.summary = summary;
+    }
+
+    public int getSectionId() {
+      return sectionId;
+    }
+
+    public void setSectionId(int sectionId) {
+      this.sectionId = sectionId;
+    }
+
+    public int getSort() {
+      return sort;
+    }
+
+    public void setSort(int sort) {
+      this.sort = sort;
+    }
+
+    public String getSectionName() {
+      return sectionName;
+    }
+
+    public void setSectionName(String sectionName) {
+      this.sectionName = sectionName;
+    }
+
+    public String getUpdatedAt() {
+      return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+      this.updatedAt = updatedAt;
     }
   }
 

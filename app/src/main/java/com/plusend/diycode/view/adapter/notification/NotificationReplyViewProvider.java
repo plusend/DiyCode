@@ -18,9 +18,6 @@ import com.plusend.diycode.util.GlideImageGetter;
 import com.plusend.diycode.view.activity.TopicActivity;
 import me.drakeet.multitype.ItemViewProvider;
 
-/**
- * Created by plusend on 2016/12/13.
- */
 public class NotificationReplyViewProvider
     extends ItemViewProvider<NotificationReply, NotificationReplyViewProvider.ViewHolder> {
 
