@@ -3,8 +3,10 @@ package com.plusend.diycode.mvp.model.notification.data;
 import android.util.Log;
 import com.plusend.diycode.mvp.model.notification.entity.Notification;
 import com.plusend.diycode.mvp.model.notification.entity.NotificationDelete;
+import com.plusend.diycode.mvp.model.notification.entity.NotificationsUnreadCount;
 import com.plusend.diycode.mvp.model.notification.event.NotificationDeleteEvent;
 import com.plusend.diycode.mvp.model.notification.event.NotificationsEvent;
+import com.plusend.diycode.mvp.model.notification.event.NotificationsUnreadCountEvent;
 import com.plusend.diycode.util.Constant;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
@@ -86,6 +88,25 @@ public class NotificationDataNetwork implements NotificationData {
   }
 
   @Override public void unReadNotificationCount() {
+    Call<NotificationsUnreadCount> call =
+        service.unReadNotificationCount(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN);
+    call.enqueue(new Callback<NotificationsUnreadCount>() {
+      @Override public void onResponse(Call<NotificationsUnreadCount> call,
+          Response<NotificationsUnreadCount> response) {
+        if (response.isSuccessful()) {
+          NotificationsUnreadCount notificationsUnreadCount = response.body();
+          Log.v(TAG, "notificationsUnreadCount: " + notificationsUnreadCount);
+          EventBus.getDefault().post(new NotificationsUnreadCountEvent(notificationsUnreadCount));
+        } else {
+          Log.e(TAG, "unReadNotificationCount STATUS: " + response.code());
+          EventBus.getDefault().post(new NotificationsUnreadCountEvent(null));
+        }
+      }
 
+      @Override public void onFailure(Call<NotificationsUnreadCount> call, Throwable t) {
+        Log.e(TAG, t.getMessage());
+        EventBus.getDefault().post(new NotificationsUnreadCountEvent(null));
+      }
+    });
   }
 }
