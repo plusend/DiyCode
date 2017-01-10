@@ -18,9 +18,6 @@ import com.plusend.diycode.util.TimeUtil;
 import com.plusend.diycode.view.activity.TopicActivity;
 import me.drakeet.multitype.ItemViewProvider;
 
-/**
- * Created by plusend on 2016/12/18.
- */
 public class ReplyViewProvider extends ItemViewProvider<Reply, ReplyViewProvider.ViewHolder> {
 
   @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,

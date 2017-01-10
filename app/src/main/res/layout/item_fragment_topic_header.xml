@@ -7,8 +7,6 @@
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:descendantFocusability="blocksDescendants"
-    android:paddingEnd="20dp"
-    android:paddingStart="20dp"
     tools:ignore="WebViewLayout"
     >
   <LinearLayout
@@ -17,6 +15,7 @@
       android:layout_marginTop="12dp"
       android:gravity="center_vertical"
       android:orientation="horizontal"
+      android:paddingStart="20dp"
       >
     <ImageView
         android:id="@+id/avatar"
@@ -47,6 +46,7 @@
       android:layout_height="wrap_content"
       android:layout_alignParentEnd="true"
       android:layout_marginTop="16dp"
+      android:paddingEnd="20dp"
       android:textColor="#c8c8ce"
       android:textSize="12sp"
       />
@@ -56,10 +56,12 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="56dp"
+      android:paddingEnd="20dp"
+      android:paddingStart="20dp"
       android:textColor="#4d4d4d"
       android:textSize="22sp"
       />
-  <WebView
+  <com.mukesh.MarkdownView
       android:id="@+id/content"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -95,6 +97,7 @@
       android:layout_height="wrap_content"
       android:layout_below="@id/content"
       android:paddingBottom="11dp"
+      android:paddingStart="20dp"
       android:paddingTop="8dp"
       android:textColor="#999999"
       android:textSize="12sp"

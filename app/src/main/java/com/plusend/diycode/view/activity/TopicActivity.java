@@ -69,6 +69,7 @@ public class TopicActivity extends AppCompatActivity
         if (!noMoreReplies
             && newState == RecyclerView.SCROLL_STATE_IDLE
             && lastVisibleItem + 1 == topicRepliesAdapter.getItemCount()) {
+          Log.d(TAG, "add more: offset " + offset);
           topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_LOADING);
           topicRepliesPresenter.addReplies(offset);
         }
@@ -106,7 +107,7 @@ public class TopicActivity extends AppCompatActivity
   @Override public void showTopic(TopicDetail topicDetail) {
     this.topicDetail = topicDetail;
     topicRepliesAdapter.setTopicDetail(topicDetail);
-    topicRepliesAdapter.notifyDataSetChanged();
+    topicRepliesAdapter.notifyItemInserted(0);
     requestReplies();
   }
 
@@ -135,36 +136,46 @@ public class TopicActivity extends AppCompatActivity
 
   @Override public void showReplies(List<TopicReply> topicReplyList) {
     if (topicReplyList != null) {
-      noReplies(topicReplyList);
-      this.topicReplyList.clear();
       this.topicReplyList.addAll(topicReplyList);
-      if (topicReplyList.size() == 0) {
-        topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
-      } else {
-        topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NORMAL);
+      offset = this.topicReplyList.size();
+      switch (topicReplyList.size()) {
+        case 20:
+          noMoreReplies = false;
+          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NORMAL);
+          topicRepliesAdapter.notifyItemRangeInserted(1, 20);
+          break;
+        case 0:
+          noMoreReplies = true;
+          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
+          break;
+        default:
+          noMoreReplies = true;
+          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
+          topicRepliesAdapter.notifyItemRangeInserted(1, topicReplyList.size());
+          break;
       }
     }
-    offset = this.topicReplyList.size();
-    topicRepliesAdapter.notifyDataSetChanged();
   }
 
   @Override public void addReplies(List<TopicReply> topicReplyList) {
     if (topicReplyList != null) {
-      noReplies(topicReplyList);
       this.topicReplyList.addAll(topicReplyList);
-      if (topicReplyList.size() == 0) {
-        topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
-      } else {
-        topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NORMAL);
+      switch (topicReplyList.size()) {
+        case 20:
+          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NORMAL);
+          topicRepliesAdapter.notifyItemRangeInserted(offset, 20);
+          break;
+        case 0:
+          noMoreReplies = true;
+          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
+          break;
+        default:
+          noMoreReplies = true;
+          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
+          topicRepliesAdapter.notifyItemRangeInserted(offset, topicReplyList.size());
+          break;
       }
-    }
-    offset = this.topicReplyList.size();
-    topicRepliesAdapter.notifyDataSetChanged();
-  }
-
-  private void noReplies(List<TopicReply> topicReplyList) {
-    if (topicReplyList.size() == 0) {
-      noMoreReplies = true;
+      offset = this.topicReplyList.size();
     }
   }
 

@@ -15,12 +15,8 @@ import com.plusend.diycode.mvp.model.topic.entity.Topic;
 import com.plusend.diycode.util.TimeUtil;
 import java.util.List;
 
-/**
- * Created by plusend on 2016/11/24.
- */
-
 public class TopicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-  private static final String TAG = "TopicRVAdapter";
+  private static final String TAG = "TopicsAdapter";
   private static final int ITEM_NORMAL = 1;
   private static final int ITEM_FOOTER = 2;
   public static final int STATUS_NORMAL = 1;//正常状态
