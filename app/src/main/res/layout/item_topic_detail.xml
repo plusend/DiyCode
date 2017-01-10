@@ -61,7 +61,7 @@
       android:textColor="#4d4d4d"
       android:textSize="22sp"
       />
-  <com.mukesh.MarkdownView
+  <com.plusend.diycode.view.widget.MarkdownView
       android:id="@+id/content"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

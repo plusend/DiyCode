@@ -19,16 +19,19 @@ import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
 import com.plusend.diycode.mvp.model.topic.entity.TopicReply;
 import com.plusend.diycode.mvp.model.topic.presenter.TopicPresenter;
 import com.plusend.diycode.mvp.model.topic.presenter.TopicRepliesPresenter;
-import com.plusend.diycode.mvp.model.user.view.FollowView;
 import com.plusend.diycode.mvp.model.topic.view.TopicRepliesView;
 import com.plusend.diycode.mvp.model.topic.view.TopicView;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
-import com.plusend.diycode.view.adapter.topic.TopicRepliesAdapter;
-import java.util.ArrayList;
+import com.plusend.diycode.view.adapter.topic.TopicDetailViewProvider;
+import com.plusend.diycode.view.adapter.topic.TopicReplyLoadMore;
+import com.plusend.diycode.view.adapter.topic.TopicReplyLoadMoreViewProvider;
+import com.plusend.diycode.view.adapter.topic.TopicReplyViewProvider;
+import com.plusend.diycode.view.adapter.topic.TopicReplyWithTopic;
 import java.util.List;
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 
-public class TopicActivity extends AppCompatActivity
-    implements TopicView, TopicRepliesView, FollowView {
+public class TopicActivity extends AppCompatActivity implements TopicView, TopicRepliesView {
   private static final String TAG = "TopicActivity";
   public static final String ID = "topicId";
 
@@ -38,8 +41,8 @@ public class TopicActivity extends AppCompatActivity
 
   private int id;
   private TopicDetail topicDetail;
-  private List<TopicReply> topicReplyList = new ArrayList<>();
-  private TopicRepliesAdapter topicRepliesAdapter;
+  private MultiTypeAdapter adapter;
+  private Items items = new Items();
   private TopicPresenter topicPresenter;
   private TopicRepliesPresenter topicRepliesPresenter;
   private LinearLayoutManager linearLayoutManager;
@@ -58,8 +61,13 @@ public class TopicActivity extends AppCompatActivity
     Log.d(TAG, "id: " + id);
     linearLayoutManager = new LinearLayoutManager(this);
     rv.setLayoutManager(linearLayoutManager);
-    topicRepliesAdapter = new TopicRepliesAdapter(topicReplyList, null);
-    rv.setAdapter(topicRepliesAdapter);
+
+    adapter = new MultiTypeAdapter(items);
+    adapter.register(TopicDetail.class, new TopicDetailViewProvider());
+    adapter.register(TopicReplyWithTopic.class, new TopicReplyViewProvider());
+    adapter.register(TopicReplyLoadMore.class, new TopicReplyLoadMoreViewProvider());
+
+    rv.setAdapter(adapter);
     rv.addItemDecoration(new DividerListItemDecoration(this));
     rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
       private int lastVisibleItem;
@@ -68,9 +76,11 @@ public class TopicActivity extends AppCompatActivity
         super.onScrollStateChanged(recyclerView, newState);
         if (!noMoreReplies
             && newState == RecyclerView.SCROLL_STATE_IDLE
-            && lastVisibleItem + 1 == topicRepliesAdapter.getItemCount()) {
+            && lastVisibleItem + 1 == adapter.getItemCount()) {
           Log.d(TAG, "add more: offset " + offset);
-          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_LOADING);
+          ((TopicReplyLoadMore) items.get(items.size() - 1)).setStatus(
+              TopicReplyLoadMore.STATUS_LOADING);
+          adapter.notifyItemChanged(adapter.getItemCount());
           topicRepliesPresenter.addReplies(offset);
         }
       }
@@ -105,9 +115,11 @@ public class TopicActivity extends AppCompatActivity
   }
 
   @Override public void showTopic(TopicDetail topicDetail) {
+    items.add(topicDetail);
     this.topicDetail = topicDetail;
-    topicRepliesAdapter.setTopicDetail(topicDetail);
-    topicRepliesAdapter.notifyItemInserted(0);
+    //topicRepliesAdapter.setTopicDetail(topicDetail);
+    //topicRepliesAdapter.notifyItemInserted(0);
+    adapter.notifyItemInserted(adapter.getItemCount());
     requestReplies();
   }
 
@@ -136,22 +148,26 @@ public class TopicActivity extends AppCompatActivity
 
   @Override public void showReplies(List<TopicReply> topicReplyList) {
     if (topicReplyList != null) {
-      this.topicReplyList.addAll(topicReplyList);
-      offset = this.topicReplyList.size();
+      for (TopicReply topicReply : topicReplyList) {
+        items.add(new TopicReplyWithTopic(this.topicDetail, topicReply));
+        adapter.notifyItemInserted(adapter.getItemCount());
+      }
+      offset = this.items.size() - 1;// 去除 Header
       switch (topicReplyList.size()) {
         case 20:
           noMoreReplies = false;
-          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NORMAL);
-          topicRepliesAdapter.notifyItemRangeInserted(1, 20);
+          items.add(new TopicReplyLoadMore(TopicReplyLoadMore.STATUS_NORMAL));
+          adapter.notifyItemInserted(adapter.getItemCount());
           break;
         case 0:
           noMoreReplies = true;
-          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
+          items.add(new TopicReplyLoadMore(TopicReplyLoadMore.STATUS_NO_MORE));
+          adapter.notifyItemInserted(adapter.getItemCount());
           break;
         default:
           noMoreReplies = true;
-          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
-          topicRepliesAdapter.notifyItemRangeInserted(1, topicReplyList.size());
+          items.add(new TopicReplyLoadMore(TopicReplyLoadMore.STATUS_NO_MORE));
+          adapter.notifyItemInserted(adapter.getItemCount());
           break;
       }
     }
@@ -159,23 +175,32 @@ public class TopicActivity extends AppCompatActivity
 
   @Override public void addReplies(List<TopicReply> topicReplyList) {
     if (topicReplyList != null) {
-      this.topicReplyList.addAll(topicReplyList);
+      for (TopicReply topicReply : topicReplyList) {
+        // 插入 FooterView 前面
+        items.add(items.size() - 2, new TopicReplyWithTopic(this.topicDetail, topicReply));
+        adapter.notifyItemInserted(adapter.getItemCount());
+      }
       switch (topicReplyList.size()) {
         case 20:
-          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NORMAL);
-          topicRepliesAdapter.notifyItemRangeInserted(offset, 20);
+          noMoreReplies = false;
+          ((TopicReplyLoadMore) items.get(items.size() - 1)).setStatus(
+              TopicReplyLoadMore.STATUS_NORMAL);
+          adapter.notifyItemChanged(adapter.getItemCount());
           break;
         case 0:
           noMoreReplies = true;
-          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
+          ((TopicReplyLoadMore) items.get(items.size() - 1)).setStatus(
+              TopicReplyLoadMore.STATUS_NO_MORE);
+          adapter.notifyItemChanged(adapter.getItemCount());
           break;
         default:
           noMoreReplies = true;
-          topicRepliesAdapter.setStatus(TopicRepliesAdapter.STATUS_NO_MORE);
-          topicRepliesAdapter.notifyItemRangeInserted(offset, topicReplyList.size());
+          ((TopicReplyLoadMore) items.get(items.size() - 1)).setStatus(
+              TopicReplyLoadMore.STATUS_NO_MORE);
+          adapter.notifyItemChanged(adapter.getItemCount());
           break;
       }
-      offset = this.topicReplyList.size();
+      offset = this.items.size() - 2; // 去除 Footer & Header
     }
   }
 
@@ -188,13 +213,5 @@ public class TopicActivity extends AppCompatActivity
         break;
     }
     return super.onOptionsItemSelected(item);
-  }
-
-  @Override public void setFollow(boolean isFollowed) {
-    topicRepliesAdapter.setFollow(isFollowed);
-  }
-
-  @Override public void setFavorite(boolean isFavorite) {
-    topicRepliesAdapter.setFavorite(isFavorite);
   }
 }

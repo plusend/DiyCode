@@ -1,11 +1,5 @@
 apply plugin: 'com.android.application'
 
-allprojects {
-  repositories {
-    maven { url "https://jitpack.io" }
-  }
-}
-
 android {
   compileSdkVersion 25
   buildToolsVersion "25.0.2"
@@ -51,5 +45,4 @@ dependencies {
   compile 'com.android.support:support-vector-drawable:25.1.0'
   testCompile 'junit:junit:4.12'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-  compile 'com.github.mukeshsolanki:MarkdownView-Android:1.0.3'
 }
