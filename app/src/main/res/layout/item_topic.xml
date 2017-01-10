@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_topic"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
@@ -56,65 +57,5 @@
       android:textColor="#4d4d4d"
       android:textSize="15sp"
       />
-  <!--<LinearLayout-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="99dp"-->
-  <!--android:layout_marginTop="48dp"-->
-  <!--android:orientation="horizontal"-->
-  <!--&gt;-->
-  <!--<LinearLayout-->
-  <!--android:layout_width="0dp"-->
-  <!--android:layout_height="match_parent"-->
-  <!--android:layout_weight="1"-->
-  <!--android:orientation="vertical"-->
-  <!--&gt;-->
-  <!--<TextView-->
-  <!--android:id="@+id/title"-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="43dp"-->
-  <!--android:maxLines="2"-->
-  <!--android:textColor="#4d4d4d"-->
-  <!--android:textSize="15sp"-->
-  <!--/>-->
-  <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-  <!--&lt;!&ndash;android:id="@+id/content"&ndash;&gt;-->
-  <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-  <!--&lt;!&ndash;android:layout_height="56dp"&ndash;&gt;-->
-  <!--&lt;!&ndash;android:layout_marginTop="4dp"&ndash;&gt;-->
-  <!--&lt;!&ndash;android:gravity="center_vertical"&ndash;&gt;-->
-  <!--&lt;!&ndash;android:maxLines="3"&ndash;&gt;-->
-  <!--&lt;!&ndash;android:text="《提问的智慧》就是一个敲门砖，它把黑客间的礼仪和准则明白地写下来。它会让你了解到一个事实，为什么那些看起来很牛的人几乎从不提问，似乎他们一进入这个行业就是牛人了。不是的，他们也有问题，但是通常在提问之前就自己解决了；不是因为他们本来就懂得怎么解决，而是解决问题的经历让他们成为牛人；最终，你只会看到网络上多了一篇文章：关于解决XXX问题的方案。」"&ndash;&gt;-->
-  <!--&lt;!&ndash;android:textColor="#999999"&ndash;&gt;-->
-  <!--&lt;!&ndash;android:textSize="12sp"&ndash;&gt;-->
-  <!--/>-->
-  <!--</LinearLayout>-->
-  <!--<ImageView-->
-  <!--android:id="@+id/image"-->
-  <!--android:layout_width="152dp"-->
-  <!--android:layout_height="match_parent"-->
-  <!--android:layout_marginStart="8dp"-->
-  <!--android:visibility="gone"-->
-  <!--/>-->
-  <!--</LinearLayout>-->
-
-  <!--<ImageView-->
-  <!--android:id="@+id/favorite"-->
-  <!--android:layout_width="22dp"-->
-  <!--android:layout_height="22dp"-->
-  <!--android:layout_alignParentBottom="true"-->
-  <!--android:layout_alignParentEnd="true"-->
-  <!--android:layout_marginBottom="12dp"-->
-  <!--android:layout_marginEnd="32dp"-->
-  <!--android:src="@drawable/ic_favorite"-->
-  <!--/>-->
-  <!--<ImageView-->
-  <!--android:id="@+id/thumb"-->
-  <!--android:layout_width="22dp"-->
-  <!--android:layout_height="22dp"-->
-  <!--android:layout_marginEnd="20dp"-->
-  <!--android:src="@drawable/iv_thumb"-->
-  <!--android:layout_alignTop="@+id/favorite"-->
-  <!--android:layout_toStartOf="@+id/favorite"-->
-  <!--/>-->
 
 </RelativeLayout>

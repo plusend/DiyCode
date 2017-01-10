@@ -12,8 +12,8 @@ import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import me.drakeet.multitype.ItemViewProvider;
 
-public class TopicReplyLoadMoreViewProvider
-    extends ItemViewProvider<TopicReplyLoadMore, TopicReplyLoadMoreViewProvider.ViewHolder> {
+public class FooterViewProvider
+    extends ItemViewProvider<Footer, FooterViewProvider.ViewHolder> {
 
   @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
       @NonNull ViewGroup parent) {
@@ -22,17 +22,17 @@ public class TopicReplyLoadMoreViewProvider
   }
 
   @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
-      @NonNull TopicReplyLoadMore topicReplyLoadMore) {
-    switch (topicReplyLoadMore.getStatus()) {
-      case TopicReplyLoadMore.STATUS_NORMAL:
+      @NonNull Footer footer) {
+    switch (footer.getStatus()) {
+      case Footer.STATUS_NORMAL:
         holder.tips.setText("上拉加载更多");
         holder.progressBar.setVisibility(View.GONE);
         break;
-      case TopicReplyLoadMore.STATUS_LOADING:
+      case Footer.STATUS_LOADING:
         holder.tips.setText("加载中");
         holder.progressBar.setVisibility(View.VISIBLE);
         break;
-      case TopicReplyLoadMore.STATUS_NO_MORE:
+      case Footer.STATUS_NO_MORE:
         holder.tips.setText("没有更多了");
         holder.progressBar.setVisibility(View.GONE);
         break;

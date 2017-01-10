@@ -22,9 +22,9 @@ import com.plusend.diycode.mvp.model.topic.presenter.TopicRepliesPresenter;
 import com.plusend.diycode.mvp.model.topic.view.TopicRepliesView;
 import com.plusend.diycode.mvp.model.topic.view.TopicView;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
+import com.plusend.diycode.view.adapter.topic.FooterViewProvider;
 import com.plusend.diycode.view.adapter.topic.TopicDetailViewProvider;
-import com.plusend.diycode.view.adapter.topic.TopicReplyLoadMore;
-import com.plusend.diycode.view.adapter.topic.TopicReplyLoadMoreViewProvider;
+import com.plusend.diycode.view.adapter.topic.Footer;
 import com.plusend.diycode.view.adapter.topic.TopicReplyViewProvider;
 import com.plusend.diycode.view.adapter.topic.TopicReplyWithTopic;
 import java.util.List;
@@ -65,7 +65,7 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
     adapter = new MultiTypeAdapter(items);
     adapter.register(TopicDetail.class, new TopicDetailViewProvider());
     adapter.register(TopicReplyWithTopic.class, new TopicReplyViewProvider());
-    adapter.register(TopicReplyLoadMore.class, new TopicReplyLoadMoreViewProvider());
+    adapter.register(Footer.class, new FooterViewProvider());
 
     rv.setAdapter(adapter);
     rv.addItemDecoration(new DividerListItemDecoration(this));
@@ -78,8 +78,7 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
             && newState == RecyclerView.SCROLL_STATE_IDLE
             && lastVisibleItem + 1 == adapter.getItemCount()) {
           Log.d(TAG, "add more: offset " + offset);
-          ((TopicReplyLoadMore) items.get(items.size() - 1)).setStatus(
-              TopicReplyLoadMore.STATUS_LOADING);
+          ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_LOADING);
           adapter.notifyItemChanged(adapter.getItemCount());
           topicRepliesPresenter.addReplies(offset);
         }
@@ -156,17 +155,17 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
       switch (topicReplyList.size()) {
         case 20:
           noMoreReplies = false;
-          items.add(new TopicReplyLoadMore(TopicReplyLoadMore.STATUS_NORMAL));
+          items.add(new Footer(Footer.STATUS_NORMAL));
           adapter.notifyItemInserted(adapter.getItemCount());
           break;
         case 0:
           noMoreReplies = true;
-          items.add(new TopicReplyLoadMore(TopicReplyLoadMore.STATUS_NO_MORE));
+          items.add(new Footer(Footer.STATUS_NO_MORE));
           adapter.notifyItemInserted(adapter.getItemCount());
           break;
         default:
           noMoreReplies = true;
-          items.add(new TopicReplyLoadMore(TopicReplyLoadMore.STATUS_NO_MORE));
+          items.add(new Footer(Footer.STATUS_NO_MORE));
           adapter.notifyItemInserted(adapter.getItemCount());
           break;
       }
@@ -177,26 +176,23 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
     if (topicReplyList != null) {
       for (TopicReply topicReply : topicReplyList) {
         // 插入 FooterView 前面
-        items.add(items.size() - 2, new TopicReplyWithTopic(this.topicDetail, topicReply));
-        adapter.notifyItemInserted(adapter.getItemCount());
+        items.add(items.size() - 1, new TopicReplyWithTopic(this.topicDetail, topicReply));
+        adapter.notifyItemInserted(adapter.getItemCount() - 1);
       }
       switch (topicReplyList.size()) {
         case 20:
           noMoreReplies = false;
-          ((TopicReplyLoadMore) items.get(items.size() - 1)).setStatus(
-              TopicReplyLoadMore.STATUS_NORMAL);
+          ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_NORMAL);
           adapter.notifyItemChanged(adapter.getItemCount());
           break;
         case 0:
           noMoreReplies = true;
-          ((TopicReplyLoadMore) items.get(items.size() - 1)).setStatus(
-              TopicReplyLoadMore.STATUS_NO_MORE);
+          ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_NO_MORE);
           adapter.notifyItemChanged(adapter.getItemCount());
           break;
         default:
           noMoreReplies = true;
-          ((TopicReplyLoadMore) items.get(items.size() - 1)).setStatus(
-              TopicReplyLoadMore.STATUS_NO_MORE);
+          ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_NO_MORE);
           adapter.notifyItemChanged(adapter.getItemCount());
           break;
       }

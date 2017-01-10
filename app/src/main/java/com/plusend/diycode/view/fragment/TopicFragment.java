@@ -1,6 +1,5 @@
 package com.plusend.diycode.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,12 +20,14 @@ import com.plusend.diycode.mvp.model.topic.presenter.TopicsPresenter;
 import com.plusend.diycode.mvp.model.topic.view.TopicsView;
 import com.plusend.diycode.mvp.model.user.presenter.UserTopicsPresenter;
 import com.plusend.diycode.util.Constant;
-import com.plusend.diycode.view.activity.TopicActivity;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.EmptyRecyclerView;
-import com.plusend.diycode.view.adapter.topic.TopicsAdapter;
-import java.util.ArrayList;
+import com.plusend.diycode.view.adapter.topic.Footer;
+import com.plusend.diycode.view.adapter.topic.FooterViewProvider;
+import com.plusend.diycode.view.adapter.topic.TopicViewProvider;
 import java.util.List;
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 
 public class TopicFragment extends Fragment implements TopicsView {
   private static final String TAG = "TopicFragment";
@@ -38,8 +39,8 @@ public class TopicFragment extends Fragment implements TopicsView {
 
   @BindView(R.id.rv) EmptyRecyclerView rv;
   @BindView(R.id.empty_view) TextView emptyView;
-  private List<Topic> mTopicList = new ArrayList<>();
-  private TopicsAdapter topicsAdapter;
+  private MultiTypeAdapter adapter;
+  private Items items = new Items();
   private LinearLayoutManager linearLayoutManager;
   private Presenter topicsPresenter;
   private int offset = 0;
@@ -63,8 +64,11 @@ public class TopicFragment extends Fragment implements TopicsView {
     ButterKnife.bind(this, rootView);
     linearLayoutManager = new LinearLayoutManager(this.getContext());
     rv.setLayoutManager(linearLayoutManager);
-    topicsAdapter = new TopicsAdapter(mTopicList);
-    rv.setAdapter(topicsAdapter);
+    items.add(new Footer(Footer.STATUS_NORMAL));
+    adapter = new MultiTypeAdapter(items);
+    adapter.register(Topic.class, new TopicViewProvider());
+    adapter.register(Footer.class, new FooterViewProvider());
+    rv.setAdapter(adapter);
     rv.addItemDecoration(new DividerListItemDecoration(getContext()));
     rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
       private int lastVisibleItem;
@@ -72,9 +76,9 @@ public class TopicFragment extends Fragment implements TopicsView {
       @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
         if (newState == RecyclerView.SCROLL_STATE_IDLE
-            && lastVisibleItem + 1 == topicsAdapter.getItemCount()) {
-          topicsAdapter.setStatus(TopicsAdapter.STATUS_LOADING);
-          topicsAdapter.notifyDataSetChanged();
+            && lastVisibleItem + 1 == adapter.getItemCount()) {
+          ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_LOADING);
+          adapter.notifyItemChanged(adapter.getItemCount());
           if (type == TYPE_ALL) {
             ((TopicsPresenter) topicsPresenter).getTopics(offset);
           } else if (type == TYPE_CREATE) {
@@ -101,28 +105,25 @@ public class TopicFragment extends Fragment implements TopicsView {
       return;
     }
     Log.v(TAG, "showTopics: " + topicList.size());
-    //this.mTopicList.clear();
-    this.mTopicList.addAll(topicList);
-    offset = this.mTopicList.size();
-    if (topicList.isEmpty()) {
-      topicsAdapter.setStatus(TopicsAdapter.STATUS_NO_MORE);
-    } else {
-      topicsAdapter.setStatus(TopicsAdapter.STATUS_NORMAL);
+    for (Topic topic : topicList) {
+      // 插入 FooterView 前面
+      items.add(items.size() - 1, topic);
+      adapter.notifyItemInserted(adapter.getItemCount() - 1);
     }
-    topicsAdapter.notifyDataSetChanged();
+    offset = items.size() - 1;
+    if (topicList.size() < 20) {
+      ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_NO_MORE);
+      adapter.notifyItemChanged(adapter.getItemCount());
+    } else {
+      ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_NORMAL);
+      adapter.notifyItemChanged(adapter.getItemCount());
+    }
   }
 
   @Override public void onStart() {
     Log.d(TAG, "onStart");
     super.onStart();
 
-    topicsAdapter.setOnItemClickListener(new TopicsAdapter.OnItemClickListener() {
-      @Override public void onItemClick(View view, int position) {
-        Intent intent = new Intent(getActivity(), TopicActivity.class);
-        intent.putExtra(TopicActivity.ID, mTopicList.get(position).getId());
-        startActivity(intent);
-      }
-    });
     Bundle bundle = getArguments();
     if (bundle != null) {
       loginName = bundle.getString(Constant.User.LOGIN);
