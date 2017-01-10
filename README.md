@@ -3,7 +3,7 @@
 [深夜发布个小消息，Diycode 社区、项目、News、sites 的 API 发布了 - DiyCode](https://www.diycode.cc/topics/411)
 
 ## 下载
-[app-release-0.2.2.apk](https://github.com/plusend/DiyCode/blob/master/apk/app-release-0.2.2.apk)
+[app-release.apk](http://fir.im/ul58)
 
 ## 功能
 1. Topics、News、Sites 的浏览，回复；
