@@ -40,7 +40,7 @@ public class TopicFragment extends Fragment implements TopicsView {
   @BindView(R.id.rv) EmptyRecyclerView rv;
   @BindView(R.id.empty_view) TextView emptyView;
   private MultiTypeAdapter adapter;
-  private Items items = new Items();
+  private Items items;
   private LinearLayoutManager linearLayoutManager;
   private Presenter topicsPresenter;
   private int offset = 0;
@@ -59,17 +59,29 @@ public class TopicFragment extends Fragment implements TopicsView {
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    Log.d(TAG, "onCreateView");
+    Log.v(TAG, "onCreateView");
     View rootView = inflater.inflate(R.layout.fragment_topic, container, false);
     ButterKnife.bind(this, rootView);
-    linearLayoutManager = new LinearLayoutManager(this.getContext());
+    initRV();
+    return rootView;
+  }
+
+  // 初始化默认 RV
+  private void initRV() {
+    linearLayoutManager = new LinearLayoutManager(getContext());
     rv.setLayoutManager(linearLayoutManager);
+    items = new Items();
     items.add(new Footer(Footer.STATUS_NORMAL));
     adapter = new MultiTypeAdapter(items);
     adapter.register(Topic.class, new TopicViewProvider());
     adapter.register(Footer.class, new FooterViewProvider());
     rv.setAdapter(adapter);
     rv.addItemDecoration(new DividerListItemDecoration(getContext()));
+    rv.setEmptyView(emptyView);
+    loadMore();
+  }
+
+  private void loadMore() {
     rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
       private int lastVisibleItem;
 
@@ -94,9 +106,6 @@ public class TopicFragment extends Fragment implements TopicsView {
         lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
       }
     });
-    rv.setEmptyView(emptyView);
-
-    return rootView;
   }
 
   @Override public void showTopics(List<Topic> topicList) {
@@ -113,15 +122,14 @@ public class TopicFragment extends Fragment implements TopicsView {
     offset = items.size() - 1;
     if (topicList.size() < 20) {
       ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_NO_MORE);
-      adapter.notifyItemChanged(adapter.getItemCount());
     } else {
       ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_NORMAL);
-      adapter.notifyItemChanged(adapter.getItemCount());
     }
+    adapter.notifyItemChanged(adapter.getItemCount());
   }
 
   @Override public void onStart() {
-    Log.d(TAG, "onStart");
+    Log.v(TAG, "onStart");
     super.onStart();
 
     Bundle bundle = getArguments();
@@ -131,7 +139,6 @@ public class TopicFragment extends Fragment implements TopicsView {
       Log.d(TAG, "loginName: " + loginName + " type: " + type);
     }
 
-    Log.d(TAG, "type: " + type);
     if (type == TYPE_ALL) {
       topicsPresenter = new TopicsPresenter(this);
     } else if (type == TYPE_CREATE) {

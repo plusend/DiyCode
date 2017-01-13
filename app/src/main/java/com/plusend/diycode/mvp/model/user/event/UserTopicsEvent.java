@@ -1,4 +1,4 @@
-package com.plusend.diycode.mvp.model.topic.event;
+package com.plusend.diycode.mvp.model.user.event;
 
 import com.plusend.diycode.mvp.model.topic.entity.Topic;
 import java.util.List;

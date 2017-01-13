@@ -4,7 +4,7 @@ import android.util.Log;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.topic.entity.Reply;
 import com.plusend.diycode.mvp.model.topic.event.RepliesEvent;
-import com.plusend.diycode.mvp.model.topic.event.TopicsEvent;
+import com.plusend.diycode.mvp.model.user.event.UserTopicsEvent;
 import com.plusend.diycode.mvp.model.user.entity.UserFollow;
 import com.plusend.diycode.mvp.model.user.entity.UserUnFollow;
 import com.plusend.diycode.mvp.model.user.event.MeEvent;
@@ -12,6 +12,7 @@ import com.plusend.diycode.mvp.model.user.event.TokenEvent;
 import com.plusend.diycode.mvp.model.user.event.UserBlockEvent;
 import com.plusend.diycode.mvp.model.user.event.UserBlockedEvent;
 import com.plusend.diycode.mvp.model.user.event.UserDetailInfoEvent;
+import com.plusend.diycode.mvp.model.user.event.UserFavoriteTopicsEvent;
 import com.plusend.diycode.mvp.model.user.event.UserFollowEvent;
 import com.plusend.diycode.mvp.model.user.event.UserFollowersEvent;
 import com.plusend.diycode.mvp.model.user.event.UserFollowingEvent;
@@ -299,16 +300,16 @@ public class UserDataNetwork implements UserData {
         if (response.isSuccessful()) {
           List<Topic> topicList = response.body();
           Log.v(TAG, "topicList:" + topicList);
-          EventBus.getDefault().post(new TopicsEvent(topicList));
+          EventBus.getDefault().post(new UserTopicsEvent(topicList));
         } else {
           Log.e(TAG, "getUserCreateTopics STATUS: " + response.code());
-          EventBus.getDefault().post(new TopicsEvent(null));
+          EventBus.getDefault().post(new UserTopicsEvent(null));
         }
       }
 
       @Override public void onFailure(Call<List<Topic>> call, Throwable t) {
         Log.e(TAG, t.getMessage());
-        EventBus.getDefault().post(new TopicsEvent(null));
+        EventBus.getDefault().post(new UserTopicsEvent(null));
       }
     });
   }
@@ -321,16 +322,16 @@ public class UserDataNetwork implements UserData {
         if (response.isSuccessful()) {
           List<Topic> topicList = response.body();
           Log.v(TAG, "topicList:" + topicList);
-          EventBus.getDefault().post(new TopicsEvent(topicList));
+          EventBus.getDefault().post(new UserFavoriteTopicsEvent(topicList));
         } else {
           Log.e(TAG, "getUserFavoriteTopics STATUS: " + response.code());
-          EventBus.getDefault().post(new TopicsEvent(null));
+          EventBus.getDefault().post(new UserFavoriteTopicsEvent(null));
         }
       }
 
       @Override public void onFailure(Call<List<Topic>> call, Throwable t) {
         Log.e(TAG, t.getMessage());
-        EventBus.getDefault().post(new TopicsEvent(null));
+        EventBus.getDefault().post(new UserFavoriteTopicsEvent(null));
       }
     });
   }

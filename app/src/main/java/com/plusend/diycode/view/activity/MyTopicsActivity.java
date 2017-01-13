@@ -2,6 +2,7 @@ package com.plusend.diycode.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -71,8 +72,10 @@ public class MyTopicsActivity extends AppCompatActivity {
   }
 
   private void addTopicFragment() {
-    TopicFragment topicFragment = TopicFragment.newInstance(PrefUtil.getMe(this).getLogin(), type);
-    //bundle.putString(Constant.User.LOGIN, PrefUtil.getMe(this).getLogin());
+    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+    TopicFragment topicFragment =
+        fragment == null ? TopicFragment.newInstance(PrefUtil.getMe(this).getLogin(), type)
+            : (TopicFragment) fragment;
     getSupportFragmentManager().beginTransaction().add(R.id.container, topicFragment).commit();
   }
 

@@ -3,15 +3,13 @@ package com.plusend.diycode.mvp.model.user.presenter;
 import android.util.Log;
 import com.plusend.diycode.mvp.model.base.BaseData;
 import com.plusend.diycode.mvp.model.base.Presenter;
-import com.plusend.diycode.mvp.model.topic.event.UserTopicsEvent;
+import com.plusend.diycode.mvp.model.user.event.UserTopicsEvent;
 import com.plusend.diycode.mvp.model.topic.view.TopicsView;
 import com.plusend.diycode.mvp.model.user.event.UserFavoriteTopicsEvent;
 import com.plusend.diycode.mvp.model.user.model.UserDataNetwork;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import static android.R.attr.offset;
 
 public class UserTopicsPresenter extends Presenter {
   private static final String TAG = "UserTopicsPresenter";
