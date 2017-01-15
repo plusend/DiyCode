@@ -98,9 +98,10 @@ public class UpdateService extends Service {
       long completeDownloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
       // 安装新版本
       Intent installIntent = new Intent(Intent.ACTION_VIEW);
+      installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
       installIntent.setDataAndType(downloadManager.getUriForDownloadedFile(completeDownloadId),
-          "application/vnd.android.package-archive");
+          downloadManager.getMimeTypeForDownloadedFile(completeDownloadId));
       startActivity(installIntent);
       stopSelf();
     }
