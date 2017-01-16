@@ -33,12 +33,16 @@ import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
+import static android.os.Build.VERSION_CODES.M;
+
 public class NotificationActivity extends AppCompatActivity implements NotificationsView {
 
   private static final String TYPE_REPLY = "TopicReply";
   private static final String TYPE_MENTION = "Mention";
   private static final String TYPE_FOLLOW = "Follow";
   private static final String TYPE_NODE_CHANGED = "NodeChanged";
+  private static final String MENTION_TYPE_NEWS = "HacknewsReply";
+  private static final String MENTION_TYPE_REPLY = "Reply";
   @BindView(R.id.activity_notification) EmptyRecyclerView recyclerView;
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.empty_view) TextView emptyView;
@@ -114,12 +118,20 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
             notification.getReply().getBodyHtml(), notification.getReply().getTopicId());
         items.add(reply);
       } else if (TYPE_MENTION.equals(notification.getType())) {
-        NotificationMention mention =
-            new NotificationMention(notification.getActor().getAvatarUrl(),
-                notification.getActor().getLogin(),
-                String.valueOf(notification.getMention().getId()),
-                notification.getMention().getBodyHtml(), notification.getMention().getTopicId());
-        items.add(mention);
+        if (MENTION_TYPE_REPLY.equals(notification.getMentionType())) {
+          NotificationMention mention =
+              new NotificationMention(notification.getActor().getAvatarUrl(),
+                  notification.getActor().getLogin(),
+                  String.valueOf(notification.getMention().getId()),
+                  notification.getMention().getBodyHtml(), notification.getMention().getTopicId());
+          items.add(mention);
+        } else if (MENTION_TYPE_NEWS.equals(notification.getMentionType())) {
+          // 这里的 api 有个 bug：这种情况下没有返回 mention 的值
+          NotificationMention mention =
+              new NotificationMention(notification.getActor().getAvatarUrl(),
+                  notification.getActor().getLogin(), "HacknewsReply", "提到了你", 411);
+          items.add(mention);
+        }
       } else if (TYPE_FOLLOW.equals(notification.getType())) {
         NotificationFollow follow = new NotificationFollow(notification.getActor().getAvatarUrl(),
             notification.getActor().getLogin());
