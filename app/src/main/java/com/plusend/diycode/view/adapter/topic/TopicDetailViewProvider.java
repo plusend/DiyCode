@@ -35,6 +35,7 @@ public class TopicDetailViewProvider
     holder.title.setText(topicDetail.getTitle());
     Glide.with(holder.avatar.getContext())
         .load(topicDetail.getUser().getAvatarUrl())
+        .error(R.mipmap.ic_avatar_error)
         .crossFade()
         .centerCrop()
         .into(holder.avatar);
