@@ -44,7 +44,7 @@ public class TopicReplyViewProvider
         .crossFade()
         .centerCrop()
         .into(holder.avatar);
-    holder.content.setText(Html.fromHtml(topicReply.getTopicReply().getBodyHtml(),
+    holder.content.setText(Html.fromHtml(removeP(topicReply.getTopicReply().getBodyHtml()),
         new GlideImageGetter(holder.content.getContext(), holder.content), null));
     holder.content.setMovementMethod(new LinkMovementMethodExt(new SpanClickListener() {
       @Override public void onClick(int type, String url) {
@@ -93,6 +93,21 @@ public class TopicReplyViewProvider
     holder.name.setOnClickListener(listener);
   }
 
+  private String removeP(String html) {
+    String result = html;
+    Log.d(TAG, "html: " + html);
+    if (result.contains("<p>") && result.contains("</p>")) {
+      result = result.replace("<p>", "");
+      result = result.replace("</p>", "<br>");
+      Log.d(TAG, "result: " + result);
+      if (result.endsWith("<br>")) {
+        result = result.substring(0, result.length() - 4);
+        Log.d(TAG, "final: " + result);
+      }
+    }
+    return result;
+  }
+  
   static class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.avatar) ImageView avatar;
     @BindView(R.id.name) TextView name;
