@@ -1,5 +1,6 @@
 package com.plusend.diycode.view.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -46,6 +47,8 @@ public class TopicFragment extends Fragment implements TopicsView {
   private int offset = 0;
   private int type = 0;
   private String loginName;
+  // 标记 Fragment 是否是第一次初始化
+  private boolean state = true;
 
   public static TopicFragment newInstance(String loginName, int type) {
     Log.v(TAG, "newInstance type: " + type);
@@ -57,9 +60,24 @@ public class TopicFragment extends Fragment implements TopicsView {
     return topicFragment;
   }
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    Log.v(TAG, "onCreate");
+    super.onCreate(savedInstanceState);
+    initAdapter();
+  }
+
+  private void initAdapter() {
+    items = new Items();
+    items.add(new Footer(Footer.STATUS_NORMAL));
+    adapter = new MultiTypeAdapter(items);
+    adapter.register(Topic.class, new TopicViewProvider());
+    adapter.register(Footer.class, new FooterViewProvider());
+  }
+
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     Log.v(TAG, "onCreateView");
+    Log.v(TAG, "items.size: " + items.size() + " offset: " + offset + " type: " + type);
     View rootView = inflater.inflate(R.layout.fragment_topic, container, false);
     ButterKnife.bind(this, rootView);
     initRV();
@@ -70,11 +88,6 @@ public class TopicFragment extends Fragment implements TopicsView {
   private void initRV() {
     linearLayoutManager = new LinearLayoutManager(getContext());
     rv.setLayoutManager(linearLayoutManager);
-    items = new Items();
-    items.add(new Footer(Footer.STATUS_NORMAL));
-    adapter = new MultiTypeAdapter(items);
-    adapter.register(Topic.class, new TopicViewProvider());
-    adapter.register(Footer.class, new FooterViewProvider());
     rv.setAdapter(adapter);
     rv.addItemDecoration(new DividerListItemDecoration(getContext()));
     rv.setEmptyView(emptyView);
@@ -147,15 +160,21 @@ public class TopicFragment extends Fragment implements TopicsView {
       topicsPresenter = new UserTopicsPresenter(this);
     }
     topicsPresenter.start();
-    if (!TextUtils.isEmpty(loginName)) {
-      if (type != TYPE_FAVORITE) {
-        ((UserTopicsPresenter) topicsPresenter).getUserCreateTopics(loginName, offset);
+    Log.v(TAG, "state: " + state);
+    if(state){
+      if (!TextUtils.isEmpty(loginName)) {
+        if (type != TYPE_FAVORITE) {
+          ((UserTopicsPresenter) topicsPresenter).getUserCreateTopics(loginName, offset);
+        } else {
+          ((UserTopicsPresenter) topicsPresenter).getUserFavoriteTopics(loginName, offset);
+        }
       } else {
-        ((UserTopicsPresenter) topicsPresenter).getUserFavoriteTopics(loginName, offset);
+        ((TopicsPresenter) topicsPresenter).getTopics(offset);
       }
-    } else {
-      ((TopicsPresenter) topicsPresenter).getTopics(offset);
+      // 标记 Fragment 已经进行过第一次加载
+      state = false;
     }
+
   }
 
   @Override public void onStop() {
@@ -164,4 +183,20 @@ public class TopicFragment extends Fragment implements TopicsView {
     }
     super.onStop();
   }
+
+  @Override public void onSaveInstanceState(Bundle outState) {
+    Log.v(TAG, "onSaveInstanceState");
+    super.onSaveInstanceState(outState);
+  }
+
+  @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    Log.v(TAG, "onActivityCreated");
+    super.onActivityCreated(savedInstanceState);
+  }
+
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
+    Log.v(TAG, "onAttach");
+  }
+
 }
