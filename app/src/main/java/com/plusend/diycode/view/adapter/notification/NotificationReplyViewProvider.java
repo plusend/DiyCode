@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
 import com.plusend.diycode.util.GlideImageGetter;
+import com.plusend.diycode.util.HtmlUtil;
 import com.plusend.diycode.view.activity.TopicActivity;
 import me.drakeet.multitype.ItemViewProvider;
 
@@ -40,7 +41,7 @@ public class NotificationReplyViewProvider
         + notificationReply.getTopicTitle()
         + "<font color='#9e9e9e'> 回复了：</font>";
     holder.header.setText(Html.fromHtml(header));
-    holder.body.setText(Html.fromHtml(notificationReply.getBodyHtml(),
+    holder.body.setText(Html.fromHtml(HtmlUtil.removeP(notificationReply.getBodyHtml()),
         new GlideImageGetter(holder.body.getContext(), holder.body), null));
   }
 

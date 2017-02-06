@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,14 @@ import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.topic.entity.Reply;
 import com.plusend.diycode.util.GlideImageGetter;
+import com.plusend.diycode.util.HtmlUtil;
 import com.plusend.diycode.util.TimeUtil;
 import com.plusend.diycode.view.activity.TopicActivity;
 import me.drakeet.multitype.ItemViewProvider;
 
 public class ReplyViewProvider extends ItemViewProvider<Reply, ReplyViewProvider.ViewHolder> {
+
+  private static final String TAG = "ReplyViewProvider";
 
   @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
       @NonNull ViewGroup parent) {
@@ -31,7 +35,7 @@ public class ReplyViewProvider extends ItemViewProvider<Reply, ReplyViewProvider
     holder.topicTitle.setText(Html.fromHtml("<font color='#ff0099cc'> 在帖子 </font>"
         + reply.getTopicTitle()
         + "<font color='#ff0099cc'> 发表了回复：</font>"));
-    holder.body.setText(Html.fromHtml(reply.getBodyHtml(),
+    holder.body.setText(Html.fromHtml(HtmlUtil.removeP(reply.getBodyHtml()),
         new GlideImageGetter(holder.body.getContext(), holder.body), null));
     holder.time.setText(TimeUtil.formatTime(reply.getUpdatedAt()));
   }

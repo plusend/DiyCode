@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
 import com.plusend.diycode.util.GlideImageGetter;
+import com.plusend.diycode.util.HtmlUtil;
 import com.plusend.diycode.view.activity.TopicActivity;
 import me.drakeet.multitype.ItemViewProvider;
 
@@ -40,7 +41,7 @@ public class NotificationMentionViewProvider
         + notificationMention.getTopicTitle()
         + "<font color='#9e9e9e'> 提及你：</font>";
     holder.header.setText(Html.fromHtml(header));
-    holder.body.setText(Html.fromHtml(notificationMention.getBodyHtml(),
+    holder.body.setText(Html.fromHtml(HtmlUtil.removeP(notificationMention.getBodyHtml()),
         new GlideImageGetter(holder.body.getContext(), holder.body), null));
   }
 
