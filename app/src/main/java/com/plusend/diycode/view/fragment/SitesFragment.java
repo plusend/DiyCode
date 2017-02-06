@@ -24,10 +24,6 @@ import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-/**
- * Created by plusend on 2016/11/22.
- */
-
 public class SitesFragment extends Fragment implements SiteView {
   private static final String TAG = "SitesFragment";
 
@@ -38,6 +34,15 @@ public class SitesFragment extends Fragment implements SiteView {
   private SitePresenter sitePresenter;
   private Items items = new Items();
   private MultiTypeAdapter adapter;
+  // 标记 Fragment 是否是第一次初始化
+  private boolean isFirstLoad = true;
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    adapter = new MultiTypeAdapter(items);
+    adapter.register(SiteName.class, new SiteNameViewProvider());
+    adapter.register(SitesName.class, new SitesNameViewProvider());
+  }
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -51,14 +56,8 @@ public class SitesFragment extends Fragment implements SiteView {
       }
     });
     rvSiteCategory.setLayoutManager(layoutManager);
-
-    adapter = new MultiTypeAdapter(items);
-
-    adapter.register(SiteName.class, new SiteNameViewProvider());
-    adapter.register(SitesName.class, new SitesNameViewProvider());
     rvSiteCategory.setAdapter(adapter);
     rvSiteCategory.setEmptyView(emptyView);
-
     //rvSiteCategory.addItemDecoration(new DividerGridItemDecoration(getContext()));
     sitePresenter = new SitePresenter(this);
 
@@ -84,6 +83,10 @@ public class SitesFragment extends Fragment implements SiteView {
   @Override public void onStart() {
     super.onStart();
     sitePresenter.start();
+    if(isFirstLoad){
+      sitePresenter.getSite();
+      isFirstLoad = false;
+    }
   }
 
   @Override public void onStop() {

@@ -23,10 +23,6 @@ import com.plusend.diycode.view.adapter.topic.TopicsAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by plusend on 2016/11/22.
- */
-
 public class NewsFragment extends Fragment implements NewsView {
   private static final String TAG = "NewsFragment";
 
@@ -37,6 +33,13 @@ public class NewsFragment extends Fragment implements NewsView {
   private LinearLayoutManager linearLayoutManager;
   private NewsPresenter newsPresenter;
   private int offset;
+  // 标记 Fragment 是否是第一次初始化
+  private boolean isFirstLoad = true;
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    newsAdapter = new NewsAdapter(newsList);
+  }
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -46,7 +49,6 @@ public class NewsFragment extends Fragment implements NewsView {
     linearLayoutManager = new LinearLayoutManager(this.getContext());
     rv.setLayoutManager(linearLayoutManager);
     rv.setEmptyView(emptyView);
-    newsAdapter = new NewsAdapter(newsList);
     rv.setAdapter(newsAdapter);
     rv.addItemDecoration(new DividerListItemDecoration(getContext()));
     rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -88,17 +90,13 @@ public class NewsFragment extends Fragment implements NewsView {
 
   @Override public void onStart() {
     super.onStart();
-    //newsAdapter.setOnItemClickListener(
-    //    new TopicRecyclerViewAdapter.OnItemClickListener() {
-    //      @Override public void onItemClick(View view, int position) {
-    //        Intent intent = new Intent(getActivity(), TopicActivity.class);
-    //        intent.putExtra(TopicActivity.ID, newsList.get(position).getId());
-    //        startActivity(intent);
-    //      }
-    //    });
 
     newsPresenter.start();
-    newsPresenter.readNews(offset);
+    if(isFirstLoad){
+      newsPresenter.readNews(offset);
+      isFirstLoad = false;
+    }
+
   }
 
   @Override public void onStop() {

@@ -48,7 +48,7 @@ public class TopicFragment extends Fragment implements TopicsView {
   private int type = 0;
   private String loginName;
   // 标记 Fragment 是否是第一次初始化
-  private boolean state = true;
+  private boolean isFirstLoad = true;
 
   public static TopicFragment newInstance(String loginName, int type) {
     Log.v(TAG, "newInstance type: " + type);
@@ -160,8 +160,8 @@ public class TopicFragment extends Fragment implements TopicsView {
       topicsPresenter = new UserTopicsPresenter(this);
     }
     topicsPresenter.start();
-    Log.v(TAG, "state: " + state);
-    if(state){
+    Log.v(TAG, "isFirstLoad: " + isFirstLoad);
+    if(isFirstLoad){
       if (!TextUtils.isEmpty(loginName)) {
         if (type != TYPE_FAVORITE) {
           ((UserTopicsPresenter) topicsPresenter).getUserCreateTopics(loginName, offset);
@@ -172,7 +172,7 @@ public class TopicFragment extends Fragment implements TopicsView {
         ((TopicsPresenter) topicsPresenter).getTopics(offset);
       }
       // 标记 Fragment 已经进行过第一次加载
-      state = false;
+      isFirstLoad = false;
     }
 
   }

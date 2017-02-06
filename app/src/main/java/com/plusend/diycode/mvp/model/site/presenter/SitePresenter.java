@@ -24,10 +24,13 @@ public class SitePresenter extends Presenter {
     this.siteView.showSite(siteEvent.getSiteList());
   }
 
+  public void getSite(){
+    ((SiteDataNetwork) data).getSite();
+  }
+
   @Override public void start() {
     Log.d(TAG, "register");
     EventBus.getDefault().register(this);
-    ((SiteDataNetwork) data).getSite();
   }
 
   @Override public void stop() {
