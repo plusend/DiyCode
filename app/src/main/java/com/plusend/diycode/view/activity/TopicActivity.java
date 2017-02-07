@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -91,6 +92,7 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
     });
 
     topicPresenter = new TopicPresenter(this);
+    topicRepliesPresenter = new TopicRepliesPresenter(this, id);
     if (id != 0) {
       topicPresenter.getTopic(id);
     }
@@ -123,8 +125,6 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
   }
 
   private void requestReplies() {
-    topicRepliesPresenter = new TopicRepliesPresenter(this, id);
-    topicRepliesPresenter.start();
     topicRepliesPresenter.getReplies();
   }
 
@@ -135,13 +135,12 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
   @Override protected void onStart() {
     super.onStart();
     topicPresenter.start();
+    topicRepliesPresenter.start();
   }
 
   @Override protected void onStop() {
     topicPresenter.stop();
-    if (topicRepliesPresenter != null) {
-      topicRepliesPresenter.stop();
-    }
+    topicRepliesPresenter.stop();
     super.onStop();
   }
 
@@ -198,6 +197,13 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
       }
       offset = this.items.size() - 2; // 去除 Footer & Header
     }
+  }
+
+  @Override public void showNewReply() {
+    Log.d(TAG, "add more: offset " + offset);
+    ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_LOADING);
+    adapter.notifyItemChanged(adapter.getItemCount());
+    topicRepliesPresenter.addReplies(offset);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

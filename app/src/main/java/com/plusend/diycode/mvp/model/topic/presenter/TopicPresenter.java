@@ -39,13 +39,7 @@ public class TopicPresenter extends Presenter {
     Log.d(TAG, "showNewTopic");
     topicView.showTopic(newTopicEvent.getTopicDetail());
   }
-
-  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-  public void getNewTopicReply(CreateTopicReplyEvent createTopicReplyEvent) {
-    Log.d(TAG, "getNewTopicReply");
-    getTopic(id);
-  }
-
+  
   @Override public void start() {
     Log.d(TAG, "register");
     EventBus.getDefault().register(this);

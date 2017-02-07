@@ -11,4 +11,5 @@ import java.util.List;
 public interface TopicRepliesView extends BaseView {
   void showReplies(List<TopicReply> topicReplyList);
   void addReplies(List<TopicReply> topicReplyList);
+  void showNewReply();
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 import com.plusend.diycode.mvp.model.base.BaseData;
 import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.topic.data.TopicDataNetwork;
+import com.plusend.diycode.mvp.model.topic.event.CreateTopicReplyEvent;
 import com.plusend.diycode.mvp.model.topic.event.TopicRepliesEvent;
 import com.plusend.diycode.mvp.model.topic.view.TopicRepliesView;
 import org.greenrobot.eventbus.EventBus;
@@ -48,6 +49,14 @@ public class TopicRepliesPresenter extends Presenter {
     } else if (status == 2) {
       status = 0;
       topicRepliesView.addReplies(topicRepliesEvent.getTopicReplyList());
+    }
+  }
+
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void getNewTopicReply(CreateTopicReplyEvent createTopicReplyEvent) {
+    Log.d(TAG, "getNewTopicReply");
+    if (createTopicReplyEvent.isSuccessful()) {
+      topicRepliesView.showNewReply();
     }
   }
 
