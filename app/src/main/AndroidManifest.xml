@@ -40,7 +40,8 @@
     </activity>
     <activity
         android:name=".view.activity.SignInActivity"
-        android:label="登录">
+        android:label="登录"
+        android:screenOrientation="portrait">
     </activity>
     <activity
         android:name=".view.activity.TopicActivity"
@@ -118,8 +119,6 @@
         android:exported="false">
     </service>
 
-    <activity android:name=".view.activity.BaseActivity">
-    </activity>
   </application>
 
 </manifest>
