@@ -30,7 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@android:drawable/ic_menu_edit"
         />
 
   </RelativeLayout>
