@@ -19,7 +19,6 @@ import com.plusend.diycode.mvp.model.news.view.NewsView;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.NewsAdapter;
-import com.plusend.diycode.view.adapter.topic.TopicsAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,9 +80,9 @@ public class NewsFragment extends Fragment implements NewsView {
     this.newsList.addAll(newsList);
     offset = this.newsList.size();
     if (newsList.isEmpty()) {
-      newsAdapter.setStatus(TopicsAdapter.STATUS_NO_MORE);
+      newsAdapter.setStatus(NewsAdapter.STATUS_NO_MORE);
     } else {
-      newsAdapter.setStatus(TopicsAdapter.STATUS_NORMAL);
+      newsAdapter.setStatus(NewsAdapter.STATUS_NORMAL);
     }
     newsAdapter.notifyDataSetChanged();
   }
