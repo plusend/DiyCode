@@ -18,13 +18,23 @@
       android:layout_height="match_parent"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin"
-      android:paddingTop="@dimen/activity_vertical_margin"
       >
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="#4d4d4d"
+        android:textSize="22sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="8dp"
+        android:background="#999999"
         />
 
     <EditText
@@ -32,6 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
+        android:layout_marginTop="16dp"
+        android:hint="在此输入评论内容"
         />
 
     <android.support.design.widget.FloatingActionButton
