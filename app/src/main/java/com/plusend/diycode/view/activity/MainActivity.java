@@ -42,11 +42,10 @@ public class MainActivity extends AppCompatActivity
 
   @BindView(R.id.tab_layout) TabLayout tabLayout;
   @BindView(R.id.view_pager) ViewPager viewPager;
+  @BindView(R.id.fab) FloatingActionButton fab;
   private MenuItem search;
   private ImageView avatar;
   private TextView email;
-
-  private PagerAdapter pagerAdapter;
 
   private UserDetailInfo me;
   private UserPresenter userPresenter;
@@ -60,7 +59,6 @@ public class MainActivity extends AppCompatActivity
     toolbar.setTitle("");
     setSupportActionBar(toolbar);
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         if (viewPager.getCurrentItem() == 0) {
@@ -81,9 +79,27 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
 
-    pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+    PagerAdapter pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
     viewPager.setAdapter(pagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
+
+    viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Log.d(TAG, position + " " + positionOffset + " " + positionOffsetPixels);
+        if (position == 1) {
+          fab.setScaleX(1 - positionOffset);
+          fab.setScaleY(1 - positionOffset);
+          fab.setAlpha(1 - positionOffset);
+        }
+      }
+
+      @Override public void onPageSelected(int position) {
+      }
+
+      @Override public void onPageScrollStateChanged(int state) {
+      }
+    });
 
     View header = navigationView.getHeaderView(0);
     email = (TextView) header.findViewById(R.id.email);
