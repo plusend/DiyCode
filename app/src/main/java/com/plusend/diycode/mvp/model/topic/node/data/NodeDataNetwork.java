@@ -1,8 +1,8 @@
-package com.plusend.diycode.mvp.model.node.data;
+package com.plusend.diycode.mvp.model.topic.node.data;
 
 import android.util.Log;
-import com.plusend.diycode.mvp.model.node.entity.Node;
-import com.plusend.diycode.mvp.model.node.event.NodesEvent;
+import com.plusend.diycode.mvp.model.topic.node.entity.Node;
+import com.plusend.diycode.mvp.model.topic.node.event.NodesEvent;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;

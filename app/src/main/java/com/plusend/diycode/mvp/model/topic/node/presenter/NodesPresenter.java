@@ -1,10 +1,10 @@
-package com.plusend.diycode.mvp.model.node.presenter;
+package com.plusend.diycode.mvp.model.topic.node.presenter;
 
 import com.plusend.diycode.mvp.model.base.BaseData;
 import com.plusend.diycode.mvp.model.base.Presenter;
-import com.plusend.diycode.mvp.model.node.data.NodeDataNetwork;
-import com.plusend.diycode.mvp.model.node.event.NodesEvent;
-import com.plusend.diycode.mvp.model.node.view.NodesView;
+import com.plusend.diycode.mvp.model.topic.node.data.NodeDataNetwork;
+import com.plusend.diycode.mvp.model.topic.node.event.NodesEvent;
+import com.plusend.diycode.mvp.model.topic.node.view.NodesView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

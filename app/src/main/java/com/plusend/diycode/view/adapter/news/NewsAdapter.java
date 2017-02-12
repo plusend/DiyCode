@@ -1,4 +1,4 @@
-package com.plusend.diycode.view.adapter;
+package com.plusend.diycode.view.adapter.news;
 
 import android.content.Context;
 import android.content.Intent;

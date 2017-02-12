@@ -1,4 +1,4 @@
-package com.plusend.diycode.mvp.model.node.data;
+package com.plusend.diycode.mvp.model.topic.node.data;
 
 import com.plusend.diycode.mvp.model.base.BaseData;
 

@@ -1,4 +1,4 @@
-package com.plusend.diycode.mvp.model.node.entity;
+package com.plusend.diycode.mvp.model.topic.node.entity;
 
 import com.google.gson.annotations.SerializedName;
 

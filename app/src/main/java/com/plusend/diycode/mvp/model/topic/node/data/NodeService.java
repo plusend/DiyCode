@@ -1,6 +1,6 @@
-package com.plusend.diycode.mvp.model.node.data;
+package com.plusend.diycode.mvp.model.topic.node.data;
 
-import com.plusend.diycode.mvp.model.node.entity.Node;
+import com.plusend.diycode.mvp.model.topic.node.entity.Node;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;

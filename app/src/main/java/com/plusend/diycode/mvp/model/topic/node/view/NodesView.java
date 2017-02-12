@@ -1,6 +1,6 @@
-package com.plusend.diycode.mvp.model.node.view;
+package com.plusend.diycode.mvp.model.topic.node.view;
 
-import com.plusend.diycode.mvp.model.node.entity.Node;
+import com.plusend.diycode.mvp.model.topic.node.entity.Node;
 import com.plusend.diycode.mvp.model.base.BaseView;
 import java.util.List;
 

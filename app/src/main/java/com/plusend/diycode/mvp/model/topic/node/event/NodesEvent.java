@@ -1,6 +1,6 @@
-package com.plusend.diycode.mvp.model.node.event;
+package com.plusend.diycode.mvp.model.topic.node.event;
 
-import com.plusend.diycode.mvp.model.node.entity.Node;
+import com.plusend.diycode.mvp.model.topic.node.entity.Node;
 import java.util.List;
 
 /**

@@ -119,6 +119,16 @@
         android:exported="false">
     </service>
 
+    <activity
+        android:name=".view.activity.CreateNewsActivity"
+        android:label="分享新链接"
+        android:windowSoftInputMode="stateVisible|adjustResize">
+      <intent-filter>
+        <action android:name="android.intent.action.SEND"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:mimeType="text/plain"/>
+      </intent-filter>
+    </activity>
   </application>
 
 </manifest>

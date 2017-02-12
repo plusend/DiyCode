@@ -18,7 +18,7 @@ import com.plusend.diycode.mvp.model.news.presenter.NewsPresenter;
 import com.plusend.diycode.mvp.model.news.view.NewsView;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.EmptyRecyclerView;
-import com.plusend.diycode.view.adapter.NewsAdapter;
+import com.plusend.diycode.view.adapter.news.NewsAdapter;
 import java.util.ArrayList;
 import java.util.List;
 

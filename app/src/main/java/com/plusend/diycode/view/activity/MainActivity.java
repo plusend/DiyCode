@@ -43,10 +43,12 @@ public class MainActivity extends AppCompatActivity
   @BindView(R.id.tab_layout) TabLayout tabLayout;
   @BindView(R.id.view_pager) ViewPager viewPager;
   private MenuItem search;
-  ImageView avatar;
-  TextView email;
-  private UserDetailInfo me;
+  private ImageView avatar;
+  private TextView email;
 
+  private PagerAdapter pagerAdapter;
+
+  private UserDetailInfo me;
   private UserPresenter userPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,11 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-        startActivity(new Intent(MainActivity.this, NewTopicActivity.class));
+        if (viewPager.getCurrentItem() == 0) {
+          startActivity(new Intent(MainActivity.this, NewTopicActivity.class));
+        } else if (viewPager.getCurrentItem() == 1) {
+          startActivity(new Intent(MainActivity.this, CreateNewsActivity.class));
+        }
       }
     });
 
@@ -75,7 +81,7 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
 
-    PagerAdapter pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+    pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
     viewPager.setAdapter(pagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
 

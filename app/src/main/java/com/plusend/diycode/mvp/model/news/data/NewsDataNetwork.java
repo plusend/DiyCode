@@ -2,7 +2,9 @@ package com.plusend.diycode.mvp.model.news.data;
 
 import android.util.Log;
 import com.plusend.diycode.mvp.model.news.entity.News;
+import com.plusend.diycode.mvp.model.news.event.CreateNewsEvent;
 import com.plusend.diycode.mvp.model.news.event.NewsEvent;
+import com.plusend.diycode.util.Constant;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
@@ -46,5 +48,32 @@ public class NewsDataNetwork implements NewsData {
         EventBus.getDefault().post(new NewsEvent(null));
       }
     });
+  }
+
+  @Override public void createNews(String title, String address, Integer node_id) {
+    Call<News> call =
+        service.createNews(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, title, address,
+            node_id);
+    call.enqueue(new Callback<News>() {
+      @Override public void onResponse(Call<News> call, Response<News> response) {
+        if (response.isSuccessful()) {
+          News news = response.body();
+          Log.v(TAG, "news: " + news);
+          EventBus.getDefault().post(new CreateNewsEvent(news));
+        } else {
+          Log.e(TAG, "createNews STATUS: " + response.code());
+          EventBus.getDefault().post(new CreateNewsEvent(null));
+        }
+      }
+
+      @Override public void onFailure(Call<News> call, Throwable t) {
+        Log.e(TAG, t.getMessage());
+        EventBus.getDefault().post(new CreateNewsEvent(null));
+      }
+    });
+  }
+
+  public void getLinkTitle(String link){
+
   }
 }

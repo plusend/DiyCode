@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.plusend.diycode.view.activity.CreateNewsActivity"
+    >
+  <include
+      layout="@layout/toolbar"
+      />
+  <RelativeLayout
+      android:id="@+id/relative"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#f0f0f0"
+      >
+
+    <TextView
+        android:id="@+id/node_id_prefix"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:text="分类："
+        android:textColor="#999999"
+        android:textSize="15sp"
+        />
+    <Spinner
+        android:id="@+id/section_name"
+        android:layout_width="125dp"
+        android:layout_height="53dp"
+        android:layout_toEndOf="@id/node_id_prefix"
+        android:gravity="center_vertical"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/node_id_prefix"
+        android:background="#999999"
+        />
+
+    <TextView
+        android:id="@+id/title_prefix"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_below="@id/node_id_prefix"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:text="标题："
+        android:textColor="#999999"
+        android:textSize="15sp"
+        />
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/node_id_prefix"
+        android:layout_toEndOf="@id/title_prefix"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="在这里输入标题"
+        android:lineSpacingExtra="8dp"
+        android:minHeight="53dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="16dp"
+        android:textSize="15sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/title"
+        android:background="#999999"
+        />
+
+    <TextView
+        android:id="@+id/link_prefix"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_below="@id/title"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:text="链接："
+        android:textColor="#999999"
+        android:textSize="15sp"
+        />
+
+    <EditText
+        android:id="@+id/link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_toEndOf="@id/link_prefix"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="在这里填写链接"
+        android:lineSpacingExtra="8dp"
+        android:minHeight="53dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="16dp"
+        android:textSize="15sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/link"
+        android:background="#999999"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_menu_send"
+        />
+  </RelativeLayout>
+
+</LinearLayout>
