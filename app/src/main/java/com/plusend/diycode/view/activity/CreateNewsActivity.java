@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,12 +24,17 @@ import com.plusend.diycode.mvp.model.news.presenter.CreateNewsPresenter;
 import com.plusend.diycode.mvp.model.news.view.CreateNewsView;
 import com.plusend.diycode.mvp.model.topic.node.entity.Node;
 import com.plusend.diycode.util.ToastUtil;
+import com.plusend.diycode.util.UrlUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static android.text.TextUtils.split;
+
 public class CreateNewsActivity extends BaseActivity implements CreateNewsView, NewsNodesView {
+
+  private static final String TAG = "CreateNewsActivity";
 
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.section_name) Spinner sectionName;
@@ -49,7 +55,22 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
 
     Intent intent = getIntent();
     if (Intent.ACTION_SEND.equals(intent.getAction())) {
-      link.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+      String linkText = intent.getStringExtra(Intent.EXTRA_TEXT);
+      String titleText = intent.getStringExtra(Intent.EXTRA_SUBJECT);
+      Log.d(TAG, "getIntent: " + linkText + " " + titleText);
+
+      if (!TextUtils.isEmpty(linkText) && TextUtils.isEmpty(titleText)) {
+        titleText = linkText;
+        linkText = UrlUtil.getUrl(linkText);
+        if (TextUtils.isEmpty(linkText)) {
+          linkText = titleText;
+        } else {
+          titleText = titleText.replace(linkText, "");
+        }
+      }
+
+      link.setText(linkText);
+      title.setText(titleText);
     }
 
     fab.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +86,7 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
   }
 
   private void createNews() {
-    if(isTextEmpty()){
+    if (isTextEmpty()) {
       return;
     }
     String section = sectionName.getDisplay().getName();
@@ -75,19 +96,20 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
         id = node.getId();
       }
     }
-    ((CreateNewsPresenter)mCreateNewsPresenter).createNews(title.getText().toString(),link.getText().toString(),id);
+    ((CreateNewsPresenter) mCreateNewsPresenter).createNews(title.getText().toString(),
+        link.getText().toString(), id);
   }
 
-  private boolean isTextEmpty(){
+  private boolean isTextEmpty() {
     boolean result = false;
-    if(TextUtils.isEmpty(title.getText().toString())){
-      ToastUtil.showText(this,"标题不能为空");
+    if (TextUtils.isEmpty(title.getText().toString())) {
+      ToastUtil.showText(this, "标题不能为空");
       result = true;
-    }else if(TextUtils.isEmpty(link.getText().toString())){
-      ToastUtil.showText(this,"链接不能为空");
+    } else if (TextUtils.isEmpty(link.getText().toString())) {
+      ToastUtil.showText(this, "链接不能为空");
       result = true;
-    }else if(TextUtils.isEmpty(sectionName.getDisplay().getName())){
-      ToastUtil.showText(this,"分类不能为空");
+    } else if (TextUtils.isEmpty(sectionName.getDisplay().getName())) {
+      ToastUtil.showText(this, "分类不能为空");
       result = true;
     }
     return result;
