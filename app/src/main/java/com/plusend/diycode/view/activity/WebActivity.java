@@ -65,6 +65,13 @@ public class WebActivity extends AppCompatActivity {
         intent.setData(Uri.parse(mUrl));
         startActivity(intent);
         break;
+      case R.id.action_share:
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, toolbar.getTitle());
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mUrl);
+        shareIntent.setType("text/plain");
+        startActivity(shareIntent);
+        break;
     }
     return super.onOptionsItemSelected(item);
   }
