@@ -91,10 +91,17 @@ public class MainActivity extends AppCompatActivity
           fab.setScaleX(1 - positionOffset);
           fab.setScaleY(1 - positionOffset);
           fab.setAlpha(1 - positionOffset);
+        } else if (position == 0 && fab.getAlpha() < 1) {
+          fab.setScaleX(1 - positionOffset);
+          fab.setScaleY(1 - positionOffset);
+          fab.setAlpha(1 - positionOffset);
         }
       }
 
       @Override public void onPageSelected(int position) {
+        if (position == 1) {
+          fab.setAlpha(1f);
+        }
       }
 
       @Override public void onPageScrollStateChanged(int state) {
