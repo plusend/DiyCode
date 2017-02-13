@@ -103,13 +103,14 @@ public class WebActivity extends AppCompatActivity {
   @Override public void onPause() {
     super.onPause();
     webView.onPause();
-    webView.pauseTimers(); //小心这个！！！暂停整个 WebView 所有布局、解析、JS。
+    // 暂时删除，否则影响 DWebView 的使用
+    //webView.pauseTimers(); //小心这个！！！暂停整个 WebView 所有布局、解析、JS。
   }
 
   @Override public void onResume() {
     super.onResume();
     webView.onResume();
-    webView.resumeTimers();
+    //webView.resumeTimers();
   }
 
   /**

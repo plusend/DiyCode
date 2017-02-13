@@ -15,7 +15,7 @@ import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
 import com.plusend.diycode.util.TimeUtil;
 import com.plusend.diycode.view.activity.UserActivity;
-import com.plusend.diycode.view.widget.MarkdownView;
+import com.plusend.diycode.view.widget.DWebView;
 import me.drakeet.multitype.ItemViewProvider;
 
 public class TopicDetailViewProvider
@@ -28,7 +28,7 @@ public class TopicDetailViewProvider
     return new ViewHolder(root);
   }
 
-  @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
+  @Override protected void onBindViewHolder(@NonNull final ViewHolder holder,
       @NonNull final TopicDetail topicDetail) {
     holder.name.setText(topicDetail.getUser().getLogin());
     holder.time.setText(TimeUtil.computePastTime(topicDetail.getUpdatedAt()));
@@ -41,8 +41,7 @@ public class TopicDetailViewProvider
         .into(holder.avatar);
     holder.topic.setText(topicDetail.getNodeName());
     holder.repliesCount.setText("共收到 " + topicDetail.getRepliesCount() + " 条回复");
-    holder.content.setOpenUrlInBrowser(true);
-    holder.content.setMarkDownText(topicDetail.getBody());
+    holder.content.loadDetailDataAsync(topicDetail.getBodyHtml(), null);
     View.OnClickListener listener = new View.OnClickListener() {
       @Override public void onClick(View view) {
         Intent intent = new Intent(view.getContext(), UserActivity.class);
@@ -60,7 +59,7 @@ public class TopicDetailViewProvider
     @BindView(R.id.topic) TextView topic;
     @BindView(R.id.time) TextView time;
     @BindView(R.id.title) TextView title;
-    @BindView(R.id.content) MarkdownView content;
+    @BindView(R.id.content) DWebView content;
     @BindView(R.id.replies_count) TextView repliesCount;
 
     ViewHolder(View itemView) {
