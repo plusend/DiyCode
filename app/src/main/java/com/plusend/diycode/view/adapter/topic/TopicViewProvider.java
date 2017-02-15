@@ -38,6 +38,7 @@ public class TopicViewProvider extends ItemViewProvider<Topic, TopicViewProvider
     }
     Glide.with(holder.avatar.getContext())
         .load(topic.getUser().getAvatarUrl())
+        .placeholder(R.mipmap.ic_avatar_error)
         .error(R.mipmap.ic_avatar_error)
         .crossFade()
         .into(holder.avatar);

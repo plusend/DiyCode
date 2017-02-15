@@ -33,6 +33,8 @@ public class NotificationReplyViewProvider
     holder.reply = notificationReply;
     Glide.with(holder.avatar.getContext())
         .load(notificationReply.getAvatarUrl().replace("large_", ""))
+        .placeholder(R.mipmap.ic_avatar_error)
+        .error(R.mipmap.ic_avatar_error)
         .centerCrop()
         .crossFade()
         .into(holder.avatar);

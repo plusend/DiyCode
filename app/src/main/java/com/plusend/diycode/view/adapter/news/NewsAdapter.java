@@ -76,6 +76,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
       topicViewHolder.host.setText(UrlUtil.getHost(newsList.get(position).getAddress()));
       Glide.with(topicViewHolder.avatar.getContext())
           .load(newsList.get(position).getUser().getAvatarUrl())
+          .placeholder(R.mipmap.ic_avatar_error)
+          .error(R.mipmap.ic_avatar_error)
           .crossFade()
           .centerCrop()
           .into(topicViewHolder.avatar);

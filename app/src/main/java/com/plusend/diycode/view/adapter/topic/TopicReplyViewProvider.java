@@ -41,6 +41,7 @@ public class TopicReplyViewProvider
     holder.position.setText(floor);
     Glide.with(holder.avatar.getContext())
         .load(topicReply.getTopicReply().getUser().getAvatarUrl())
+        .placeholder(R.mipmap.ic_avatar_error)
         .error(R.mipmap.ic_avatar_error)
         .crossFade()
         .centerCrop()

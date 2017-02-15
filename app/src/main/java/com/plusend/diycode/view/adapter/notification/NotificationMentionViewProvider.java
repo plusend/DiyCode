@@ -33,6 +33,8 @@ public class NotificationMentionViewProvider
     holder.mention = notificationMention;
     Glide.with(holder.avatar.getContext())
         .load(notificationMention.getAvatarUrl().replace("large_", ""))
+        .placeholder(R.mipmap.ic_avatar_error)
+        .error(R.mipmap.ic_avatar_error)
         .crossFade()
         .centerCrop()
         .into(holder.avatar);

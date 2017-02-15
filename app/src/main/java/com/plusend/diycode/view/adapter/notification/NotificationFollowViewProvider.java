@@ -27,6 +27,8 @@ public class NotificationFollowViewProvider
       @NonNull final NotificationFollow notificationFollow) {
     Glide.with(holder.avatar.getContext())
         .load(notificationFollow.getAvatarUrl())
+        .placeholder(R.mipmap.ic_avatar_error)
+        .error(R.mipmap.ic_avatar_error)
         .centerCrop()
         .crossFade()
         .into(holder.avatar);
