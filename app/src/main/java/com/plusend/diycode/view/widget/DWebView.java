@@ -11,13 +11,18 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import com.plusend.diycode.util.IntentUtil;
+import com.plusend.diycode.view.activity.ImageActivity;
 import com.plusend.diycode.view.activity.WebActivity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.text.TextUtils.isEmpty;
 
 public class DWebView extends WebView {
   private static final String TAG = "DWebView";
@@ -61,17 +66,19 @@ public class DWebView extends WebView {
     settings.setDisplayZoomControls(false);
     settings.setJavaScriptEnabled(true);
 
-    //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-    //    addJavascriptInterface(new OnWebViewImageListener() {
-    //        @Override
-    //        @JavascriptInterface
-    //        public void showImagePreview(String bigImageUrl) {
-    //            if (bigImageUrl != null && !StringUtils.isEmpty(bigImageUrl)) {
-    //                ImageGalleryActivity.show(getContext(), bigImageUrl);
-    //            }
-    //        }
-    //    }, "mWebViewImageListener");
-    //}
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        addJavascriptInterface(new OnWebViewImageListener() {
+            @Override
+            @JavascriptInterface
+            public void showImagePreview(String bigImageUrl) {
+                if (!TextUtils.isEmpty(bigImageUrl)) {
+                  Intent intent = new Intent(getContext(), ImageActivity.class);
+                  intent.putExtra(ImageActivity.URL, bigImageUrl);
+                  getContext().startActivity(intent);
+                }
+            }
+        }, "mWebViewImageListener");
+    }
   }
 
   public void loadDetailDataAsync(final String content, Runnable finishCallback) {
@@ -132,7 +139,7 @@ public class DWebView extends WebView {
   }
 
   private static String setupWebContent(String content, String style) {
-    if (TextUtils.isEmpty(content) || TextUtils.isEmpty(content.trim())) return "";
+    if (isEmpty(content) || isEmpty(content.trim())) return "";
     //if (AppContext.get(AppConfig.KEY_LOAD_IMAGE, true)
     //        || TDevice.isWifiOpen()) {
     Pattern pattern = Pattern.compile(
@@ -163,7 +170,7 @@ public class DWebView extends WebView {
 
   private static String setupWebContent(String content, boolean isShowHighlight,
       boolean isShowImagePreview, String css) {
-    if (TextUtils.isEmpty(content) || TextUtils.isEmpty(content.trim())) return "";
+    if (isEmpty(content) || isEmpty(content.trim())) return "";
 
     // 读取用户设置：是否加载文章图片--默认有wifi下始终加载图片
     //if (AppContext.get(AppConfig.KEY_LOAD_IMAGE, true)
