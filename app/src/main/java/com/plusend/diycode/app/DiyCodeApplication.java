@@ -1,16 +1,13 @@
 package com.plusend.diycode.app;
 
 import android.app.Application;
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.KeyStoreHelper;
 import im.fir.sdk.FIR;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-
-/**
- * Created by plusend on 2016/12/18.
- */
 
 public class DiyCodeApplication extends Application {
 
@@ -25,5 +22,8 @@ public class DiyCodeApplication extends Application {
     } catch (NoSuchProviderException | NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {
       e.printStackTrace();
     }
+
+    // 滑动返回
+    BGASwipeBackManager.getInstance().init(this);
   }
 }
