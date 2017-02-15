@@ -10,6 +10,7 @@ import android.view.View;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.base.Presenter;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseActivity extends AppCompatActivity
@@ -26,6 +27,14 @@ public abstract class BaseActivity extends AppCompatActivity
   protected abstract Toolbar getToolbar();
 
   protected abstract List<Presenter> getPresenter();
+
+  public List<Presenter> addPresenter(Presenter... presenters) {
+    List<Presenter> result = new ArrayList<>();
+    for (Presenter presenter : presenters) {
+      result.add(presenter);
+    }
+    return result;
+  }
 
   private void initActionBar(Toolbar toolbar) {
     setSupportActionBar(toolbar);

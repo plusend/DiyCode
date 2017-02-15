@@ -3,11 +3,8 @@ package com.plusend.diycode.view.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -24,8 +21,10 @@ import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
+import com.plusend.diycode.mvp.model.base.Presenter;
+import java.util.List;
 
-public class WebActivity extends AppCompatActivity {
+public class WebActivity extends BaseActivity {
   private static final String TAG = "WebActivity";
   public static final String URL = "url";
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -34,10 +33,10 @@ public class WebActivity extends AppCompatActivity {
   private String mUrl;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_web);
     ButterKnife.bind(this);
-    initActionBar(toolbar);
+    super.onCreate(savedInstanceState);
+
     initWebView(webView);
 
     Intent intent = getIntent();
@@ -47,12 +46,12 @@ public class WebActivity extends AppCompatActivity {
     webView.loadUrl(mUrl);
   }
 
-  private void initActionBar(Toolbar toolbar) {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  @Override protected Toolbar getToolbar() {
+    return toolbar;
+  }
+
+  @Override protected List<Presenter> getPresenter() {
+    return null;
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

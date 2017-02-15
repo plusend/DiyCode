@@ -23,7 +23,8 @@ public class NodesPresenter extends Presenter {
     ((NodeDataNetwork) data).readNodes();
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void showNodes(NodesEvent nodesEvent) {
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void showNodes(NodesEvent nodesEvent) {
     nodesView.showNodes(nodesEvent.getNodeList());
   }
 

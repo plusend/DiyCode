@@ -4,8 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,8 +14,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
+import com.plusend.diycode.mvp.model.base.Presenter;
+import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
   private static final String TAG = "SearchActivity";
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.result) TextView result;
@@ -25,20 +25,19 @@ public class SearchActivity extends AppCompatActivity {
   private String fromQuery;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_search);
     ButterKnife.bind(this);
-    initActionBar(toolbar);
+    super.onCreate(savedInstanceState);
 
     handleIntent(getIntent());
   }
 
-  private void initActionBar(Toolbar toolbar) {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  @Override protected Toolbar getToolbar() {
+    return toolbar;
+  }
+
+  @Override protected List<Presenter> getPresenter() {
+    return null;
   }
 
   @Override protected void onNewIntent(Intent intent) {
@@ -69,14 +68,5 @@ public class SearchActivity extends AppCompatActivity {
     // 设置初始值
     searchView.setQuery(fromQuery, false);
     return true;
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-    }
-    return super.onOptionsItemSelected(item);
   }
 }

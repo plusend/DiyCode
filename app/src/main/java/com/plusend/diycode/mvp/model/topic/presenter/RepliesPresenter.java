@@ -2,7 +2,6 @@ package com.plusend.diycode.mvp.model.topic.presenter;
 
 import com.plusend.diycode.mvp.model.base.BaseData;
 import com.plusend.diycode.mvp.model.base.Presenter;
-import com.plusend.diycode.mvp.model.topic.data.TopicDataNetwork;
 import com.plusend.diycode.mvp.model.topic.event.RepliesEvent;
 import com.plusend.diycode.mvp.model.topic.view.RepliesView;
 import com.plusend.diycode.mvp.model.user.model.UserDataNetwork;
@@ -20,7 +19,8 @@ public class RepliesPresenter extends Presenter {
     data = UserDataNetwork.getInstance();
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void showReplies(RepliesEvent event) {
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void showReplies(RepliesEvent event) {
     repliesView.showReplies(event.getReplyList());
   }
 

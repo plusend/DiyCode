@@ -2,11 +2,8 @@ package com.plusend.diycode.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
+import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
 import com.plusend.diycode.mvp.model.user.presenter.SignInPresenter;
@@ -23,8 +21,9 @@ import com.plusend.diycode.mvp.model.user.view.SignInView;
 import com.plusend.diycode.mvp.model.user.view.UserView;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
+import java.util.List;
 
-public class SignInActivity extends AppCompatActivity implements SignInView, UserView {
+public class SignInActivity extends BaseActivity implements SignInView, UserView {
 
   public static final int REQUEST_CODE = 1;
   public static final int RESULT_OK = 200;
@@ -43,10 +42,9 @@ public class SignInActivity extends AppCompatActivity implements SignInView, Use
   private UserPresenter userPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sign_in);
     ButterKnife.bind(this);
-    initActionBar(toolbar);
+    super.onCreate(savedInstanceState);
 
     signInPresenter = new SignInPresenter(this);
     userPresenter = new UserPresenter(this);
@@ -64,12 +62,12 @@ public class SignInActivity extends AppCompatActivity implements SignInView, Use
     });
   }
 
-  private void initActionBar(Toolbar toolbar) {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  @Override protected Toolbar getToolbar() {
+    return toolbar;
+  }
+
+  @Override protected List<Presenter> getPresenter() {
+    return super.addPresenter(signInPresenter, userPresenter);
   }
 
   @Override public void getToken(Token token) {
@@ -83,27 +81,6 @@ public class SignInActivity extends AppCompatActivity implements SignInView, Use
 
   @Override public Context getContext() {
     return this;
-  }
-
-  @Override protected void onStart() {
-    super.onStart();
-    signInPresenter.start();
-    userPresenter.start();
-  }
-
-  @Override protected void onStop() {
-    signInPresenter.stop();
-    userPresenter.stop();
-    super.onStop();
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-    }
-    return super.onOptionsItemSelected(item);
   }
 
   @Override public void getMe(UserDetailInfo userDetailInfo) {

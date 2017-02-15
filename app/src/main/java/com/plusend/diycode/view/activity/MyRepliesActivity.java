@@ -3,17 +3,15 @@ package com.plusend.diycode.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
+import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.topic.entity.Reply;
 import com.plusend.diycode.mvp.model.topic.presenter.RepliesPresenter;
 import com.plusend.diycode.mvp.model.topic.view.RepliesView;
@@ -26,7 +24,7 @@ import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-public class MyRepliesActivity extends AppCompatActivity implements RepliesView {
+public class MyRepliesActivity extends BaseActivity implements RepliesView {
   private static final String TAG = "MyRepliesActivity";
   public static final String LOGIN_NAME = "loginName";
 
@@ -42,10 +40,9 @@ public class MyRepliesActivity extends AppCompatActivity implements RepliesView 
   private String loginName;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my_replies);
     ButterKnife.bind(this);
-    initActionBar(toolbar);
+    super.onCreate(savedInstanceState);
 
     presenter = new RepliesPresenter(this);
     items = new Items();
@@ -80,24 +77,17 @@ public class MyRepliesActivity extends AppCompatActivity implements RepliesView 
       startActivityForResult(new Intent(MyRepliesActivity.this, SignInActivity.class),
           SignInActivity.REQUEST_CODE);
       ToastUtil.showText(MyRepliesActivity.this, "请先登录");
+    } else {
+      getReplies();
     }
   }
 
-  private void initActionBar(Toolbar toolbar) {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  @Override protected Toolbar getToolbar() {
+    return toolbar;
   }
 
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-    }
-    return super.onOptionsItemSelected(item);
+  @Override protected List<Presenter> getPresenter() {
+    return super.addPresenter(presenter);
   }
 
   @Override public void showReplies(List<Reply> replyList) {
@@ -132,16 +122,5 @@ public class MyRepliesActivity extends AppCompatActivity implements RepliesView 
 
   @Override public Context getContext() {
     return this;
-  }
-
-  @Override protected void onStart() {
-    super.onStart();
-    presenter.start();
-    getReplies();
-  }
-
-  @Override protected void onStop() {
-    presenter.stop();
-    super.onStop();
   }
 }

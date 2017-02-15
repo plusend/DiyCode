@@ -3,17 +3,15 @@ package com.plusend.diycode.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
+import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.notification.entity.Notification;
 import com.plusend.diycode.mvp.model.notification.presenter.NotificationsPresenter;
 import com.plusend.diycode.mvp.model.notification.view.NotificationsView;
@@ -33,9 +31,7 @@ import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-import static android.os.Build.VERSION_CODES.M;
-
-public class NotificationActivity extends AppCompatActivity implements NotificationsView {
+public class NotificationActivity extends BaseActivity implements NotificationsView {
 
   private static final String TYPE_REPLY = "TopicReply";
   private static final String TYPE_MENTION = "Mention";
@@ -54,10 +50,9 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
   private int offset;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_notification);
     ButterKnife.bind(this);
-    initActionBar(toolbar);
+    super.onCreate(savedInstanceState);
 
     presenter = new NotificationsPresenter(this);
     items = new Items();
@@ -98,12 +93,12 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
     }
   }
 
-  private void initActionBar(Toolbar toolbar) {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  @Override protected Toolbar getToolbar() {
+    return toolbar;
+  }
+
+  @Override protected List<Presenter> getPresenter() {
+    return super.addPresenter(presenter);
   }
 
   @Override public void showNotifications(List<Notification> notificationList) {
@@ -151,25 +146,6 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
 
   @Override public Context getContext() {
     return this;
-  }
-
-  @Override protected void onStart() {
-    super.onStart();
-    presenter.start();
-  }
-
-  @Override protected void onStop() {
-    presenter.stop();
-    super.onStop();
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-    }
-    return super.onOptionsItemSelected(item);
   }
 
   @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {

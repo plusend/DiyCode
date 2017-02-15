@@ -34,16 +34,16 @@ public class NodeDataNetwork implements NodeData {
         if (response.isSuccessful()) {
           List<Node> nodeList = response.body();
           Log.v(TAG, "nodeList:" + nodeList);
-          EventBus.getDefault().post(new NodesEvent(nodeList));
+          EventBus.getDefault().postSticky(new NodesEvent(nodeList));
         } else {
           Log.e(TAG, "readNodes STATUS: " + response.code());
-          EventBus.getDefault().post(new NodesEvent(null));
+          EventBus.getDefault().postSticky(new NodesEvent(null));
         }
       }
 
       @Override public void onFailure(Call<List<Node>> call, Throwable t) {
         Log.e(TAG, t.getMessage());
-        EventBus.getDefault().post(new NodesEvent(null));
+        EventBus.getDefault().postSticky(new NodesEvent(null));
       }
     });
   }

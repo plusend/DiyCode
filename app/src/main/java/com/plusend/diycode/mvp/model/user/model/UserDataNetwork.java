@@ -343,16 +343,16 @@ public class UserDataNetwork implements UserData {
         if (response.isSuccessful()) {
           List<Reply> replyList = response.body();
           Log.v(TAG, "replyList: " + replyList);
-          EventBus.getDefault().post(new RepliesEvent(replyList));
+          EventBus.getDefault().postSticky(new RepliesEvent(replyList));
         } else {
           Log.e(TAG, "getUserReplies STATUS: " + response.code());
-          EventBus.getDefault().post(new RepliesEvent(null));
+          EventBus.getDefault().postSticky(new RepliesEvent(null));
         }
       }
 
       @Override public void onFailure(Call<List<Reply>> call, Throwable t) {
         Log.e(TAG, t.getMessage());
-        EventBus.getDefault().post(new RepliesEvent(null));
+        EventBus.getDefault().postSticky(new RepliesEvent(null));
       }
     });
   }

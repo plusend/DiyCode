@@ -4,18 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
+import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.fragment.TopicFragment;
+import java.util.List;
 
-public class MyTopicsActivity extends AppCompatActivity {
+public class MyTopicsActivity extends BaseActivity {
 
   public static final String TITLE = "title";
   public static final String TYPE = "type";
@@ -24,11 +24,10 @@ public class MyTopicsActivity extends AppCompatActivity {
   @BindView(R.id.toolbar) Toolbar toolbar;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my_topics);
     ButterKnife.bind(this);
+    super.onCreate(savedInstanceState);
 
-    initActionBar(toolbar);
     Intent intent = getIntent();
     if (intent != null) {
       title = intent.getStringExtra(TITLE);
@@ -52,23 +51,12 @@ public class MyTopicsActivity extends AppCompatActivity {
     addTopicFragment();
   }
 
-  private void initActionBar(Toolbar toolbar) {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  @Override protected Toolbar getToolbar() {
+    return toolbar;
   }
 
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-      default:
-        break;
-    }
-    return super.onOptionsItemSelected(item);
+  @Override protected List<Presenter> getPresenter() {
+    return null;
   }
 
   private void addTopicFragment() {

@@ -4,18 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
+import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
 import com.plusend.diycode.mvp.model.topic.entity.TopicReply;
 import com.plusend.diycode.mvp.model.topic.presenter.TopicPresenter;
@@ -23,16 +20,16 @@ import com.plusend.diycode.mvp.model.topic.presenter.TopicRepliesPresenter;
 import com.plusend.diycode.mvp.model.topic.view.TopicRepliesView;
 import com.plusend.diycode.mvp.model.topic.view.TopicView;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
+import com.plusend.diycode.view.adapter.topic.Footer;
 import com.plusend.diycode.view.adapter.topic.FooterViewProvider;
 import com.plusend.diycode.view.adapter.topic.TopicDetailViewProvider;
-import com.plusend.diycode.view.adapter.topic.Footer;
 import com.plusend.diycode.view.adapter.topic.TopicReplyViewProvider;
 import com.plusend.diycode.view.adapter.topic.TopicReplyWithTopic;
 import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-public class TopicActivity extends AppCompatActivity implements TopicView, TopicRepliesView {
+public class TopicActivity extends BaseActivity implements TopicView, TopicRepliesView {
   private static final String TAG = "TopicActivity";
   public static final String ID = "topicId";
 
@@ -52,10 +49,9 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     Log.d(TAG, "onCreate");
-    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_topic);
     ButterKnife.bind(this);
-    initActionBar(toolbar);
+    super.onCreate(savedInstanceState);
 
     Intent intent = getIntent();
     id = intent.getIntExtra(ID, 0);
@@ -107,12 +103,12 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
     });
   }
 
-  private void initActionBar(Toolbar toolbar) {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  @Override protected Toolbar getToolbar() {
+    return toolbar;
+  }
+
+  @Override protected List<Presenter> getPresenter() {
+    return super.addPresenter(topicPresenter, topicRepliesPresenter);
   }
 
   @Override public void showTopic(TopicDetail topicDetail) {
@@ -130,18 +126,6 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
 
   @Override public Context getContext() {
     return this;
-  }
-
-  @Override protected void onStart() {
-    super.onStart();
-    topicPresenter.start();
-    topicRepliesPresenter.start();
-  }
-
-  @Override protected void onStop() {
-    topicPresenter.stop();
-    topicRepliesPresenter.stop();
-    super.onStop();
   }
 
   @Override public void showReplies(List<TopicReply> topicReplyList) {
@@ -204,16 +188,5 @@ public class TopicActivity extends AppCompatActivity implements TopicView, Topic
     ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_LOADING);
     adapter.notifyItemChanged(adapter.getItemCount());
     topicRepliesPresenter.addReplies(offset);
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-      default:
-        break;
-    }
-    return super.onOptionsItemSelected(item);
   }
 }

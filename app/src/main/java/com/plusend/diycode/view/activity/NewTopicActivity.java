@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,19 +13,20 @@ import android.widget.Spinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.topic.node.entity.Node;
+import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
-import com.plusend.diycode.mvp.model.topic.presenter.NewTopicPresenter;
+import com.plusend.diycode.mvp.model.topic.node.entity.Node;
 import com.plusend.diycode.mvp.model.topic.node.presenter.NodesPresenter;
-import com.plusend.diycode.mvp.model.topic.view.NewTopicView;
 import com.plusend.diycode.mvp.model.topic.node.view.NodesView;
+import com.plusend.diycode.mvp.model.topic.presenter.NewTopicPresenter;
+import com.plusend.diycode.mvp.model.topic.view.NewTopicView;
 import com.plusend.diycode.util.ToastUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class NewTopicActivity extends AppCompatActivity implements NewTopicView, NodesView {
+public class NewTopicActivity extends BaseActivity implements NewTopicView, NodesView {
 
   @BindView(R.id.title) EditText title;
   @BindView(R.id.content) EditText content;
@@ -45,10 +43,9 @@ public class NewTopicActivity extends AppCompatActivity implements NewTopicView,
   private NodesPresenter nodesPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_new_topic);
     ButterKnife.bind(this);
-    initActionBar(toolbar);
+    super.onCreate(savedInstanceState);
 
     nodesPresenter = new NodesPresenter(this);
     newTopicPresenter = new NewTopicPresenter(this);
@@ -65,14 +62,19 @@ public class NewTopicActivity extends AppCompatActivity implements NewTopicView,
         newTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
       }
     });
+
+    nodesPresenter.readNodes();
   }
 
-  private void initActionBar(Toolbar toolbar) {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  @Override protected Toolbar getToolbar() {
+    return toolbar;
+  }
+
+  @Override protected List<Presenter> getPresenter() {
+    List<Presenter> list = new ArrayList<>();
+    list.add(nodesPresenter);
+    list.add(newTopicPresenter);
+    return list;
   }
 
   @Override public void getNewTopic(TopicDetail topicDetail) {
@@ -142,29 +144,5 @@ public class NewTopicActivity extends AppCompatActivity implements NewTopicView,
 
   @Override public Context getContext() {
     return this;
-  }
-
-  @Override protected void onStart() {
-    super.onStart();
-    newTopicPresenter.start();
-    nodesPresenter.start();
-    nodesPresenter.readNodes();
-  }
-
-  @Override protected void onStop() {
-    newTopicPresenter.stop();
-    nodesPresenter.stop();
-    super.onStop();
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-      default:
-        break;
-    }
-    return super.onOptionsItemSelected(item);
   }
 }

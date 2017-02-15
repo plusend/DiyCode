@@ -4,23 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
+import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.topic.presenter.CreateTopicReplyPresenter;
 import com.plusend.diycode.mvp.model.topic.view.CreateTopicReplyView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.ToastUtil;
+import java.util.List;
 
-public class CreateTopicReplyActivity extends AppCompatActivity implements CreateTopicReplyView {
+public class CreateTopicReplyActivity extends BaseActivity implements CreateTopicReplyView {
 
   @BindView(R.id.title) TextView title;
   @BindView(R.id.body) EditText body;
@@ -34,10 +33,9 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
   private int id;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_create_topic_reply);
     ButterKnife.bind(this);
-    initActionBar(toolbar);
+    super.onCreate(savedInstanceState);
 
     Intent intent = getIntent();
     id = intent.getIntExtra(TOPIC_ID, 0);
@@ -64,12 +62,12 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
     }
   }
 
-  private void initActionBar(Toolbar toolbar) {
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+  @Override protected Toolbar getToolbar() {
+    return toolbar;
+  }
+
+  @Override protected List<Presenter> getPresenter() {
+    return super.addPresenter(createTopicReplyPresenter);
   }
 
   @Override public void getResult(boolean isSuccessful) {
@@ -82,27 +80,6 @@ public class CreateTopicReplyActivity extends AppCompatActivity implements Creat
 
   @Override public Context getContext() {
     return this;
-  }
-
-  @Override protected void onStart() {
-    super.onStart();
-    createTopicReplyPresenter.start();
-  }
-
-  @Override protected void onStop() {
-    createTopicReplyPresenter.stop();
-    super.onStop();
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-      default:
-        break;
-    }
-    return super.onOptionsItemSelected(item);
   }
 
   @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
