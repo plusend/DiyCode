@@ -46,24 +46,26 @@ public abstract class BaseActivity extends AppCompatActivity
     }
   }
 
-  @Override protected void onStart() {
+  @Override protected void onResume() {
+    Log.d(TAG, "onResume");
     super.onStart();
     if (getPresenter() != null && getPresenter().size() != 0) {
       for (Presenter presenter : getPresenter()) {
         presenter.start();
       }
     } else {
-      Log.d(TAG, "onStart getPresenter() == null");
+      Log.d(TAG, "onResume getPresenter() == null");
     }
   }
 
-  @Override protected void onStop() {
+  @Override protected void onPause() {
+    Log.d(TAG, "onPause");
     if (getPresenter() != null && getPresenter().size() != 0) {
       for (Presenter presenter : getPresenter()) {
         presenter.stop();
       }
     } else {
-      Log.d(TAG, "onStop getPresenter() == null");
+      Log.d(TAG, "onPause getPresenter() == null");
     }
     super.onStop();
   }
