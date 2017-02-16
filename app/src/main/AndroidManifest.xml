@@ -132,7 +132,6 @@
       </intent-filter>
     </activity>
     <activity
-        android:process=".image"
         android:label="查看图片"
         android:name=".view.activity.ImageActivity">
     </activity>

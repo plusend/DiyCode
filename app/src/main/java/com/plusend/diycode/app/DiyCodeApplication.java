@@ -2,6 +2,7 @@ package com.plusend.diycode.app;
 
 import android.app.Application;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.KeyStoreHelper;
 import im.fir.sdk.FIR;
@@ -25,5 +26,7 @@ public class DiyCodeApplication extends Application {
 
     // 滑动返回
     BGASwipeBackManager.getInstance().init(this);
+
+    Fresco.initialize(this);
   }
 }
