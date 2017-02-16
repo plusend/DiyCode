@@ -103,16 +103,16 @@ public class UserDataNetwork implements UserData {
         if (response.isSuccessful()) {
           UserDetailInfo userDetailInfo = response.body();
           Log.d(TAG, "user: " + userDetailInfo);
-          EventBus.getDefault().post(new UserDetailInfoEvent(userDetailInfo));
+          EventBus.getDefault().postSticky(new UserDetailInfoEvent(userDetailInfo));
         } else {
           Log.e(TAG, "getUser STATUS: " + response.code());
-          EventBus.getDefault().post(new UserDetailInfoEvent(null));
+          EventBus.getDefault().postSticky(new UserDetailInfoEvent(null));
         }
       }
 
       @Override public void onFailure(Call<UserDetailInfo> call, Throwable t) {
         Log.e(TAG, t.getMessage());
-        EventBus.getDefault().post(new UserDetailInfoEvent(null));
+        EventBus.getDefault().postSticky(new UserDetailInfoEvent(null));
       }
     });
   }
