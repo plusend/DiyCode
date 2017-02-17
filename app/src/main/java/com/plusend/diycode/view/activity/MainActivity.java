@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity
       }
     });
 
+    userPresenter = new UserPresenter(this);
+
     Token token = PrefUtil.getToken(this);
     if (!TextUtils.isEmpty(token.getAccessToken())) {
       me = PrefUtil.getMe(this);
@@ -138,12 +140,10 @@ public class MainActivity extends AppCompatActivity
         showMe(me);
       } else {
         Log.d(TAG, "user is null");
-        userPresenter = new UserPresenter(this);
         userPresenter.getMe();
       }
     } else {
       Log.d(TAG, "token is null");
-      userPresenter = new UserPresenter(this);
     }
   }
 
@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity
     super.onNewIntent(intent);
     if (getResources().getString(R.string.logout_intent_action).equals(intent.getAction())) {
       PrefUtil.clearMe(this);
-      userPresenter = new UserPresenter(this);
       UserDetailInfo userDetailInfo = new UserDetailInfo();
       userDetailInfo.setEmail("点击图片登录");
       showMe(userDetailInfo);
@@ -251,9 +250,7 @@ public class MainActivity extends AppCompatActivity
 
   @Override protected void onStart() {
     super.onStart();
-    if (userPresenter != null) {
-      userPresenter.start();
-    }
+    userPresenter.start();
 
     if (!TextUtils.isEmpty(PrefUtil.getMe(this).getEmail())) {
       showMe(PrefUtil.getMe(this));
@@ -266,9 +263,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override protected void onStop() {
-    if (userPresenter != null) {
-      userPresenter.stop();
-    }
+    userPresenter.stop();
     super.onStop();
   }
 
