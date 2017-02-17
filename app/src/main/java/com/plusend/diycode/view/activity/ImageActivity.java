@@ -9,6 +9,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.plusend.diycode.R;
@@ -30,6 +32,9 @@ public class ImageActivity extends BaseActivity {
 
     String url = getIntent().getStringExtra(URL);
     Log.d(TAG, "url: " + url);
+
+    GenericDraweeHierarchy hierarchy = mPhotoDraweeView.getHierarchy();
+    hierarchy.setProgressBarImage(new ProgressBarDrawable());
 
     DraweeController controller = Fresco.newDraweeControllerBuilder()
         .setUri(Uri.parse(url))
