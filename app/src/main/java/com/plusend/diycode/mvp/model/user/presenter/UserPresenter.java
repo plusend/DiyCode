@@ -33,7 +33,9 @@ public class UserPresenter extends Presenter {
 
   @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
   public void getMe(UserDetailInfoEvent userDetailInfoEvent) {
+    Log.d(TAG, "getMe");
     userView.getUser(userDetailInfoEvent.getUserDetailInfo());
+    EventBus.getDefault().removeStickyEvent(userDetailInfoEvent);
   }
 
   public void getMe() {

@@ -38,6 +38,7 @@ public class TopicPresenter extends Presenter {
   public void showNewTopic(NewTopicEvent newTopicEvent) {
     Log.d(TAG, "showNewTopic");
     topicView.showTopic(newTopicEvent.getTopicDetail());
+    EventBus.getDefault().removeStickyEvent(newTopicEvent);
   }
   
   @Override public void start() {

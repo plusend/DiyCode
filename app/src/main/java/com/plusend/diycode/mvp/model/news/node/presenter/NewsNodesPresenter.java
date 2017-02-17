@@ -1,5 +1,6 @@
 package com.plusend.diycode.mvp.model.news.node.presenter;
 
+import android.util.Log;
 import com.plusend.diycode.mvp.model.base.BaseData;
 import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.news.node.data.NewsNodeDataNetwork;
@@ -25,7 +26,9 @@ public class NewsNodesPresenter extends Presenter {
 
   @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
   public void showNewsNodes(NewsNodesEvent newsNodesEvent) {
+    Log.d(TAG, "showNewsNodes");
     newsNodesView.showNodes(newsNodesEvent.getNewsNodeList());
+    EventBus.getDefault().removeStickyEvent(newsNodesEvent);
   }
 
   @Override public void start() {

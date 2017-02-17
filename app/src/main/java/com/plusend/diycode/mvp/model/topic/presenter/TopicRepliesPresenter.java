@@ -58,6 +58,7 @@ public class TopicRepliesPresenter extends Presenter {
     if (createTopicReplyEvent.isSuccessful()) {
       topicRepliesView.showNewReply();
     }
+    EventBus.getDefault().removeStickyEvent(createTopicReplyEvent);
   }
 
   @Override public void start() {

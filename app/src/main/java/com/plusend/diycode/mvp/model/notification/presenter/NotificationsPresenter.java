@@ -1,5 +1,6 @@
 package com.plusend.diycode.mvp.model.notification.presenter;
 
+import android.util.Log;
 import com.plusend.diycode.mvp.model.base.BaseData;
 import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.notification.data.NotificationDataNetwork;
@@ -10,6 +11,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class NotificationsPresenter extends Presenter {
+  private static final String TAG = "NotificationsPresenter";
   private BaseData topicData;
   private NotificationsView view;
 
@@ -19,12 +21,15 @@ public class NotificationsPresenter extends Presenter {
   }
 
   public void readNotifications(int offset) {
+    Log.d(TAG, "readNotifications");
     ((NotificationDataNetwork) topicData).readNotifications(offset, null);
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
   public void showNotifications(NotificationsEvent event) {
+    Log.d(TAG, "showNotifications");
     view.showNotifications(event.getNotificationList());
+    EventBus.getDefault().removeStickyEvent(event);
   }
 
   @Override public void start() {

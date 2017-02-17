@@ -1,5 +1,6 @@
 package com.plusend.diycode.mvp.model.topic.presenter;
 
+import android.util.Log;
 import com.plusend.diycode.mvp.model.base.BaseData;
 import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.topic.event.RepliesEvent;
@@ -10,7 +11,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class RepliesPresenter extends Presenter {
-
+  private static final String TAG = "RepliesPresenter";
   private RepliesView repliesView;
   private BaseData data;
 
@@ -21,7 +22,9 @@ public class RepliesPresenter extends Presenter {
 
   @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
   public void showReplies(RepliesEvent event) {
+    Log.d(TAG, "showReplies");
     repliesView.showReplies(event.getReplyList());
+    EventBus.getDefault().removeStickyEvent(event);
   }
 
   public void getReplies(String loginName, Integer offset) {
