@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.jaeger.library.StatusBarUtil;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity
   @BindView(R.id.tab_layout) TabLayout tabLayout;
   @BindView(R.id.view_pager) ViewPager viewPager;
   @BindView(R.id.fab) FloatingActionButton fab;
+  @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
   private MenuItem search;
   private ImageView avatar;
   private TextView email;
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+    StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, 0xF0F0F0, 0);
+
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     toolbar.setLogo(R.mipmap.logo_actionbar);
     toolbar.setTitle("");
@@ -187,7 +192,7 @@ public class MainActivity extends AppCompatActivity
     return super.onOptionsItemSelected(item);
   }
 
-  @Override public boolean onNavigationItemSelected(MenuItem item) {
+  @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
     // Handle navigation view item clicks here.
     int id = item.getItemId();
 
