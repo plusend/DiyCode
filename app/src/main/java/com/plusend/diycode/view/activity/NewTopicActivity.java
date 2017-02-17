@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import com.plusend.diycode.mvp.model.topic.node.presenter.NodesPresenter;
 import com.plusend.diycode.mvp.model.topic.node.view.NodesView;
 import com.plusend.diycode.mvp.model.topic.presenter.NewTopicPresenter;
 import com.plusend.diycode.mvp.model.topic.view.NewTopicView;
+import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -62,7 +64,12 @@ public class NewTopicActivity extends BaseActivity implements NewTopicView, Node
         newTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
       }
     });
-
+    String loginName = PrefUtil.getMe(this).getLogin();
+    if (TextUtils.isEmpty(loginName)) {
+      startActivityForResult(new Intent(this, SignInActivity.class), SignInActivity.REQUEST_CODE);
+      ToastUtil.showText(this, "请先登录");
+      return;
+    }
     nodesPresenter.readNodes();
   }
 
@@ -144,5 +151,19 @@ public class NewTopicActivity extends BaseActivity implements NewTopicView, Node
 
   @Override public Context getContext() {
     return this;
+  }
+
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode) {
+      case SignInActivity.REQUEST_CODE:
+        if (resultCode == SignInActivity.RESULT_OK) {
+          nodesPresenter.readNodes();
+        } else {
+          ToastUtil.showText(this, "放弃登录");
+          finish();
+        }
+        break;
+    }
   }
 }

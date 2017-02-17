@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,15 +21,13 @@ import com.plusend.diycode.mvp.model.news.node.presenter.NewsNodesPresenter;
 import com.plusend.diycode.mvp.model.news.node.view.NewsNodesView;
 import com.plusend.diycode.mvp.model.news.presenter.CreateNewsPresenter;
 import com.plusend.diycode.mvp.model.news.view.CreateNewsView;
-import com.plusend.diycode.mvp.model.topic.node.entity.Node;
+import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.util.UrlUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static android.text.TextUtils.split;
 
 public class CreateNewsActivity extends BaseActivity implements CreateNewsView, NewsNodesView {
 
@@ -82,6 +79,12 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
     mCreateNewsPresenter = new CreateNewsPresenter(this);
     mNewsNodesPresenter = new NewsNodesPresenter(this);
 
+    String loginName = PrefUtil.getMe(this).getLogin();
+    if (TextUtils.isEmpty(loginName)) {
+      startActivityForResult(new Intent(this, SignInActivity.class), SignInActivity.REQUEST_CODE);
+      ToastUtil.showText(this, "请先登录");
+      return;
+    }
     ((NewsNodesPresenter) mNewsNodesPresenter).readNodes();
   }
 
@@ -166,5 +169,19 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
       if (set.add(element)) parents.add(element);
     }
     return parents;
+  }
+
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode) {
+      case SignInActivity.REQUEST_CODE:
+        if (resultCode == SignInActivity.RESULT_OK) {
+          ((NewsNodesPresenter) mNewsNodesPresenter).readNodes();
+        } else {
+          ToastUtil.showText(this, "放弃登录");
+          finish();
+        }
+        break;
+    }
   }
 }
