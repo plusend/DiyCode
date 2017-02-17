@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.plusend.diycode.BuildConfig;
 import com.plusend.diycode.R;
+import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.view.adapter.about.Card;
 import com.plusend.diycode.view.adapter.about.CardViewProvider;
 import com.plusend.diycode.view.adapter.about.Category;
@@ -26,13 +27,14 @@ import com.plusend.diycode.view.adapter.about.License;
 import com.plusend.diycode.view.adapter.about.LicenseViewProvider;
 import com.plusend.diycode.view.adapter.about.Line;
 import com.plusend.diycode.view.adapter.about.LineViewProvider;
+import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
  * @author drakeet
  */
-public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
+public class AboutActivity extends BaseActivity implements View.OnClickListener {
 
   protected Toolbar toolbar;
   protected CollapsingToolbarLayout collapsingToolbar;
@@ -107,6 +109,14 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
     onSetupRecyclerView(recyclerView);
+  }
+
+  @Override protected Toolbar getToolbar() {
+    return null;
+  }
+
+  @Override protected List<Presenter> getPresenter() {
+    return null;
   }
 
   private void onSetupRecyclerView(RecyclerView recyclerView) {

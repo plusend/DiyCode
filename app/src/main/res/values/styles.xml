@@ -34,7 +34,7 @@
 
   <!-- AboutActivity -->
 
-  <style name="AppTheme.About" parent="Theme.AppCompat.Light.DarkActionBar">
+  <style name="AppTheme.About" parent="AppTheme.NoActionBar.Transparent">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
     <item name="colorPrimary">@color/colorPrimary</item>
