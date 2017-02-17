@@ -107,6 +107,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/fab_margin"
+        android:tint="@color/white"
+        app:backgroundTint="@color/blue"
         app:srcCompat="@android:drawable/ic_menu_send"
         />
   </RelativeLayout>

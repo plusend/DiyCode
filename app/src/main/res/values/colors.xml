@@ -2,9 +2,10 @@
 <resources>
   <color name="colorPrimary">#ffffff</color>
   <color name="colorPrimaryDark">#999999</color>
-  <color name="colorAccent">#FF4081</color>
+  <color name="colorAccent">#EB5424</color>
   <color name="windowBackground">#F0F0F0</color>
   <color name="replyTips">#ff0099cc</color>
+  <color name="blue">#356DD0</color>
 
   <!-- MaterialSettingsActivity -->
   <color name="white">#ffffff</color>
