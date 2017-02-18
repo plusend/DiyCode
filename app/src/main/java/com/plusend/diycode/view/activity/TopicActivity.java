@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
@@ -36,6 +37,7 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
   @BindView(R.id.rv) RecyclerView rv;
   @BindView(R.id.fab) FloatingActionButton fab;
   @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.progress_bar) ProgressBar progressBar;
 
   private int id;
   private TopicDetail topicDetail;
@@ -118,6 +120,12 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
     //topicRepliesAdapter.notifyItemInserted(0);
     adapter.notifyItemInserted(adapter.getItemCount());
     requestReplies();
+  }
+
+  @Override public void loadTopicFinish() {
+    progressBar.setVisibility(View.GONE);
+    rv.setVisibility(View.VISIBLE);
+    fab.setVisibility(View.VISIBLE);
   }
 
   private void requestReplies() {

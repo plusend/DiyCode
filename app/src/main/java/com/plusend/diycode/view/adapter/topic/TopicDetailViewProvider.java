@@ -13,10 +13,12 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
+import com.plusend.diycode.mvp.model.topic.event.LoadTopicDetailFinishEvent;
 import com.plusend.diycode.util.TimeUtil;
 import com.plusend.diycode.view.activity.UserActivity;
 import com.plusend.diycode.view.widget.DWebView;
 import me.drakeet.multitype.ItemViewProvider;
+import org.greenrobot.eventbus.EventBus;
 
 public class TopicDetailViewProvider
     extends ItemViewProvider<TopicDetail, TopicDetailViewProvider.ViewHolder> {
@@ -42,7 +44,11 @@ public class TopicDetailViewProvider
         .into(holder.avatar);
     holder.topic.setText(topicDetail.getNodeName());
     holder.repliesCount.setText("共收到 " + topicDetail.getRepliesCount() + " 条回复");
-    holder.content.loadDetailDataAsync(topicDetail.getBodyHtml(), null);
+    holder.content.loadDetailDataAsync(topicDetail.getBodyHtml(), new Runnable() {
+      @Override public void run() {
+        EventBus.getDefault().post(new LoadTopicDetailFinishEvent());
+      }
+    });
     View.OnClickListener listener = new View.OnClickListener() {
       @Override public void onClick(View view) {
         Intent intent = new Intent(view.getContext(), UserActivity.class);

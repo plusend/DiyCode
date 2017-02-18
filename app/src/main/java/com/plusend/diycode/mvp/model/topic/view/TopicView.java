@@ -9,4 +9,5 @@ import com.plusend.diycode.mvp.model.base.BaseView;
 
 public interface TopicView extends BaseView {
   void showTopic(TopicDetail topicDetail);
+  void loadTopicFinish();
 }

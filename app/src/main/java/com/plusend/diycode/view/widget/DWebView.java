@@ -234,6 +234,7 @@ public class DWebView extends WebView {
     }
 
     @Override public void onPageFinished(WebView view, String url) {
+      Log.d(TAG, "onPageFinished");
       super.onPageFinished(view, url);
       run();
     }
