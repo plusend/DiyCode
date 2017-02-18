@@ -41,7 +41,6 @@ dependencies {
   compile 'com.squareup.retrofit2:retrofit:2.1.0'
   compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
   compile 'org.greenrobot:eventbus:3.0.0'
-  compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
   compile 'com.android.support:support-v4:25.1.0'
   compile 'com.android.support:support-vector-drawable:25.1.0'
   testCompile 'junit:junit:4.12'
