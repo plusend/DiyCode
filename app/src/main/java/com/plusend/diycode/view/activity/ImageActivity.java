@@ -1,29 +1,29 @@
 package com.plusend.diycode.view.activity;
 
-import android.graphics.drawable.Animatable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.drawable.ProgressBarDrawable;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.imagepipeline.image.ImageInfo;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.base.Presenter;
 import java.util.List;
-import me.relex.photodraweeview.PhotoDraweeView;
+import uk.co.senab.photoview.PhotoView;
 
 public class ImageActivity extends BaseActivity {
   private static final String TAG = "ImageActivity";
   public static final String URL = "url";
 
   @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.image) PhotoDraweeView mPhotoDraweeView;
+  @BindView(R.id.progress_bar) ProgressBar progressBar;
+  @BindView(R.id.image) PhotoView image;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_image);
@@ -33,24 +33,24 @@ public class ImageActivity extends BaseActivity {
     String url = getIntent().getStringExtra(URL);
     Log.d(TAG, "url: " + url);
 
-    GenericDraweeHierarchy hierarchy = mPhotoDraweeView.getHierarchy();
-    hierarchy.setProgressBarImage(new ProgressBarDrawable());
-
-    DraweeController controller = Fresco.newDraweeControllerBuilder()
-        .setUri(Uri.parse(url))
-        .setAutoPlayAnimations(true)
-        .setControllerListener(new BaseControllerListener<ImageInfo>() {
+    Glide.with(this)
+        .load(url)
+        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+        .listener(new RequestListener<String, GlideDrawable>() {
           @Override
-          public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
-            super.onFinalImageSet(id, imageInfo, animatable);
-            if (imageInfo == null || mPhotoDraweeView == null) {
-              return;
-            }
-            mPhotoDraweeView.update(imageInfo.getWidth(), imageInfo.getHeight());
+          public boolean onException(Exception e, String model, Target<GlideDrawable> target,
+              boolean isFirstResource) {
+            progressBar.setVisibility(View.GONE);
+            return false;
+          }
+
+          @Override public boolean onResourceReady(GlideDrawable resource, String model,
+              Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+            progressBar.setVisibility(View.GONE);
+            return false;
           }
         })
-        .build();
-    mPhotoDraweeView.setController(controller);
+        .into(image);
   }
 
   @Override protected Toolbar getToolbar() {
