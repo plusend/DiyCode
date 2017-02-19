@@ -1,5 +1,6 @@
 package com.plusend.diycode.view.fragment;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.pgyersdk.update.UpdateManagerListener;
 import com.plusend.diycode.R;
 import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.activity.MainActivity;
+import permissions.dispatcher.NeedsPermission;
 
 public class SettingsFragment extends PreferenceFragment {
 
@@ -23,7 +25,7 @@ public class SettingsFragment extends PreferenceFragment {
     addFeedback();
   }
 
-  private void addCheckUpdate() {
+  @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) public void addCheckUpdate() {
     Preference myPref = findPreference(getResources().getString(R.string.pref_key_check_update));
     myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
       public boolean onPreferenceClick(Preference preference) {
@@ -53,7 +55,7 @@ public class SettingsFragment extends PreferenceFragment {
     });
   }
 
-  private void addFeedback() {
+  @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) private void addFeedback() {
     Preference myPref = findPreference(getResources().getString(R.string.pref_key_feedback));
     myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
       public boolean onPreferenceClick(Preference preference) {
