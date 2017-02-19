@@ -77,8 +77,12 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         new License("retrofit", "square", License.APACHE_2, "https://github.com/square/retrofit"));
     items.add(new License("eventbus", "greenrobot", License.APACHE_2,
         "https://github.com/greenrobot/EventBus"));
-    items.add(new License("SystemBarTint", "jgilfelt", License.APACHE_2,
-        "https://github.com/jgilfelt/SystemBarTint"));
+    items.add(new License("PhotoView", "chrisbanes", License.APACHE_2,
+        "https://github.com/chrisbanes/PhotoView"));
+    items.add(new License("BGASwipeBackLayout-Android", "bingoogolapple", License.APACHE_2,
+        "https://github.com/bingoogolapple/BGASwipeBackLayout-Android"));
+    items.add(new License("StatusBarUtil", "laobie", License.APACHE_2,
+        "https://github.com/laobie/StatusBarUtil"));
   }
 
   @Nullable protected CharSequence onCreateTitle() {
