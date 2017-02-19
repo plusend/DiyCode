@@ -103,3 +103,7 @@
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
 }
+
+# 蒲公英
+-dontwarn com.pgyersdk.**
+-keep class com.pgyersdk.** { *; }

@@ -17,4 +17,6 @@
   <string name="version_failed">更新过程出问题了</string>
   <string name="version_already">已经是最新版本啦!</string>
   <string name="pref_key_check_update">pref_key_check_update</string>
+  <string name="pref_key_feedback">pref_key_feedback</string>
+  <string name="file_provider">com.pgyersdk.provider</string>
 </resources>

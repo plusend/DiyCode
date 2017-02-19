@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.jaeger.library.StatusBarUtil;
+import com.pgyersdk.update.PgyUpdateManager;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;

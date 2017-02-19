@@ -4,10 +4,15 @@
 
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-  <!-- BugHD -->
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+  <!-- 蒲公英 -->
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- 获取网络状态 -->
+  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>  <!-- 获取设备信息 -->
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- 获取MAC地址-->
+  <uses-permission android:name="android.permission.RECORD_AUDIO"/> <!-- 允许程序录制音频 -->
+
+  <!-- 可选-->
+  <uses-permission android:name="android.permission.READ_LOGS"/> <!-- 获取logcat日志 -->
 
   <application
       android:name=".app.DiyCodeApplication"
@@ -109,16 +114,6 @@
         android:theme="@style/AppTheme.About">
     </activity>
 
-    <!-- BugHD -->
-    <meta-data
-        android:name="BUG_HD_SDK_GENERAL_KEY"
-        android:value="8600c967b234c06eb9f1a15cbfbacc8d"/>
-
-    <service
-        android:name=".view.service.UpdateService"
-        android:exported="false">
-    </service>
-
     <activity
         android:name=".view.activity.CreateNewsActivity"
         android:label="分享新链接"
@@ -135,6 +130,22 @@
         android:name=".view.activity.ImageActivity"
         android:label="查看图片">
     </activity>
+
+    <activity android:name="com.pgyersdk.activity.FeedbackActivity"/>
+
+    <meta-data
+        android:name="PGYER_APPID"
+        android:value="047d244d4b05e157bef49f4255ece514">
+    </meta-data>
+    <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="@string/file_provider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/provider_paths"/>
+    </provider>
   </application>
 
 </manifest>
