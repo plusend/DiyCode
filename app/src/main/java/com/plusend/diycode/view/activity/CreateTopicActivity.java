@@ -70,6 +70,13 @@ public class CreateTopicActivity extends BaseActivity implements NewTopicView, N
         id = node.getId();
       }
     }
+    if (TextUtils.isEmpty(title.getText())) {
+      ToastUtil.showText(this, "请输入标题");
+      return;
+    } else if (TextUtils.isEmpty(content.getText())) {
+      ToastUtil.showText(this, "请输入发帖内容");
+      return;
+    }
     newTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
   }
 

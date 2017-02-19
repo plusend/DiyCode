@@ -56,6 +56,10 @@ public class CreateTopicReplyActivity extends BaseActivity implements CreateTopi
   }
 
   private void send() {
+    if (TextUtils.isEmpty(body.getText())) {
+      ToastUtil.showText(this, "评论内容不能为空");
+      return;
+    }
     createTopicReplyPresenter.createTopicReply(id, body.getText().toString());
   }
 
