@@ -3,10 +3,10 @@ package com.plusend.diycode.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -23,7 +23,6 @@ public class CreateTopicReplyActivity extends BaseActivity implements CreateTopi
 
   @BindView(R.id.title) TextView title;
   @BindView(R.id.body) EditText body;
-  @BindView(R.id.fab) FloatingActionButton fab;
   @BindView(R.id.toolbar) Toolbar toolbar;
   public static final String TO = "toSb";
   public static final String TOPIC_ID = "topicId";
@@ -50,16 +49,14 @@ public class CreateTopicReplyActivity extends BaseActivity implements CreateTopi
 
     createTopicReplyPresenter = new CreateTopicReplyPresenter(this);
 
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        createTopicReplyPresenter.createTopicReply(id, body.getText().toString());
-      }
-    });
-
     if (TextUtils.isEmpty(Constant.VALUE_TOKEN)) {
       startActivityForResult(new Intent(this, SignInActivity.class), SignInActivity.REQUEST_CODE);
       ToastUtil.showText(this, "请先登录");
     }
+  }
+
+  private void send() {
+    createTopicReplyPresenter.createTopicReply(id, body.getText().toString());
   }
 
   @Override protected Toolbar getToolbar() {
@@ -92,5 +89,22 @@ public class CreateTopicReplyActivity extends BaseActivity implements CreateTopi
         }
         break;
     }
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        break;
+      case R.id.action_send:
+        send();
+        break;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.activity_create_topic_reply, menu);
+    return super.onCreateOptionsMenu(menu);
   }
 }

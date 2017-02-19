@@ -46,18 +46,6 @@
         android:layout_marginTop="16dp"
         android:hint="在此输入评论内容"
         />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="16dp"
-        android:tint="@color/white"
-        app:backgroundTint="@color/blue"
-        app:srcCompat="@android:drawable/ic_menu_send"
-        />
-
+    
   </RelativeLayout>
 </LinearLayout>

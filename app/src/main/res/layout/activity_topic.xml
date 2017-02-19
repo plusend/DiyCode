@@ -40,7 +40,8 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/fab_margin"
         android:visibility="gone"
-        app:srcCompat="@android:drawable/ic_menu_edit"
+        app:backgroundTint="#62646c"
+        app:srcCompat="@mipmap/ic_topic_reply"
         />
 
   </RelativeLayout>

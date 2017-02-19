@@ -27,7 +27,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.jaeger.library.StatusBarUtil;
-import com.pgyersdk.update.PgyUpdateManager;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.entity.Token;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         if (viewPager.getCurrentItem() == 0) {
-          startActivity(new Intent(MainActivity.this, NewTopicActivity.class));
+          startActivity(new Intent(MainActivity.this, CreateTopicActivity.class));
         } else if (viewPager.getCurrentItem() == 1) {
           startActivity(new Intent(MainActivity.this, CreateNewsActivity.class));
         }

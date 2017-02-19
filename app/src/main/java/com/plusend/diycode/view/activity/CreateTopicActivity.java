@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,13 +30,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class NewTopicActivity extends BaseActivity implements NewTopicView, NodesView {
+public class CreateTopicActivity extends BaseActivity implements NewTopicView, NodesView {
 
   @BindView(R.id.title) EditText title;
   @BindView(R.id.content) EditText content;
   @BindView(R.id.section_name) Spinner sectionName;
   @BindView(R.id.node_name) Spinner nodeName;
-  @BindView(R.id.fab) FloatingActionButton fab;
   @BindView(R.id.toolbar) Toolbar toolbar;
 
   private List<Node> nodeList;
@@ -52,18 +53,6 @@ public class NewTopicActivity extends BaseActivity implements NewTopicView, Node
     nodesPresenter = new NodesPresenter(this);
     newTopicPresenter = new NewTopicPresenter(this);
 
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        String section = sectionName.getDisplay().getName();
-        int id = 45;
-        for (Node node : nodeList) {
-          if (node.getName().equals(section)) {
-            id = node.getId();
-          }
-        }
-        newTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
-      }
-    });
     String loginName = PrefUtil.getMe(this).getLogin();
     if (TextUtils.isEmpty(loginName)) {
       startActivityForResult(new Intent(this, SignInActivity.class), SignInActivity.REQUEST_CODE);
@@ -71,6 +60,17 @@ public class NewTopicActivity extends BaseActivity implements NewTopicView, Node
       return;
     }
     nodesPresenter.readNodes();
+  }
+
+  private void createTopic() {
+    String section = sectionName.getDisplay().getName();
+    int id = 45;
+    for (Node node : nodeList) {
+      if (node.getName().equals(section)) {
+        id = node.getId();
+      }
+    }
+    newTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
   }
 
   @Override protected Toolbar getToolbar() {
@@ -86,7 +86,7 @@ public class NewTopicActivity extends BaseActivity implements NewTopicView, Node
 
   @Override public void getNewTopic(TopicDetail topicDetail) {
     if (topicDetail != null) {
-      startActivity(new Intent(NewTopicActivity.this, TopicActivity.class));
+      startActivity(new Intent(CreateTopicActivity.this, TopicActivity.class));
       finish();
     } else {
       ToastUtil.showText(this, "发布失败");
@@ -114,7 +114,7 @@ public class NewTopicActivity extends BaseActivity implements NewTopicView, Node
         List<String> temp2 = getNodeNames(nodeList, name);
         nodeNames = temp2.toArray(new String[temp2.size()]);
         ArrayAdapter<String> adapter =
-            new ArrayAdapter<>(NewTopicActivity.this, android.R.layout.simple_spinner_item,
+            new ArrayAdapter<>(CreateTopicActivity.this, android.R.layout.simple_spinner_item,
                 nodeNames);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -165,5 +165,22 @@ public class NewTopicActivity extends BaseActivity implements NewTopicView, Node
         }
         break;
     }
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        break;
+      case R.id.action_send:
+        createTopic();
+        break;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.activity_create_topic, menu);
+    return super.onCreateOptionsMenu(menu);
   }
 }

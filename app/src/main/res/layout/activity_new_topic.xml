@@ -9,7 +9,7 @@
     android:background="@color/windowBackground"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.plusend.diycode.view.activity.NewTopicActivity"
+    tools:context="com.plusend.diycode.view.activity.CreateTopicActivity"
     >
   <include
       layout="@layout/toolbar"
@@ -100,17 +100,6 @@
         android:textSize="15sp"
         />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:tint="@color/white"
-        app:backgroundTint="@color/blue"
-        app:srcCompat="@android:drawable/ic_menu_send"
-        />
   </RelativeLayout>
 
 </LinearLayout>
