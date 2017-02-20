@@ -3,10 +3,13 @@ package com.plusend.diycode.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -20,6 +23,7 @@ import com.plusend.diycode.mvp.model.topic.presenter.TopicPresenter;
 import com.plusend.diycode.mvp.model.topic.presenter.TopicRepliesPresenter;
 import com.plusend.diycode.mvp.model.topic.view.TopicRepliesView;
 import com.plusend.diycode.mvp.model.topic.view.TopicView;
+import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.view.adapter.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.topic.Footer;
 import com.plusend.diycode.view.adapter.topic.FooterViewProvider;
@@ -38,8 +42,8 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
   @BindView(R.id.fab) FloatingActionButton fab;
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.progress_bar) ProgressBar progressBar;
+  @BindView(R.id.coordinator) CoordinatorLayout coordinator;
 
-  private int id;
   private TopicDetail topicDetail;
   private MultiTypeAdapter adapter;
   private Items items = new Items();
@@ -56,7 +60,7 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
     super.onCreate(savedInstanceState);
 
     Intent intent = getIntent();
-    id = intent.getIntExtra(ID, 0);
+    int id = intent.getIntExtra(ID, 0);
     Log.d(TAG, "id: " + id);
     linearLayoutManager = new LinearLayoutManager(this);
     rv.setLayoutManager(linearLayoutManager);
@@ -97,6 +101,18 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
 
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
+        String loginName = PrefUtil.getMe(TopicActivity.this).getLogin();
+        if (TextUtils.isEmpty(loginName)) {
+          Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_LONG)
+              .setAction("登录", new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                  startActivityForResult(new Intent(TopicActivity.this, SignInActivity.class),
+                      SignInActivity.REQUEST_CODE);
+                }
+              })
+              .show();
+          return;
+        }
         Intent intent = new Intent(TopicActivity.this, CreateTopicReplyActivity.class);
         intent.putExtra(CreateTopicReplyActivity.TOPIC_ID, topicDetail.getId());
         intent.putExtra(CreateTopicReplyActivity.TOPIC_TITLE, topicDetail.getTitle());

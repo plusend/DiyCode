@@ -15,7 +15,6 @@ import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.base.Presenter;
 import com.plusend.diycode.mvp.model.topic.presenter.CreateTopicReplyPresenter;
 import com.plusend.diycode.mvp.model.topic.view.CreateTopicReplyView;
-import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.ToastUtil;
 import java.util.List;
 
@@ -48,11 +47,6 @@ public class CreateTopicReplyActivity extends BaseActivity implements CreateTopi
     body.requestFocus();
 
     createTopicReplyPresenter = new CreateTopicReplyPresenter(this);
-
-    if (TextUtils.isEmpty(Constant.VALUE_TOKEN)) {
-      startActivityForResult(new Intent(this, SignInActivity.class), SignInActivity.REQUEST_CODE);
-      ToastUtil.showText(this, "请先登录");
-    }
   }
 
   private void send() {
@@ -81,18 +75,6 @@ public class CreateTopicReplyActivity extends BaseActivity implements CreateTopi
 
   @Override public Context getContext() {
     return this;
-  }
-
-  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    switch (requestCode) {
-      case SignInActivity.REQUEST_CODE:
-        if (resultCode != SignInActivity.RESULT_OK) {
-          ToastUtil.showText(this, "放弃登录");
-          finish();
-        }
-        break;
-    }
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

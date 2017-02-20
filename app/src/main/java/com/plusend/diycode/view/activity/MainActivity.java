@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
@@ -34,6 +36,7 @@ import com.plusend.diycode.mvp.model.user.presenter.UserPresenter;
 import com.plusend.diycode.mvp.model.user.view.UserView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.PrefUtil;
+import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.adapter.MainPagerAdapter;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity
   @BindView(R.id.view_pager) ViewPager viewPager;
   @BindView(R.id.fab) FloatingActionButton fab;
   @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
+  @BindView(R.id.coordinator) CoordinatorLayout coordinator;
   private MenuItem search;
   private ImageView avatar;
   private TextView email;
@@ -66,6 +70,19 @@ public class MainActivity extends AppCompatActivity
 
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
+        String loginName = PrefUtil.getMe(MainActivity.this).getLogin();
+        if (TextUtils.isEmpty(loginName)) {
+          Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_LONG)
+              .setAction("登录", new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                  startActivityForResult(new Intent(MainActivity.this, SignInActivity.class),
+                      SignInActivity.REQUEST_CODE);
+                }
+              })
+              .show();
+          return;
+        }
+
         if (viewPager.getCurrentItem() == 0) {
           startActivity(new Intent(MainActivity.this, CreateTopicActivity.class));
         } else if (viewPager.getCurrentItem() == 1) {
