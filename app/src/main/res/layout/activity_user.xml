@@ -124,16 +124,16 @@
             android:textSize="12sp"
             />
 
-        <TextView
-            android:id="@+id/follow"
-            android:layout_width="64dp"
-            android:layout_height="28dp"
-            android:layout_marginStart="276dp"
-            android:layout_marginTop="97dp"
-            android:background="@mipmap/user_follow_bg"
-            android:gravity="center"
-            android:text="关注"
-            />
+        <!--<TextView-->
+            <!--android:id="@+id/follow"-->
+            <!--android:layout_width="64dp"-->
+            <!--android:layout_height="28dp"-->
+            <!--android:layout_marginStart="276dp"-->
+            <!--android:layout_marginTop="97dp"-->
+            <!--android:background="@mipmap/user_follow_bg"-->
+            <!--android:gravity="center"-->
+            <!--android:text="关注"-->
+            <!--/>-->
       </RelativeLayout>
     </android.support.v7.widget.Toolbar>
   </android.support.design.widget.AppBarLayout>
