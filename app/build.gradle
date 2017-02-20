@@ -51,4 +51,5 @@ dependencies {
   compile 'com.pgyersdk:sdk:2.5.4'
   compile 'com.github.hotchemi:permissionsdispatcher:2.3.1'
   annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
+  compile 'com.android.support:support-v13:25.1.0'
 }
