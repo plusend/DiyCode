@@ -3,18 +3,19 @@
 [深夜发布个小消息，Diycode 社区、项目、News、sites 的 API 发布了 - DiyCode](https://www.diycode.cc/topics/411)
 
 ## 下载
-[![](screenshot/ic_launcher.png)](http://fir.im/ul58)
+[![](screenshot/ic_launcher.png)](https://www.pgyer.com/diycode)
 
 ## 预览
 
-![](screenshot/DiyCode.jpg)
+![](screenshot/Diycode.jpg)
 
 ## 功能
 
-1. Topics 的浏览，回复，新建；
-2. News、Sites 的浏览；
-3. 浏览个人通知；
-4. 查看我的帖子、收藏、评论。
+1. Topics 的浏览、回复、新建；
+2. News 的浏览、分享、新建；
+3. Sites 的浏览；
+4. 浏览个人通知；
+5. 查看我的帖子、收藏、评论。
 
 ## 版权
 采用 [GNU General Public License v3.0](https://github.com/plusend/DiyCode/blob/master/LICENSE.md)
