@@ -3,11 +3,14 @@ package com.plusend.diycode.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -21,6 +24,7 @@ import com.plusend.diycode.mvp.model.news.node.presenter.NewsNodesPresenter;
 import com.plusend.diycode.mvp.model.news.node.view.NewsNodesView;
 import com.plusend.diycode.mvp.model.news.presenter.CreateNewsPresenter;
 import com.plusend.diycode.mvp.model.news.view.CreateNewsView;
+import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.util.UrlUtil;
 import java.util.ArrayList;
@@ -29,13 +33,13 @@ import java.util.List;
 import java.util.Set;
 
 public class CreateNewsActivity extends BaseActivity implements CreateNewsView, NewsNodesView {
-
   private static final String TAG = "CreateNewsActivity";
 
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.section_name) Spinner sectionName;
   @BindView(R.id.title) EditText title;
   @BindView(R.id.link) EditText link;
+  @BindView(R.id.coordinator) CoordinatorLayout coordinator;
 
   private Presenter mCreateNewsPresenter;
   private Presenter mNewsNodesPresenter;
@@ -69,8 +73,18 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
 
     mCreateNewsPresenter = new CreateNewsPresenter(this);
     mNewsNodesPresenter = new NewsNodesPresenter(this);
-
     ((NewsNodesPresenter) mNewsNodesPresenter).readNodes();
+    String loginName = PrefUtil.getMe(this).getLogin();
+    if (TextUtils.isEmpty(loginName)) {
+      Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_INDEFINITE)
+          .setAction("登录", new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              startActivityForResult(new Intent(CreateNewsActivity.this, SignInActivity.class),
+                  SignInActivity.REQUEST_CODE);
+            }
+          })
+          .show();
+    }
   }
 
   private void createNews() {
@@ -154,6 +168,22 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
       if (set.add(element)) parents.add(element);
     }
     return parents;
+  }
+
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode) {
+      case SignInActivity.REQUEST_CODE:
+        if (resultCode == SignInActivity.RESULT_OK) {
+          if (this.mNewsNodeList.size() == 0) {
+            ((NewsNodesPresenter) mNewsNodesPresenter).readNodes();
+          }
+        } else {
+          ToastUtil.showText(this, "放弃登录");
+          finish();
+        }
+        break;
+    }
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

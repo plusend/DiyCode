@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
@@ -10,14 +11,27 @@
     android:orientation="vertical"
     tools:context="com.plusend.diycode.view.activity.CreateNewsActivity"
     >
-  <include
-      layout="@layout/toolbar"
-      />
+
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:theme="@style/AppTheme.AppBarOverlay"
+      >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeToolbar"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        />
+  </android.support.design.widget.AppBarLayout>
+
   <RelativeLayout
       android:id="@+id/relative"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="#f0f0f0"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
       >
 
     <TextView
@@ -119,4 +133,4 @@
 
   </RelativeLayout>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
