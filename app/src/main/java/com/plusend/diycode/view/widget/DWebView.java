@@ -67,17 +67,15 @@ public class DWebView extends WebView {
     settings.setJavaScriptEnabled(true);
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-        addJavascriptInterface(new OnWebViewImageListener() {
-            @Override
-            @JavascriptInterface
-            public void showImagePreview(String bigImageUrl) {
-                if (!TextUtils.isEmpty(bigImageUrl)) {
-                  Intent intent = new Intent(getContext(), ImageActivity.class);
-                  intent.putExtra(ImageActivity.URL, bigImageUrl);
-                  getContext().startActivity(intent);
-                }
-            }
-        }, "mWebViewImageListener");
+      addJavascriptInterface(new OnWebViewImageListener() {
+        @Override @JavascriptInterface public void showImagePreview(String bigImageUrl) {
+          if (!TextUtils.isEmpty(bigImageUrl)) {
+            Intent intent = new Intent(getContext(), ImageActivity.class);
+            intent.putExtra(ImageActivity.URL, bigImageUrl);
+            getContext().startActivity(intent);
+          }
+        }
+      }, "mWebViewImageListener");
     }
   }
 
