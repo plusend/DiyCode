@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">diycode</string>
+  <string name="app_name">Diycode</string>
 
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -10,7 +10,7 @@
 
   <string name="logout_intent_action">com.plusend.diycode.Logout</string>
   <string name="test_intent_action">com.plusend.diycode.Test</string>
-  <string name="card_content">DiyCode由众多开发者共同维护，致力于构建开发工程师高端交流分享社区。</string>
+  <string name="card_content">Diycode由众多开发者共同维护，致力于构建开发工程师高端交流分享社区。</string>
 
   <string name="version_start">正在获取</string>
   <string name="version_finish">获取完成</string>

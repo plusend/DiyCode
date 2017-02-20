@@ -36,7 +36,6 @@ import com.plusend.diycode.mvp.model.user.presenter.UserPresenter;
 import com.plusend.diycode.mvp.model.user.view.UserView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.PrefUtil;
-import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.adapter.MainPagerAdapter;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -70,16 +69,7 @@ public class MainActivity extends AppCompatActivity
 
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-        String loginName = PrefUtil.getMe(MainActivity.this).getLogin();
-        if (TextUtils.isEmpty(loginName)) {
-          Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_LONG)
-              .setAction("登录", new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                  startActivityForResult(new Intent(MainActivity.this, SignInActivity.class),
-                      SignInActivity.REQUEST_CODE);
-                }
-              })
-              .show();
+        if(!hasSignedIn()){
           return;
         }
 
@@ -209,23 +199,27 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-    // Handle navigation view item clicks here.
     int id = item.getItemId();
 
     if (id == R.id.nav_post) {
-      Intent intent = new Intent(MainActivity.this, MyTopicsActivity.class);
-      intent.putExtra(MyTopicsActivity.TITLE, "我的帖子");
-      intent.putExtra(MyTopicsActivity.TYPE, TopicFragment.TYPE_CREATE);
-      startActivity(intent);
+      if(hasSignedIn()) {
+        Intent intent = new Intent(MainActivity.this, MyTopicsActivity.class);
+        intent.putExtra(MyTopicsActivity.TITLE, "我的帖子");
+        intent.putExtra(MyTopicsActivity.TYPE, TopicFragment.TYPE_CREATE);
+        startActivity(intent);
+      }
     } else if (id == R.id.nav_collect) {
-      Intent intent = new Intent(MainActivity.this, MyTopicsActivity.class);
-      intent.putExtra(MyTopicsActivity.TITLE, "我的收藏");
-      intent.putExtra(MyTopicsActivity.TYPE, TopicFragment.TYPE_FAVORITE);
-      startActivity(intent);
+      if(hasSignedIn()) {
+        Intent intent = new Intent(MainActivity.this, MyTopicsActivity.class);
+        intent.putExtra(MyTopicsActivity.TITLE, "我的收藏");
+        intent.putExtra(MyTopicsActivity.TYPE, TopicFragment.TYPE_FAVORITE);
+        startActivity(intent);
+      }
     } else if (id == R.id.nav_comment) {
-      Intent intent = new Intent(MainActivity.this, MyRepliesActivity.class);
-      //intent.putExtra(MyRepliesActivity.LOGIN_NAME, me.getLogin());
-      startActivity(intent);
+      if(hasSignedIn()) {
+        Intent intent = new Intent(MainActivity.this, MyRepliesActivity.class);
+        startActivity(intent);
+      }
     } else if (id == R.id.nav_about) {
       startActivity(new Intent(MainActivity.this, AboutActivity.class));
     } else if (id == R.id.nav_setting) {
@@ -294,5 +288,22 @@ public class MainActivity extends AppCompatActivity
         break;
     }
     super.onActivityResult(requestCode, resultCode, data);
+  }
+
+  private boolean hasSignedIn(){
+    String loginName = PrefUtil.getMe(MainActivity.this).getLogin();
+    if (TextUtils.isEmpty(loginName)) {
+      Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_LONG)
+          .setAction("登录", new View.OnClickListener() {
+            @Override public void onClick(View v) {
+              startActivityForResult(new Intent(MainActivity.this, SignInActivity.class),
+                  SignInActivity.REQUEST_CODE);
+            }
+          })
+          .show();
+      return false;
+    }else {
+      return true;
+    }
   }
 }

@@ -47,13 +47,13 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     setHeaderContentColor(Color.parseColor("#000000"));
     setNavigationIcon(R.mipmap.sign_close);
     icon.setImageResource(R.mipmap.ic_launcher);
-    slogan.setText("A third-party Android client of DiyCode.");
+    slogan.setText("A third-party Android client of Diycode.");
     version.setText("version " + BuildConfig.VERSION_NAME);
   }
 
   protected void onItemsCreated(@NonNull Items items) {
     items.add(new Category("介绍"));
-    items.add(new Card(getString(R.string.card_content), "DiyCode"));
+    items.add(new Card(getString(R.string.card_content), "Diycode"));
 
     items.add(new Line());
 
