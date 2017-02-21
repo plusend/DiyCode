@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.BasePresenter;
+import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.view.fragment.SettingsFragment;
 import java.util.List;
 

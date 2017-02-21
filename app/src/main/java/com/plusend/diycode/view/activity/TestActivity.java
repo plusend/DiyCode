@@ -10,7 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.BasePresenter;
+import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.util.KeyStoreHelper;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;

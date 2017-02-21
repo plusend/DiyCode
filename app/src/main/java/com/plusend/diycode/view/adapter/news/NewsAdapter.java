@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.news.entity.News;
+import com.plusend.diycode.model.news.entity.News;
 import com.plusend.diycode.util.TimeUtil;
 import com.plusend.diycode.util.UrlUtil;
 import com.plusend.diycode.view.activity.WebActivity;

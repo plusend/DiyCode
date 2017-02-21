@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.BasePresenter;
+import com.plusend.diycode.model.base.BasePresenter;
 import java.util.List;
 import uk.co.senab.photoview.PhotoView;
 

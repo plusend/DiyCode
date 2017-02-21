@@ -12,9 +12,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.BasePresenter;
-import com.plusend.diycode.mvp.model.topic.presenter.CreateTopicReplyBasePresenter;
-import com.plusend.diycode.mvp.model.topic.view.CreateTopicReplyView;
+import com.plusend.diycode.model.base.BasePresenter;
+import com.plusend.diycode.model.topic.presenter.CreateTopicReplyBasePresenter;
+import com.plusend.diycode.model.topic.view.CreateTopicReplyView;
 import com.plusend.diycode.util.ToastUtil;
 import java.util.List;
 

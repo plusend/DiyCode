@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.BasePresenter;
+import com.plusend.diycode.model.base.BasePresenter;
 import java.util.ArrayList;
 import java.util.List;
 

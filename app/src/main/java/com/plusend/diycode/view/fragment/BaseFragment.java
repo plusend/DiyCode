@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import com.plusend.diycode.mvp.model.base.BasePresenter;
+import com.plusend.diycode.model.base.BasePresenter;
 
 public abstract class BaseFragment extends Fragment {
   private static final String TAG = "BaseFragment";

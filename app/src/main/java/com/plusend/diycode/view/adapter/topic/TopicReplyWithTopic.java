@@ -1,7 +1,7 @@
 package com.plusend.diycode.view.adapter.topic;
 
-import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
-import com.plusend.diycode.mvp.model.topic.entity.TopicReply;
+import com.plusend.diycode.model.topic.entity.TopicDetail;
+import com.plusend.diycode.model.topic.entity.TopicReply;
 
 public class TopicReplyWithTopic {
   private TopicDetail topicDetail;

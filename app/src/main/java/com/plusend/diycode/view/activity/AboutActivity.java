@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.plusend.diycode.BuildConfig;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.BasePresenter;
+import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.view.adapter.about.Card;
 import com.plusend.diycode.view.adapter.about.CardViewProvider;
 import com.plusend.diycode.view.adapter.about.Category;
