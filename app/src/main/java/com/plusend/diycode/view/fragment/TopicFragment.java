@@ -68,7 +68,6 @@ public class TopicFragment extends Fragment implements TopicsView {
 
   private void initAdapter() {
     items = new Items();
-    items.add(new Footer(Footer.STATUS_NORMAL));
     adapter = new MultiTypeAdapter(items);
     adapter.register(Topic.class, new TopicViewProvider());
     adapter.register(Footer.class, new FooterViewProvider());
@@ -127,6 +126,9 @@ public class TopicFragment extends Fragment implements TopicsView {
       return;
     }
     Log.v(TAG, "showTopics: " + topicList.size());
+    if (items.size() == 0) {
+      items.add(new Footer(Footer.STATUS_NORMAL));
+    }
     for (Topic topic : topicList) {
       // 插入 FooterView 前面
       items.add(items.size() - 1, topic);
@@ -161,7 +163,7 @@ public class TopicFragment extends Fragment implements TopicsView {
     }
     topicsPresenter.start();
     Log.v(TAG, "isFirstLoad: " + isFirstLoad);
-    if(isFirstLoad){
+    if (isFirstLoad) {
       if (!TextUtils.isEmpty(loginName)) {
         if (type != TYPE_FAVORITE) {
           ((UserTopicsPresenter) topicsPresenter).getUserCreateTopics(loginName, offset);
@@ -174,7 +176,6 @@ public class TopicFragment extends Fragment implements TopicsView {
       // 标记 Fragment 已经进行过第一次加载
       isFirstLoad = false;
     }
-
   }
 
   @Override public void onStop() {
@@ -198,5 +199,4 @@ public class TopicFragment extends Fragment implements TopicsView {
     super.onAttach(context);
     Log.v(TAG, "onAttach");
   }
-
 }
