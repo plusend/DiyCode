@@ -14,10 +14,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.news.entity.News;
-import com.plusend.diycode.mvp.model.news.presenter.NewsPresenter;
+import com.plusend.diycode.mvp.model.news.presenter.NewsBasePresenter;
 import com.plusend.diycode.mvp.model.news.view.NewsView;
-import com.plusend.diycode.view.adapter.DividerListItemDecoration;
-import com.plusend.diycode.view.adapter.EmptyRecyclerView;
+import com.plusend.diycode.view.widget.DividerListItemDecoration;
+import com.plusend.diycode.view.widget.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.news.NewsAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class NewsFragment extends Fragment implements NewsView {
   private List<News> newsList = new ArrayList<>();
   private NewsAdapter newsAdapter;
   private LinearLayoutManager linearLayoutManager;
-  private NewsPresenter newsPresenter;
+  private NewsBasePresenter newsPresenter;
   private int offset;
   // 标记 Fragment 是否是第一次初始化
   private boolean isFirstLoad = true;
@@ -68,7 +68,7 @@ public class NewsFragment extends Fragment implements NewsView {
         lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
       }
     });
-    newsPresenter = new NewsPresenter(this);
+    newsPresenter = new NewsBasePresenter(this);
     return rootView;
   }
 

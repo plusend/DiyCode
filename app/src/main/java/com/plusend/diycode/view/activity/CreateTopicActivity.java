@@ -15,12 +15,12 @@ import android.widget.Spinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
 import com.plusend.diycode.mvp.model.topic.node.entity.Node;
-import com.plusend.diycode.mvp.model.topic.node.presenter.NodesPresenter;
+import com.plusend.diycode.mvp.model.topic.node.presenter.NodesBasePresenter;
 import com.plusend.diycode.mvp.model.topic.node.view.NodesView;
-import com.plusend.diycode.mvp.model.topic.presenter.NewTopicPresenter;
+import com.plusend.diycode.mvp.model.topic.presenter.NewTopicBasePresenter;
 import com.plusend.diycode.mvp.model.topic.view.NewTopicView;
 import com.plusend.diycode.util.ToastUtil;
 import java.util.ArrayList;
@@ -40,16 +40,16 @@ public class CreateTopicActivity extends BaseActivity implements NewTopicView, N
   private String[] sectionNames;
   private String[] nodeNames;
 
-  private NewTopicPresenter newTopicPresenter;
-  private NodesPresenter nodesPresenter;
+  private NewTopicBasePresenter newTopicPresenter;
+  private NodesBasePresenter nodesPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_new_topic);
     ButterKnife.bind(this);
     super.onCreate(savedInstanceState);
 
-    nodesPresenter = new NodesPresenter(this);
-    newTopicPresenter = new NewTopicPresenter(this);
+    nodesPresenter = new NodesBasePresenter(this);
+    newTopicPresenter = new NewTopicBasePresenter(this);
 
     nodesPresenter.readNodes();
   }
@@ -76,8 +76,8 @@ public class CreateTopicActivity extends BaseActivity implements NewTopicView, N
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
-    List<Presenter> list = new ArrayList<>();
+  @Override protected List<BasePresenter> getPresenter() {
+    List<BasePresenter> list = new ArrayList<>();
     list.add(nodesPresenter);
     list.add(newTopicPresenter);
     return list;

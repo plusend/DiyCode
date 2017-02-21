@@ -11,14 +11,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.mvp.model.topic.entity.Reply;
-import com.plusend.diycode.mvp.model.topic.presenter.RepliesPresenter;
+import com.plusend.diycode.mvp.model.topic.presenter.RepliesBasePresenter;
 import com.plusend.diycode.mvp.model.topic.view.RepliesView;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
-import com.plusend.diycode.view.adapter.DividerListItemDecoration;
-import com.plusend.diycode.view.adapter.EmptyRecyclerView;
+import com.plusend.diycode.view.widget.DividerListItemDecoration;
+import com.plusend.diycode.view.widget.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.reply.ReplyViewProvider;
 import java.util.List;
 import me.drakeet.multitype.Items;
@@ -35,7 +35,7 @@ public class MyRepliesActivity extends BaseActivity implements RepliesView {
   private MultiTypeAdapter adapter;
   private LinearLayoutManager linearLayoutManager;
   private Items items;
-  private RepliesPresenter presenter;
+  private RepliesBasePresenter presenter;
   private int offset;
   private String loginName;
 
@@ -44,7 +44,7 @@ public class MyRepliesActivity extends BaseActivity implements RepliesView {
     ButterKnife.bind(this);
     super.onCreate(savedInstanceState);
 
-    presenter = new RepliesPresenter(this);
+    presenter = new RepliesBasePresenter(this);
     items = new Items();
     adapter = new MultiTypeAdapter(items);
     adapter.register(Reply.class, new ReplyViewProvider());
@@ -86,7 +86,7 @@ public class MyRepliesActivity extends BaseActivity implements RepliesView {
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return super.addPresenter(presenter);
   }
 

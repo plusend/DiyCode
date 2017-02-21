@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +25,12 @@ public abstract class BaseActivity extends AppCompatActivity
 
   protected abstract Toolbar getToolbar();
 
-  protected abstract List<Presenter> getPresenter();
+  protected abstract List<BasePresenter> getPresenter();
 
-  public List<Presenter> addPresenter(Presenter... presenters) {
-    List<Presenter> result = new ArrayList<>();
-    for (Presenter presenter : presenters) {
-      result.add(presenter);
+  public List<BasePresenter> addPresenter(BasePresenter... basePresenters) {
+    List<BasePresenter> result = new ArrayList<>();
+    for (BasePresenter basePresenter : basePresenters) {
+      result.add(basePresenter);
     }
     return result;
   }
@@ -50,8 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity
     Log.d(TAG, "onResume");
     super.onStart();
     if (getPresenter() != null && getPresenter().size() != 0) {
-      for (Presenter presenter : getPresenter()) {
-        presenter.start();
+      for (BasePresenter basePresenter : getPresenter()) {
+        basePresenter.start();
       }
     } else {
       Log.d(TAG, "onResume getPresenter() == null");
@@ -61,8 +60,8 @@ public abstract class BaseActivity extends AppCompatActivity
   @Override protected void onPause() {
     Log.d(TAG, "onPause");
     if (getPresenter() != null && getPresenter().size() != 0) {
-      for (Presenter presenter : getPresenter()) {
-        presenter.stop();
+      for (BasePresenter basePresenter : getPresenter()) {
+        basePresenter.stop();
       }
     } else {
       Log.d(TAG, "onPause getPresenter() == null");

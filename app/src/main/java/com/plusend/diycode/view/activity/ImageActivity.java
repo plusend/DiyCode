@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import java.util.List;
 import uk.co.senab.photoview.PhotoView;
 
@@ -57,7 +57,7 @@ public class ImageActivity extends BaseActivity {
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return null;
   }
 }

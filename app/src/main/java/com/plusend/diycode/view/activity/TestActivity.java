@@ -10,7 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.util.KeyStoreHelper;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -51,7 +51,7 @@ public class TestActivity extends BaseActivity {
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return null;
   }
 

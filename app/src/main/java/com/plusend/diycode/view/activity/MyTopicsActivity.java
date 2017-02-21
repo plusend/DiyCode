@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.fragment.TopicFragment;
@@ -55,7 +55,7 @@ public class MyTopicsActivity extends BaseActivity {
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return null;
   }
 

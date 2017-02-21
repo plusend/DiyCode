@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.view.fragment.SettingsFragment;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class SettingsActivity extends BaseActivity {
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return null;
   }
 }

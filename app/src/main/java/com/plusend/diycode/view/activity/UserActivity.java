@@ -14,9 +14,9 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.jaeger.library.StatusBarUtil;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
-import com.plusend.diycode.mvp.model.user.presenter.UserPresenter;
+import com.plusend.diycode.mvp.model.user.presenter.UserBasePresenter;
 import com.plusend.diycode.mvp.model.user.view.UserView;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import java.util.List;
@@ -32,7 +32,7 @@ public class UserActivity extends BaseActivity implements UserView {
   @BindView(R.id.follow_num) TextView followNum;
   @BindView(R.id.back) ImageView back;
   @BindView(R.id.container) FrameLayout container;
-  private UserPresenter userPresenter;
+  private UserBasePresenter userPresenter;
   private String loginName;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class UserActivity extends BaseActivity implements UserView {
     TopicFragment topicFragment = TopicFragment.newInstance(loginName, TopicFragment.TYPE_CREATE);
     getSupportFragmentManager().beginTransaction().add(R.id.container, topicFragment).commit();
 
-    userPresenter = new UserPresenter(this);
+    userPresenter = new UserBasePresenter(this);
     userPresenter.getUser(loginName);
   }
 
@@ -65,7 +65,7 @@ public class UserActivity extends BaseActivity implements UserView {
     return null;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return super.addPresenter(userPresenter);
   }
 

@@ -3,7 +3,7 @@ package com.plusend.diycode.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import com.plusend.diycode.mvp.model.entity.Token;
+import com.plusend.diycode.mvp.model.user.entity.Token;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
 import java.io.IOException;
 import java.security.InvalidKeyException;

@@ -16,15 +16,15 @@ import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.mvp.model.topic.entity.TopicDetail;
 import com.plusend.diycode.mvp.model.topic.entity.TopicReply;
-import com.plusend.diycode.mvp.model.topic.presenter.TopicPresenter;
-import com.plusend.diycode.mvp.model.topic.presenter.TopicRepliesPresenter;
+import com.plusend.diycode.mvp.model.topic.presenter.TopicBasePresenter;
+import com.plusend.diycode.mvp.model.topic.presenter.TopicRepliesBasePresenter;
 import com.plusend.diycode.mvp.model.topic.view.TopicRepliesView;
 import com.plusend.diycode.mvp.model.topic.view.TopicView;
 import com.plusend.diycode.util.PrefUtil;
-import com.plusend.diycode.view.adapter.DividerListItemDecoration;
+import com.plusend.diycode.view.widget.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.topic.Footer;
 import com.plusend.diycode.view.adapter.topic.FooterViewProvider;
 import com.plusend.diycode.view.adapter.topic.TopicDetailViewProvider;
@@ -47,8 +47,8 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
   private TopicDetail topicDetail;
   private MultiTypeAdapter adapter;
   private Items items = new Items();
-  private TopicPresenter topicPresenter;
-  private TopicRepliesPresenter topicRepliesPresenter;
+  private TopicBasePresenter topicPresenter;
+  private TopicRepliesBasePresenter topicRepliesPresenter;
   private LinearLayoutManager linearLayoutManager;
   private int offset;
   private boolean noMoreReplies;
@@ -93,8 +93,8 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
       }
     });
 
-    topicPresenter = new TopicPresenter(this);
-    topicRepliesPresenter = new TopicRepliesPresenter(this, id);
+    topicPresenter = new TopicBasePresenter(this);
+    topicRepliesPresenter = new TopicRepliesBasePresenter(this, id);
     if (id != 0) {
       topicPresenter.getTopic(id);
     }
@@ -125,7 +125,7 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return super.addPresenter(topicPresenter, topicRepliesPresenter);
   }
 

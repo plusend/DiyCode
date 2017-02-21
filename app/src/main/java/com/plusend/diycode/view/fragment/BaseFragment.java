@@ -2,15 +2,9 @@ package com.plusend.diycode.view.fragment;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 
 public abstract class BaseFragment extends Fragment {
   private static final String TAG = "BaseFragment";
@@ -20,7 +14,7 @@ public abstract class BaseFragment extends Fragment {
     // Required empty public constructor
   }
 
-  protected abstract Presenter getPresenter();
+  protected abstract BasePresenter getPresenter();
 
   @Override public void onAttach(Context context) {
     super.onAttach(context);

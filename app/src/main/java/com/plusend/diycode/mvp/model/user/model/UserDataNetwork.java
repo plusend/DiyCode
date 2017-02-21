@@ -1,7 +1,7 @@
 package com.plusend.diycode.mvp.model.user.model;
 
 import android.util.Log;
-import com.plusend.diycode.mvp.model.entity.Token;
+import com.plusend.diycode.mvp.model.user.entity.Token;
 import com.plusend.diycode.mvp.model.topic.entity.Reply;
 import com.plusend.diycode.mvp.model.topic.event.RepliesEvent;
 import com.plusend.diycode.mvp.model.user.event.UserTopicsEvent;

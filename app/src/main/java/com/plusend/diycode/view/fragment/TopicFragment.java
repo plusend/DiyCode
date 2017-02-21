@@ -15,14 +15,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.mvp.model.topic.entity.Topic;
-import com.plusend.diycode.mvp.model.topic.presenter.TopicsPresenter;
+import com.plusend.diycode.mvp.model.topic.presenter.TopicsBasePresenter;
 import com.plusend.diycode.mvp.model.topic.view.TopicsView;
-import com.plusend.diycode.mvp.model.user.presenter.UserTopicsPresenter;
+import com.plusend.diycode.mvp.model.user.presenter.UserTopicsBasePresenter;
 import com.plusend.diycode.util.Constant;
-import com.plusend.diycode.view.adapter.DividerListItemDecoration;
-import com.plusend.diycode.view.adapter.EmptyRecyclerView;
+import com.plusend.diycode.view.widget.DividerListItemDecoration;
+import com.plusend.diycode.view.widget.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.topic.Footer;
 import com.plusend.diycode.view.adapter.topic.FooterViewProvider;
 import com.plusend.diycode.view.adapter.topic.TopicViewProvider;
@@ -43,7 +43,7 @@ public class TopicFragment extends Fragment implements TopicsView {
   private MultiTypeAdapter adapter;
   private Items items;
   private LinearLayoutManager linearLayoutManager;
-  private Presenter topicsPresenter;
+  private BasePresenter topicsBasePresenter;
   private int offset = 0;
   private int type = 0;
   private String loginName;
@@ -104,11 +104,11 @@ public class TopicFragment extends Fragment implements TopicsView {
           ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_LOADING);
           adapter.notifyItemChanged(adapter.getItemCount());
           if (type == TYPE_ALL) {
-            ((TopicsPresenter) topicsPresenter).getTopics(offset);
+            ((TopicsBasePresenter) topicsBasePresenter).getTopics(offset);
           } else if (type == TYPE_CREATE) {
-            ((UserTopicsPresenter) topicsPresenter).getUserCreateTopics(loginName, offset);
+            ((UserTopicsBasePresenter) topicsBasePresenter).getUserCreateTopics(loginName, offset);
           } else if (type == TYPE_FAVORITE) {
-            ((UserTopicsPresenter) topicsPresenter).getUserFavoriteTopics(loginName, offset);
+            ((UserTopicsBasePresenter) topicsBasePresenter).getUserFavoriteTopics(loginName, offset);
           }
         }
       }
@@ -155,23 +155,23 @@ public class TopicFragment extends Fragment implements TopicsView {
     }
 
     if (type == TYPE_ALL) {
-      topicsPresenter = new TopicsPresenter(this);
+      topicsBasePresenter = new TopicsBasePresenter(this);
     } else if (type == TYPE_CREATE) {
-      topicsPresenter = new UserTopicsPresenter(this);
+      topicsBasePresenter = new UserTopicsBasePresenter(this);
     } else if (type == TYPE_FAVORITE) {
-      topicsPresenter = new UserTopicsPresenter(this);
+      topicsBasePresenter = new UserTopicsBasePresenter(this);
     }
-    topicsPresenter.start();
+    topicsBasePresenter.start();
     Log.v(TAG, "isFirstLoad: " + isFirstLoad);
     if (isFirstLoad) {
       if (!TextUtils.isEmpty(loginName)) {
         if (type != TYPE_FAVORITE) {
-          ((UserTopicsPresenter) topicsPresenter).getUserCreateTopics(loginName, offset);
+          ((UserTopicsBasePresenter) topicsBasePresenter).getUserCreateTopics(loginName, offset);
         } else {
-          ((UserTopicsPresenter) topicsPresenter).getUserFavoriteTopics(loginName, offset);
+          ((UserTopicsBasePresenter) topicsBasePresenter).getUserFavoriteTopics(loginName, offset);
         }
       } else {
-        ((TopicsPresenter) topicsPresenter).getTopics(offset);
+        ((TopicsBasePresenter) topicsBasePresenter).getTopics(offset);
       }
       // 标记 Fragment 已经进行过第一次加载
       isFirstLoad = false;
@@ -179,8 +179,8 @@ public class TopicFragment extends Fragment implements TopicsView {
   }
 
   @Override public void onStop() {
-    if (topicsPresenter != null) {
-      topicsPresenter.stop();
+    if (topicsBasePresenter != null) {
+      topicsBasePresenter.stop();
     }
     super.onStop();
   }

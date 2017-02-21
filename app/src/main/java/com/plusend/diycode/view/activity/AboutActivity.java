@@ -7,7 +7,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -16,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.plusend.diycode.BuildConfig;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.view.adapter.about.Card;
 import com.plusend.diycode.view.adapter.about.CardViewProvider;
 import com.plusend.diycode.view.adapter.about.Category;
@@ -119,7 +118,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     return null;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return null;
   }
 

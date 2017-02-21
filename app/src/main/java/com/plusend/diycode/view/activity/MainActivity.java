@@ -30,13 +30,13 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.jaeger.library.StatusBarUtil;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.entity.Token;
+import com.plusend.diycode.mvp.model.user.entity.Token;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
-import com.plusend.diycode.mvp.model.user.presenter.UserPresenter;
+import com.plusend.diycode.mvp.model.user.presenter.UserBasePresenter;
 import com.plusend.diycode.mvp.model.user.view.UserView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.PrefUtil;
-import com.plusend.diycode.view.adapter.MainPagerAdapter;
+import com.plusend.diycode.view.adapter.main.MainPagerAdapter;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
   private TextView email;
 
   private UserDetailInfo me;
-  private UserPresenter userPresenter;
+  private UserBasePresenter userPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
       }
     });
 
-    userPresenter = new UserPresenter(this);
+    userPresenter = new UserBasePresenter(this);
 
     Token token = PrefUtil.getToken(this);
     if (!TextUtils.isEmpty(token.getAccessToken())) {

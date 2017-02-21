@@ -1,6 +1,6 @@
 package com.plusend.diycode.mvp.model.user.event;
 
-import com.plusend.diycode.mvp.model.entity.Token;
+import com.plusend.diycode.mvp.model.user.entity.Token;
 
 /**
  * Created by plusend on 2016/11/28.

@@ -12,8 +12,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
-import com.plusend.diycode.mvp.model.topic.presenter.CreateTopicReplyPresenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
+import com.plusend.diycode.mvp.model.topic.presenter.CreateTopicReplyBasePresenter;
 import com.plusend.diycode.mvp.model.topic.view.CreateTopicReplyView;
 import com.plusend.diycode.util.ToastUtil;
 import java.util.List;
@@ -27,7 +27,7 @@ public class CreateTopicReplyActivity extends BaseActivity implements CreateTopi
   public static final String TOPIC_ID = "topicId";
   public static final String TOPIC_TITLE = "topicTitle";
 
-  private CreateTopicReplyPresenter createTopicReplyPresenter;
+  private CreateTopicReplyBasePresenter createTopicReplyPresenter;
   private int id;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class CreateTopicReplyActivity extends BaseActivity implements CreateTopi
     }
     body.requestFocus();
 
-    createTopicReplyPresenter = new CreateTopicReplyPresenter(this);
+    createTopicReplyPresenter = new CreateTopicReplyBasePresenter(this);
   }
 
   private void send() {
@@ -61,7 +61,7 @@ public class CreateTopicReplyActivity extends BaseActivity implements CreateTopi
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return super.addPresenter(createTopicReplyPresenter);
   }
 

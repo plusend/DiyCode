@@ -1,6 +1,6 @@
 package com.plusend.diycode.mvp.model.user.model;
 
-import com.plusend.diycode.mvp.model.entity.Token;
+import com.plusend.diycode.mvp.model.user.entity.Token;
 import com.plusend.diycode.mvp.model.topic.entity.Reply;
 import com.plusend.diycode.mvp.model.topic.entity.Topic;
 import com.plusend.diycode.mvp.model.user.entity.UserBlock;

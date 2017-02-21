@@ -13,9 +13,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.mvp.model.site.entity.Site;
-import com.plusend.diycode.mvp.model.site.presenter.SitePresenter;
+import com.plusend.diycode.mvp.model.site.presenter.SiteBasePresenter;
 import com.plusend.diycode.mvp.model.site.view.SiteView;
-import com.plusend.diycode.view.adapter.EmptyRecyclerView;
+import com.plusend.diycode.view.widget.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.site.SiteName;
 import com.plusend.diycode.view.adapter.site.SiteNameViewProvider;
 import com.plusend.diycode.view.adapter.site.SitesName;
@@ -31,7 +31,7 @@ public class SitesFragment extends Fragment implements SiteView {
   @BindView(R.id.rv_site_category) EmptyRecyclerView rvSiteCategory;
   @BindView(R.id.empty_view) TextView emptyView;
 
-  private SitePresenter sitePresenter;
+  private SiteBasePresenter sitePresenter;
   private Items items = new Items();
   private MultiTypeAdapter adapter;
   // 标记 Fragment 是否是第一次初始化
@@ -59,7 +59,7 @@ public class SitesFragment extends Fragment implements SiteView {
     rvSiteCategory.setAdapter(adapter);
     rvSiteCategory.setEmptyView(emptyView);
     //rvSiteCategory.addItemDecoration(new DividerGridItemDecoration(getContext()));
-    sitePresenter = new SitePresenter(this);
+    sitePresenter = new SiteBasePresenter(this);
 
     return rootView;
   }

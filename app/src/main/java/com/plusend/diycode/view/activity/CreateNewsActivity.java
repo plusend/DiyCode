@@ -17,12 +17,12 @@ import android.widget.Spinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.mvp.model.news.entity.News;
 import com.plusend.diycode.mvp.model.news.node.entity.NewsNode;
-import com.plusend.diycode.mvp.model.news.node.presenter.NewsNodesPresenter;
+import com.plusend.diycode.mvp.model.news.node.presenter.NewsNodesBasePresenter;
 import com.plusend.diycode.mvp.model.news.node.view.NewsNodesView;
-import com.plusend.diycode.mvp.model.news.presenter.CreateNewsPresenter;
+import com.plusend.diycode.mvp.model.news.presenter.CreateNewsBasePresenter;
 import com.plusend.diycode.mvp.model.news.view.CreateNewsView;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
@@ -41,8 +41,8 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
   @BindView(R.id.link) EditText link;
   @BindView(R.id.coordinator) CoordinatorLayout coordinator;
 
-  private Presenter mCreateNewsPresenter;
-  private Presenter mNewsNodesPresenter;
+  private BasePresenter mCreateNewsBasePresenter;
+  private BasePresenter mNewsNodesBasePresenter;
   private List<NewsNode> mNewsNodeList;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +71,9 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
       title.setText(titleText);
     }
 
-    mCreateNewsPresenter = new CreateNewsPresenter(this);
-    mNewsNodesPresenter = new NewsNodesPresenter(this);
-    ((NewsNodesPresenter) mNewsNodesPresenter).readNodes();
+    mCreateNewsBasePresenter = new CreateNewsBasePresenter(this);
+    mNewsNodesBasePresenter = new NewsNodesBasePresenter(this);
+    ((NewsNodesBasePresenter) mNewsNodesBasePresenter).readNodes();
     String loginName = PrefUtil.getMe(this).getLogin();
     if (TextUtils.isEmpty(loginName)) {
       Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_INDEFINITE)
@@ -98,7 +98,7 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
         id = node.getId();
       }
     }
-    ((CreateNewsPresenter) mCreateNewsPresenter).createNews(title.getText().toString(),
+    ((CreateNewsBasePresenter) mCreateNewsBasePresenter).createNews(title.getText().toString(),
         link.getText().toString(), id);
   }
 
@@ -121,10 +121,10 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
-    List<Presenter> list = new ArrayList<>();
-    list.add(mCreateNewsPresenter);
-    list.add(mNewsNodesPresenter);
+  @Override protected List<BasePresenter> getPresenter() {
+    List<BasePresenter> list = new ArrayList<>();
+    list.add(mCreateNewsBasePresenter);
+    list.add(mNewsNodesBasePresenter);
     return list;
   }
 
@@ -176,7 +176,7 @@ public class CreateNewsActivity extends BaseActivity implements CreateNewsView, 
       case SignInActivity.REQUEST_CODE:
         if (resultCode == SignInActivity.RESULT_OK) {
           if (this.mNewsNodeList.size() == 0) {
-            ((NewsNodesPresenter) mNewsNodesPresenter).readNodes();
+            ((NewsNodesBasePresenter) mNewsNodesBasePresenter).readNodes();
           }
         } else {
           ToastUtil.showText(this, "放弃登录");

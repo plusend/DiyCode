@@ -16,7 +16,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import com.plusend.diycode.util.IntentUtil;
+import com.plusend.diycode.util.AppOperator;
 import com.plusend.diycode.view.activity.ImageActivity;
 import com.plusend.diycode.view.activity.WebActivity;
 import java.util.regex.Matcher;

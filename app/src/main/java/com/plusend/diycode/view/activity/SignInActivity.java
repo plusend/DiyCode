@@ -12,11 +12,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
-import com.plusend.diycode.mvp.model.entity.Token;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
+import com.plusend.diycode.mvp.model.user.entity.Token;
 import com.plusend.diycode.mvp.model.user.entity.UserDetailInfo;
-import com.plusend.diycode.mvp.model.user.presenter.SignInPresenter;
-import com.plusend.diycode.mvp.model.user.presenter.UserPresenter;
+import com.plusend.diycode.mvp.model.user.presenter.SignInBasePresenter;
+import com.plusend.diycode.mvp.model.user.presenter.UserBasePresenter;
 import com.plusend.diycode.mvp.model.user.view.SignInView;
 import com.plusend.diycode.mvp.model.user.view.UserView;
 import com.plusend.diycode.util.PrefUtil;
@@ -38,16 +38,16 @@ public class SignInActivity extends BaseActivity implements SignInView, UserView
   @BindView(R.id.forget_password) TextView forgetPassword;
   @BindView(R.id.toolbar) Toolbar toolbar;
 
-  private SignInPresenter signInPresenter;
-  private UserPresenter userPresenter;
+  private SignInBasePresenter signInPresenter;
+  private UserBasePresenter userPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_sign_in);
     ButterKnife.bind(this);
     super.onCreate(savedInstanceState);
 
-    signInPresenter = new SignInPresenter(this);
-    userPresenter = new UserPresenter(this);
+    signInPresenter = new SignInBasePresenter(this);
+    userPresenter = new UserBasePresenter(this);
 
     signIn.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
@@ -66,7 +66,7 @@ public class SignInActivity extends BaseActivity implements SignInView, UserView
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return super.addPresenter(signInPresenter, userPresenter);
   }
 

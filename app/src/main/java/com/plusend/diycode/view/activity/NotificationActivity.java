@@ -11,14 +11,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.plusend.diycode.R;
-import com.plusend.diycode.mvp.model.base.Presenter;
+import com.plusend.diycode.mvp.model.base.BasePresenter;
 import com.plusend.diycode.mvp.model.notification.entity.Notification;
-import com.plusend.diycode.mvp.model.notification.presenter.NotificationsPresenter;
+import com.plusend.diycode.mvp.model.notification.presenter.NotificationsBasePresenter;
 import com.plusend.diycode.mvp.model.notification.view.NotificationsView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.ToastUtil;
-import com.plusend.diycode.view.adapter.DividerListItemDecoration;
-import com.plusend.diycode.view.adapter.EmptyRecyclerView;
+import com.plusend.diycode.view.widget.DividerListItemDecoration;
+import com.plusend.diycode.view.widget.EmptyRecyclerView;
 import com.plusend.diycode.view.adapter.notification.NotificationElse;
 import com.plusend.diycode.view.adapter.notification.NotificationElseViewProvider;
 import com.plusend.diycode.view.adapter.notification.NotificationFollow;
@@ -46,7 +46,7 @@ public class NotificationActivity extends BaseActivity implements NotificationsV
   private MultiTypeAdapter adapter;
   private LinearLayoutManager linearLayoutManager;
   private Items items;
-  private NotificationsPresenter presenter;
+  private NotificationsBasePresenter presenter;
   private int offset;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class NotificationActivity extends BaseActivity implements NotificationsV
     ButterKnife.bind(this);
     super.onCreate(savedInstanceState);
 
-    presenter = new NotificationsPresenter(this);
+    presenter = new NotificationsBasePresenter(this);
     items = new Items();
     adapter = new MultiTypeAdapter(items);
     adapter.register(NotificationReply.class, new NotificationReplyViewProvider());
@@ -97,7 +97,7 @@ public class NotificationActivity extends BaseActivity implements NotificationsV
     return toolbar;
   }
 
-  @Override protected List<Presenter> getPresenter() {
+  @Override protected List<BasePresenter> getPresenter() {
     return super.addPresenter(presenter);
   }
 
