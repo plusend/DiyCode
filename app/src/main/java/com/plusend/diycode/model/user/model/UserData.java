@@ -2,12 +2,19 @@ package com.plusend.diycode.model.user.model;
 
 import com.plusend.diycode.model.base.BaseData;
 
-public interface UserData extends BaseData {
+interface UserData extends BaseData {
 
   /**
    * 验证账号
    */
   void getToken(String username, String password);
+
+  /**
+   * token 过期时获取新的 token
+   *
+   * @param refresh_token 验证账号时获取的 refresh_token
+   */
+  void refreshToken(String refresh_token);
 
   /**
    * 获取当然登录者的资料

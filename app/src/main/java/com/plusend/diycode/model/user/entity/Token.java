@@ -2,15 +2,13 @@ package com.plusend.diycode.model.user.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by plusend on 2016/11/28.
- */
-
 public class Token {
   @SerializedName("access_token") private String accessToken;
   @SerializedName("token_type") private String tokenType;
+  // accessToken 有效期60天
   @SerializedName("expires_in") private int expiresIn;
   @SerializedName("refresh_token") private String refreshToken;
+  // accessToken 创建时间距 1970-01-01 00:00:00 的秒数
   @SerializedName("created_at") private int createdAt;
 
   public String getAccessToken() {

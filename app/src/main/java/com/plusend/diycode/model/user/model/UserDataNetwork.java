@@ -4,6 +4,7 @@ import android.util.Log;
 import com.plusend.diycode.model.user.entity.Token;
 import com.plusend.diycode.model.topic.entity.Reply;
 import com.plusend.diycode.model.topic.event.RepliesEvent;
+import com.plusend.diycode.model.user.event.RefreshTokenEvent;
 import com.plusend.diycode.model.user.event.UserTopicsEvent;
 import com.plusend.diycode.model.user.entity.UserFollow;
 import com.plusend.diycode.model.user.entity.UserUnFollow;
@@ -51,7 +52,7 @@ public class UserDataNetwork implements UserData {
 
   @Override public void getToken(String username, String password) {
     Call<Token> call = userService.getToken(Constant.VALUE_CLIENT_ID, Constant.VALUE_CLIENT_SECRET,
-        Constant.VALUE_GRANT_TYPE, username, password);
+        Constant.VALUE_GRANT_TYPE_PASSWORD, username, password);
     call.enqueue(new Callback<Token>() {
       @Override public void onResponse(Call<Token> call, retrofit2.Response<Token> response) {
         if (response.isSuccessful()) {
@@ -67,6 +68,28 @@ public class UserDataNetwork implements UserData {
       @Override public void onFailure(Call<Token> call, Throwable t) {
         Log.d(TAG, t.getMessage());
         EventBus.getDefault().post(new TokenEvent(null));
+      }
+    });
+  }
+
+  @Override public void refreshToken(String refresh_token) {
+    Call<Token> call =
+        userService.refreshToken(Constant.VALUE_CLIENT_ID, Constant.VALUE_CLIENT_SECRET,
+            Constant.VALUE_GRANT_TYPE_REFRESH_TOKEN, refresh_token);
+    call.enqueue(new Callback<Token>() {
+      @Override public void onResponse(Call<Token> call, Response<Token> response) {
+        if (response.isSuccessful()) {
+          Token token = response.body();
+          EventBus.getDefault().post(new RefreshTokenEvent(token));
+        } else {
+          EventBus.getDefault().post(new RefreshTokenEvent(null));
+          Log.e(TAG, "refreshToken STATUS: " + response.code());
+        }
+      }
+
+      @Override public void onFailure(Call<Token> call, Throwable t) {
+        Log.d(TAG, t.getMessage());
+        EventBus.getDefault().post(new RefreshTokenEvent(null));
       }
     });
   }

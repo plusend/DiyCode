@@ -20,7 +20,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface UserService {
+interface UserService {
   /**
    * 登录获取 Token
    */
@@ -28,6 +28,13 @@ public interface UserService {
       @Field("client_id") String client_id, @Field("client_secret") String client_secret,
       @Field("grant_type") String grant_type, @Field("username") String username,
       @Field("password") String password);
+
+  /**
+   * 获取新的 Token
+   */
+  @POST("https://www.diycode.cc/oauth/token") @FormUrlEncoded Call<Token> refreshToken(
+      @Field("client_id") String client_id, @Field("client_secret") String client_secret,
+      @Field("grant_type") String grant_type, @Field("refresh_token") String refresh_token);
 
   /**
    * 获取当然登录者的资料
