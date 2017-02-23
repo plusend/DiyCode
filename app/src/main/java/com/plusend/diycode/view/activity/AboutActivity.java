@@ -44,7 +44,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
   protected void onCreateHeader(ImageView icon, TextView slogan, TextView version) {
     setHeaderContentColor(Color.parseColor("#000000"));
-    setNavigationIcon(R.mipmap.sign_close);
+    setNavigationIcon(R.drawable.ic_menu_close);
     icon.setImageResource(R.mipmap.ic_launcher);
     slogan.setText("A third-party Android client of Diycode.");
     version.setText("version " + BuildConfig.VERSION_NAME);

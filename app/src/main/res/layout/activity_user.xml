@@ -38,7 +38,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="11dp"
             android:scaleType="center"
-            android:src="@mipmap/user_back"
+            android:src="@drawable/ic_menu_back"
             />
         <ImageView
             android:id="@+id/avatar"

@@ -6,6 +6,7 @@
   <color name="windowBackground">#F0F0F0</color>
   <color name="replyTips">#ff0099cc</color>
   <color name="blue">#356DD0</color>
+  <color name="colorMenuIcon">#62646c</color>
 
   <!-- MaterialSettingsActivity -->
   <color name="white">#ffffff</color>

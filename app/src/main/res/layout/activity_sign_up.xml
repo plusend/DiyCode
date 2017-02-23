@@ -24,7 +24,7 @@
         android:layout_marginStart="13dp"
         android:layout_marginTop="16dp"
         android:scaleType="center"
-        android:src="@mipmap/sign_close"
+        android:src="@drawable/ic_menu_close"
         />
     <ImageView
         android:id="@+id/logo"
