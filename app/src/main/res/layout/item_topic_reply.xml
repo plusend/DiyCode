@@ -48,7 +48,7 @@
       android:layout_height="22dp"
       android:layout_alignParentEnd="true"
       android:layout_marginEnd="16dp"
-      android:src="@mipmap/ic_reply"
+      android:src="@drawable/ic_reply"
       />
   <TextView
       android:id="@+id/content"
