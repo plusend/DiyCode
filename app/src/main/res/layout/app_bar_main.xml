@@ -20,7 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/ThemeToolbar"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
         />
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"

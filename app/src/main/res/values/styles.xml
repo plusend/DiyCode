@@ -16,21 +16,21 @@
   </style>
 
   <style name="DrawerArrow" parent="Base.Widget.AppCompat.DrawerArrowToggle">
-    <item name="color">#62646c</item>
+    <item name="color">@color/colorMenuIcon</item>
   </style>
 
   <style name="ThemeToolbar" parent="ThemeOverlay.AppCompat.Light">
 
     <!-- navigation icon color -->
-    <item name="colorControlNormal">#62646c</item>
+    <item name="colorControlNormal">@color/colorMenuIcon</item>
 
     <!-- color of the menu overflow icon -->
-    <item name="android:textColorSecondary">#62646c</item>
+    <item name="android:textColorSecondary">@color/colorMenuIcon</item>
+    <item name="android:textColorPrimary">@color/colorTitle</item>
+
   </style>
 
   <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
   <!-- AboutActivity -->
 
