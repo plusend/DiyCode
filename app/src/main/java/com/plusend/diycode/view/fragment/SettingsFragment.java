@@ -30,8 +30,22 @@ import permissions.dispatcher.RuntimePermissions;
     super.onCreate(savedInstanceState);
     addPreferencesFromResource(R.xml.preferences);
 
+    addSignOut();
     addCheckUpdate();
     addFeedback();
+  }
+
+  private void addSignOut() {
+    Preference myPref = findPreference(getResources().getString(R.string.pref_key_sign_out));
+    myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = new Intent(getResources().getString(R.string.logout_intent_action));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        getActivity().startActivity(intent);
+        return true;
+      }
+    });
   }
 
   private void addCheckUpdate() {

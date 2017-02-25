@@ -7,15 +7,9 @@
       android:layout="@layout/preference_category_widget"
       android:title="基本配置">
     <Preference
-        android:key="@string/pref_key_feedback"
+        android:key="@string/pref_key_check_update"
         android:layout="@layout/preference_item"
-        android:title="反馈">
-    </Preference>
-
-    <Preference
-        android:layout="@layout/preference_item"
-        android:title="测试">
-      <intent android:action="@string/test_intent_action"/>
+        android:title="检测更新">
     </Preference>
   </PreferenceCategory>
 
@@ -23,15 +17,25 @@
       android:layout="@layout/preference_category_widget"
       android:title="账户">
     <Preference
+        android:key="@string/pref_key_sign_out"
         android:layout="@layout/preference_item"
         android:title="退出">
-      <intent android:action="@string/logout_intent_action"/>
     </Preference>
 
     <Preference
-        android:key="@string/pref_key_check_update"
+        android:key="@string/pref_key_feedback"
         android:layout="@layout/preference_item"
-        android:title="检测更新">
+        android:title="反馈">
+    </Preference>
+  </PreferenceCategory>
+
+  <PreferenceCategory
+      android:layout="@layout/preference_category_widget"
+      android:title="其他">
+    <Preference
+        android:layout="@layout/preference_item"
+        android:title="测试">
+      <intent android:action="@string/test_intent_action"/>
     </Preference>
   </PreferenceCategory>
 

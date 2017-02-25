@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity
 
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-        if(!hasSignedIn()){
+        if (!hasSignedIn()) {
           return;
         }
 
@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override protected void onNewIntent(Intent intent) {
+    Log.d(TAG, "onNewIntent");
     super.onNewIntent(intent);
     if (getResources().getString(R.string.logout_intent_action).equals(intent.getAction())) {
       PrefUtil.clearMe(this);
@@ -202,21 +203,21 @@ public class MainActivity extends AppCompatActivity
     int id = item.getItemId();
 
     if (id == R.id.nav_post) {
-      if(hasSignedIn()) {
+      if (hasSignedIn()) {
         Intent intent = new Intent(MainActivity.this, MyTopicsActivity.class);
         intent.putExtra(MyTopicsActivity.TITLE, "我的帖子");
         intent.putExtra(MyTopicsActivity.TYPE, TopicFragment.TYPE_CREATE);
         startActivity(intent);
       }
     } else if (id == R.id.nav_collect) {
-      if(hasSignedIn()) {
+      if (hasSignedIn()) {
         Intent intent = new Intent(MainActivity.this, MyTopicsActivity.class);
         intent.putExtra(MyTopicsActivity.TITLE, "我的收藏");
         intent.putExtra(MyTopicsActivity.TYPE, TopicFragment.TYPE_FAVORITE);
         startActivity(intent);
       }
     } else if (id == R.id.nav_comment) {
-      if(hasSignedIn()) {
+      if (hasSignedIn()) {
         Intent intent = new Intent(MainActivity.this, MyUserRepliesActivity.class);
         startActivity(intent);
       }
@@ -290,7 +291,7 @@ public class MainActivity extends AppCompatActivity
     super.onActivityResult(requestCode, resultCode, data);
   }
 
-  private boolean hasSignedIn(){
+  private boolean hasSignedIn() {
     String loginName = PrefUtil.getMe(MainActivity.this).getLogin();
     if (TextUtils.isEmpty(loginName)) {
       Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_LONG)
@@ -302,7 +303,7 @@ public class MainActivity extends AppCompatActivity
           })
           .show();
       return false;
-    }else {
+    } else {
       return true;
     }
   }
