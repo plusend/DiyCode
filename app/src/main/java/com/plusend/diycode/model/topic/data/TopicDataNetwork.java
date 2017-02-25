@@ -18,7 +18,11 @@ import com.plusend.diycode.model.topic.event.TopicsEvent;
 import com.plusend.diycode.model.topic.event.UnFavoriteEvent;
 import com.plusend.diycode.model.topic.event.UnFollowEvent;
 import com.plusend.diycode.util.Constant;
+import java.io.IOException;
 import java.util.List;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,8 +36,23 @@ public class TopicDataNetwork implements TopicData {
   private static TopicDataNetwork networkData = new TopicDataNetwork();
 
   private TopicDataNetwork() {
+    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+
+    clientBuilder.addInterceptor(new Interceptor() {
+      @Override public okhttp3.Response intercept(Chain chain) throws IOException {
+        Request original = chain.request();
+        Request.Builder builder = original.newBuilder();
+        if (Constant.VALUE_TOKEN != null) {
+          builder.addHeader(Constant.KEY_TOKEN, Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN);
+        }
+        return chain.proceed(builder.build());
+      }
+    });
+    OkHttpClient client = clientBuilder.build();
+
     Retrofit retrofit = new Retrofit.Builder().baseUrl("https://www.diycode.cc/api/v3/")
         .addConverterFactory(GsonConverterFactory.create())
+        .client(client)
         .build();
     service = retrofit.create(TopicService.class);
   }
@@ -73,10 +92,6 @@ public class TopicDataNetwork implements TopicData {
           TopicDetail topicDetail = response.body();
           Log.v(TAG, "getTopic topicDetail:" + topicDetail);
           EventBus.getDefault().post(new TopicDetailEvent(topicDetail));
-          //Map<String, List<String>> map = response.headers().toMultimap();
-          //for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-          //  Log.d(TAG, "Key : " + entry.getKey() + " ,Value : " + entry.getValue());
-          //}
         } else {
           Log.e(TAG, "getTopic STATUS: " + response.code());
           EventBus.getDefault().post(new TopicDetailEvent(null));
@@ -112,10 +127,8 @@ public class TopicDataNetwork implements TopicData {
     });
   }
 
-
   @Override public void newTopic(final String title, String body, int nodeId) {
-    Call<TopicDetail> call =
-        service.newTopic(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, title, body, nodeId);
+    Call<TopicDetail> call = service.newTopic(title, body, nodeId);
     call.enqueue(new Callback<TopicDetail>() {
       @Override public void onResponse(Call<TopicDetail> call, Response<TopicDetail> response) {
         if (response.isSuccessful()) {
@@ -137,8 +150,7 @@ public class TopicDataNetwork implements TopicData {
   }
 
   @Override public void favorite(int id) {
-    Call<FavoriteTopic> call =
-        service.favoriteTopic(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
+    Call<FavoriteTopic> call = service.favoriteTopic(id);
     call.enqueue(new Callback<FavoriteTopic>() {
       @Override public void onResponse(Call<FavoriteTopic> call, Response<FavoriteTopic> response) {
         if (response.isSuccessful()) {
@@ -159,8 +171,7 @@ public class TopicDataNetwork implements TopicData {
   }
 
   @Override public void unFavorite(int id) {
-    Call<UnFavoriteTopic> call =
-        service.unFavoriteTopic(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
+    Call<UnFavoriteTopic> call = service.unFavoriteTopic(id);
     call.enqueue(new Callback<UnFavoriteTopic>() {
       @Override
       public void onResponse(Call<UnFavoriteTopic> call, Response<UnFavoriteTopic> response) {
@@ -182,8 +193,7 @@ public class TopicDataNetwork implements TopicData {
   }
 
   @Override public void follow(int id) {
-    Call<FollowTopic> call =
-        service.followTopic(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
+    Call<FollowTopic> call = service.followTopic(id);
     call.enqueue(new Callback<FollowTopic>() {
       @Override public void onResponse(Call<FollowTopic> call, Response<FollowTopic> response) {
         if (response.isSuccessful()) {
@@ -204,8 +214,7 @@ public class TopicDataNetwork implements TopicData {
   }
 
   @Override public void unFollow(int id) {
-    Call<UnFollowTopic> call =
-        service.unFollowTopic(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id);
+    Call<UnFollowTopic> call = service.unFollowTopic(id);
     call.enqueue(new Callback<UnFollowTopic>() {
       @Override public void onResponse(Call<UnFollowTopic> call, Response<UnFollowTopic> response) {
         if (response.isSuccessful()) {
@@ -226,8 +235,7 @@ public class TopicDataNetwork implements TopicData {
   }
 
   @Override public void createReply(int id, String body) {
-    Call<TopicReply> call =
-        service.createReply(Constant.VALUE_TOKEN_PREFIX + Constant.VALUE_TOKEN, id, body);
+    Call<TopicReply> call = service.createReply(id, body);
     call.enqueue(new Callback<TopicReply>() {
       @Override public void onResponse(Call<TopicReply> call, Response<TopicReply> response) {
         if (response.isSuccessful()) {

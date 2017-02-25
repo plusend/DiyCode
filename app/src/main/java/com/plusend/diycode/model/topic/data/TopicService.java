@@ -7,13 +7,11 @@ import com.plusend.diycode.model.topic.entity.TopicDetail;
 import com.plusend.diycode.model.topic.entity.TopicReply;
 import com.plusend.diycode.model.topic.entity.UnFavoriteTopic;
 import com.plusend.diycode.model.topic.entity.UnFollowTopic;
-import com.plusend.diycode.util.Constant;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -54,41 +52,35 @@ interface TopicService {
    * @param body 话题内容, Markdown 格式
    * @param nodeId 节点编号
    */
-  @POST("topics.json") @FormUrlEncoded Call<TopicDetail> newTopic(
-      @Header(Constant.KEY_TOKEN) String token, @Field("title") String title,
+  @POST("topics.json") @FormUrlEncoded Call<TopicDetail> newTopic(@Field("title") String title,
       @Field("body") String body, @Field("node_id") int nodeId);
 
   /**
    * 收藏话题
    */
-  @POST("topics/{id}/favorite.json") Call<FavoriteTopic> favoriteTopic(
-      @Header(Constant.KEY_TOKEN) String token, @Path("id") int id);
+  @POST("topics/{id}/favorite.json") Call<FavoriteTopic> favoriteTopic(@Path("id") int id);
 
   /**
    * 取消收藏话题
    */
-  @POST("topics/{id}/unfavorite.json") Call<UnFavoriteTopic> unFavoriteTopic(
-      @Header(Constant.KEY_TOKEN) String token, @Path("id") int id);
+  @POST("topics/{id}/unfavorite.json") Call<UnFavoriteTopic> unFavoriteTopic(@Path("id") int id);
 
   /**
    * 关注话题
    */
-  @POST("topics/{id}/follow.json") Call<FollowTopic> followTopic(
-      @Header(Constant.KEY_TOKEN) String token, @Path("id") int id);
+  @POST("topics/{id}/follow.json") Call<FollowTopic> followTopic(@Path("id") int id);
 
   /**
    * 取消关注话题
    */
-  @POST("topics/{id}/unfollow.json") Call<UnFollowTopic> unFollowTopic(
-      @Header(Constant.KEY_TOKEN) String token, @Path("id") int id);
+  @POST("topics/{id}/unfollow.json") Call<UnFollowTopic> unFollowTopic(@Path("id") int id);
 
   /**
    * 创建回帖
    *
-   * @param token 登录 Token
    * @param id 帖子 id
    * @param body 回帖内容, Markdown 格式
    */
-  @POST("topics/{id}/replies.json") @FormUrlEncoded Call<TopicReply> createReply(
-      @Header(Constant.KEY_TOKEN) String token, @Path("id") int id, @Field("body") String body);
+  @POST("topics/{id}/replies.json") @FormUrlEncoded Call<TopicReply> createReply(@Path("id") int id,
+      @Field("body") String body);
 }

@@ -7,7 +7,7 @@
     android:background="@color/windowBackground"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.plusend.diycode.view.activity.MyRepliesActivity"
+    tools:context="com.plusend.diycode.view.activity.MyUserRepliesActivity"
     >
   <include
       layout="@layout/toolbar"

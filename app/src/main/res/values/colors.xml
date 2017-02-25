@@ -8,7 +8,7 @@
   <color name="blue">#356DD0</color>
   <color name="colorMenuIcon">#62646c</color>
   <color name="colorTitle">#4d4d4d</color>
-  <color name="colorSubTitle">#c8c8ce</color>
+  <color name="colorSubTitle">#999999</color>
 
   <!-- MaterialSettingsActivity -->
   <color name="white">#ffffff</color>

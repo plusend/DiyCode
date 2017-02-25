@@ -20,15 +20,15 @@ import com.plusend.diycode.model.topic.entity.TopicDetail;
 import com.plusend.diycode.model.topic.node.entity.Node;
 import com.plusend.diycode.model.topic.node.presenter.NodesBasePresenter;
 import com.plusend.diycode.model.topic.node.view.NodesView;
-import com.plusend.diycode.model.topic.presenter.NewTopicBasePresenter;
-import com.plusend.diycode.model.topic.view.NewTopicView;
+import com.plusend.diycode.model.topic.presenter.CreateTopicPresenter;
+import com.plusend.diycode.model.topic.view.CreateTopicView;
 import com.plusend.diycode.util.ToastUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CreateTopicActivity extends BaseActivity implements NewTopicView, NodesView {
+public class CreateTopicActivity extends BaseActivity implements CreateTopicView, NodesView {
 
   @BindView(R.id.title) EditText title;
   @BindView(R.id.content) EditText content;
@@ -40,7 +40,7 @@ public class CreateTopicActivity extends BaseActivity implements NewTopicView, N
   private String[] sectionNames;
   private String[] nodeNames;
 
-  private NewTopicBasePresenter newTopicPresenter;
+  private CreateTopicPresenter createTopicPresenter;
   private NodesBasePresenter nodesPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class CreateTopicActivity extends BaseActivity implements NewTopicView, N
     super.onCreate(savedInstanceState);
 
     nodesPresenter = new NodesBasePresenter(this);
-    newTopicPresenter = new NewTopicBasePresenter(this);
+    createTopicPresenter = new CreateTopicPresenter(this);
 
     nodesPresenter.readNodes();
   }
@@ -69,7 +69,7 @@ public class CreateTopicActivity extends BaseActivity implements NewTopicView, N
       ToastUtil.showText(this, "请输入发帖内容");
       return;
     }
-    newTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
+    createTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
   }
 
   @Override protected Toolbar getToolbar() {
@@ -79,7 +79,7 @@ public class CreateTopicActivity extends BaseActivity implements NewTopicView, N
   @Override protected List<BasePresenter> getPresenter() {
     List<BasePresenter> list = new ArrayList<>();
     list.add(nodesPresenter);
-    list.add(newTopicPresenter);
+    list.add(createTopicPresenter);
     return list;
   }
 

@@ -11,13 +11,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class UserTopicsBasePresenter extends BasePresenter {
+public class UserTopicsPresenter extends BasePresenter {
   private static final String TAG = "UserTopicsPresenter";
 
   private BaseData data;
   private TopicsView topicsView;
 
-  public UserTopicsBasePresenter(TopicsView topicsView) {
+  public UserTopicsPresenter(TopicsView topicsView) {
     this.data = UserDataNetwork.getInstance();
     this.topicsView = topicsView;
   }

@@ -97,7 +97,7 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".view.activity.MyRepliesActivity"
+        android:name=".view.activity.MyUserRepliesActivity"
         android:label="我的评论">
     </activity>
     <activity

@@ -19,20 +19,22 @@ import com.plusend.diycode.R;
 import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.model.topic.entity.TopicDetail;
 import com.plusend.diycode.model.topic.entity.TopicReply;
-import com.plusend.diycode.model.topic.presenter.TopicBasePresenter;
-import com.plusend.diycode.model.topic.presenter.TopicRepliesBasePresenter;
+import com.plusend.diycode.model.topic.presenter.TopicPresenter;
+import com.plusend.diycode.model.topic.presenter.TopicRepliesPresenter;
 import com.plusend.diycode.model.topic.view.TopicRepliesView;
 import com.plusend.diycode.model.topic.view.TopicView;
 import com.plusend.diycode.util.PrefUtil;
-import com.plusend.diycode.view.widget.DividerListItemDecoration;
 import com.plusend.diycode.view.adapter.topic.Footer;
 import com.plusend.diycode.view.adapter.topic.FooterViewProvider;
 import com.plusend.diycode.view.adapter.topic.TopicDetailViewProvider;
 import com.plusend.diycode.view.adapter.topic.TopicReplyViewProvider;
 import com.plusend.diycode.view.adapter.topic.TopicReplyWithTopic;
+import com.plusend.diycode.view.widget.DividerListItemDecoration;
 import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
+
+import static com.plusend.diycode.R.id.topic;
 
 public class TopicActivity extends BaseActivity implements TopicView, TopicRepliesView {
   private static final String TAG = "TopicActivity";
@@ -47,9 +49,10 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
   private TopicDetail topicDetail;
   private MultiTypeAdapter adapter;
   private Items items = new Items();
-  private TopicBasePresenter topicPresenter;
-  private TopicRepliesBasePresenter topicRepliesPresenter;
+  private TopicPresenter topicPresenter;
+  private TopicRepliesPresenter topicRepliesPresenter;
   private LinearLayoutManager linearLayoutManager;
+  private int topicId;
   private int offset;
   private boolean noMoreReplies;
 
@@ -60,10 +63,30 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
     super.onCreate(savedInstanceState);
 
     Intent intent = getIntent();
-    int id = intent.getIntExtra(ID, 0);
-    Log.d(TAG, "id: " + id);
+    topicId = intent.getIntExtra(ID, 0);
+    Log.d(TAG, "topicId: " + topicId);
     linearLayoutManager = new LinearLayoutManager(this);
     rv.setLayoutManager(linearLayoutManager);
+
+    topicPresenter = new TopicPresenter(this);
+
+    View.OnClickListener favoriteListener = new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        String loginName = PrefUtil.getMe(TopicActivity.this).getLogin();
+        if (TextUtils.isEmpty(loginName)) {
+          Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_LONG)
+              .setAction("登录", new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                  startActivityForResult(new Intent(TopicActivity.this, SignInActivity.class),
+                      SignInActivity.REQUEST_CODE);
+                }
+              })
+              .show();
+          return;
+        }
+        topicPresenter.favoriteTopic(topicId);
+      }
+    };
 
     adapter = new MultiTypeAdapter(items);
     adapter.register(TopicDetail.class, new TopicDetailViewProvider());
@@ -93,10 +116,9 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
       }
     });
 
-    topicPresenter = new TopicBasePresenter(this);
-    topicRepliesPresenter = new TopicRepliesBasePresenter(this, id);
-    if (id != 0) {
-      topicPresenter.getTopic(id);
+    topicRepliesPresenter = new TopicRepliesPresenter(this, topicId);
+    if (topicId != 0) {
+      topicPresenter.getTopic(topicId);
     }
 
     fab.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +154,6 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
   @Override public void showTopic(TopicDetail topicDetail) {
     items.add(topicDetail);
     this.topicDetail = topicDetail;
-    //topicRepliesAdapter.setTopicDetail(topicDetail);
-    //topicRepliesAdapter.notifyItemInserted(0);
     adapter.notifyItemInserted(adapter.getItemCount());
     requestReplies();
   }
@@ -142,6 +162,38 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
     progressBar.setVisibility(View.GONE);
     rv.setVisibility(View.VISIBLE);
     fab.setVisibility(View.VISIBLE);
+  }
+
+  @Override public void showFavorite(boolean bool) {
+    if (bool) {
+      ((TopicDetail) items.get(0)).setFavorited(true);
+      adapter.notifyItemChanged(0);
+    } else {
+      Snackbar.make(coordinator, "收藏失败", Snackbar.LENGTH_LONG).show();
+    }
+  }
+
+  @Override public void showUnFavorite(boolean bool) {
+    if (bool) {
+      ((TopicDetail) items.get(0)).setFavorited(false);
+      adapter.notifyItemChanged(0);
+    }
+  }
+
+  @Override public void showFollow(boolean bool) {
+
+  }
+
+  @Override public void showUnFollow(boolean bool) {
+
+  }
+
+  @Override public void showLike(boolean bool) {
+
+  }
+
+  @Override public void showUnLike(boolean bool) {
+
   }
 
   private void requestReplies() {
@@ -212,5 +264,14 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
     ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_LOADING);
     adapter.notifyItemChanged(adapter.getItemCount());
     topicRepliesPresenter.addReplies(offset);
+  }
+
+  @Override protected void onPause() {
+    if (topicDetail.isFavorited()) {
+      topicPresenter.favoriteTopic(topicId);
+    } else {
+      topicPresenter.unFavoriteTopic(topicId);
+    }
+    super.onPause();
   }
 }

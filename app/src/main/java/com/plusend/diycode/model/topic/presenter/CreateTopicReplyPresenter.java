@@ -10,12 +10,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class CreateTopicReplyBasePresenter extends BasePresenter {
+public class CreateTopicReplyPresenter extends BasePresenter {
   private static final String TAG = "CreateTopicReplyPresent";
   private CreateTopicReplyView createTopicReplyView;
   private BaseData data;
 
-  public CreateTopicReplyBasePresenter(CreateTopicReplyView createTopicReplyView) {
+  public CreateTopicReplyPresenter(CreateTopicReplyView createTopicReplyView) {
     this.createTopicReplyView = createTopicReplyView;
     data = TopicDataNetwork.getInstance();
   }

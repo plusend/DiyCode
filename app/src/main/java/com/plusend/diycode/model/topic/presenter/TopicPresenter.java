@@ -4,28 +4,46 @@ import android.util.Log;
 import com.plusend.diycode.model.base.BaseData;
 import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.model.topic.data.TopicDataNetwork;
+import com.plusend.diycode.model.topic.event.FavoriteEvent;
+import com.plusend.diycode.model.topic.event.FollowEvent;
 import com.plusend.diycode.model.topic.event.LoadTopicDetailFinishEvent;
 import com.plusend.diycode.model.topic.event.NewTopicEvent;
 import com.plusend.diycode.model.topic.event.TopicDetailEvent;
+import com.plusend.diycode.model.topic.event.UnFavoriteEvent;
+import com.plusend.diycode.model.topic.event.UnFollowEvent;
 import com.plusend.diycode.model.topic.view.TopicView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class TopicBasePresenter extends BasePresenter {
+public class TopicPresenter extends BasePresenter {
   private static final String TAG = "TopicPresenter";
   private BaseData data;
   private TopicView topicView;
-  private int id;
 
-  public TopicBasePresenter(TopicView topicView) {
+  public TopicPresenter(TopicView topicView) {
     this.data = TopicDataNetwork.getInstance();
     this.topicView = topicView;
   }
 
   public void getTopic(int id) {
-    this.id = id;
     ((TopicDataNetwork) data).getTopic(id);
+  }
+
+  public void favoriteTopic(int id) {
+    ((TopicDataNetwork) data).favorite(id);
+  }
+
+  public void unFavoriteTopic(int id) {
+    ((TopicDataNetwork) data).unFavorite(id);
+  }
+
+  public void followTopic(int id) {
+    ((TopicDataNetwork) data).follow(id);
+  }
+
+  public void unFollowTopic(int id) {
+    ((TopicDataNetwork) data).unFollow(id);
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN)
@@ -45,6 +63,22 @@ public class TopicBasePresenter extends BasePresenter {
     Log.d(TAG, "showNewTopic");
     topicView.showTopic(newTopicEvent.getTopicDetail());
     EventBus.getDefault().removeStickyEvent(newTopicEvent);
+  }
+
+  @Subscribe(threadMode = ThreadMode.MAIN) public void showFavorite(FavoriteEvent event) {
+    topicView.showFavorite(event.isResult());
+  }
+
+  @Subscribe(threadMode = ThreadMode.MAIN) public void showUnFavorite(UnFavoriteEvent event) {
+    topicView.showUnFavorite(event.isResult());
+  }
+
+  @Subscribe(threadMode = ThreadMode.MAIN) public void showFollow(FollowEvent event) {
+    topicView.showFollow(event.isResult());
+  }
+
+  @Subscribe(threadMode = ThreadMode.MAIN) public void showUnFollow(UnFollowEvent event) {
+    topicView.showUnFollow(event.isResult());
   }
 
   @Override public void start() {

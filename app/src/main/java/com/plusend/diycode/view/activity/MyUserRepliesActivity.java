@@ -13,8 +13,8 @@ import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.model.topic.entity.Reply;
-import com.plusend.diycode.model.topic.presenter.RepliesBasePresenter;
-import com.plusend.diycode.model.topic.view.RepliesView;
+import com.plusend.diycode.model.topic.presenter.UserRepliesPresenter;
+import com.plusend.diycode.model.topic.view.UserRepliesView;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.ToastUtil;
 import com.plusend.diycode.view.widget.DividerListItemDecoration;
@@ -24,7 +24,7 @@ import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-public class MyRepliesActivity extends BaseActivity implements RepliesView {
+public class MyUserRepliesActivity extends BaseActivity implements UserRepliesView {
   private static final String TAG = "MyRepliesActivity";
   public static final String LOGIN_NAME = "loginName";
 
@@ -35,7 +35,7 @@ public class MyRepliesActivity extends BaseActivity implements RepliesView {
   private MultiTypeAdapter adapter;
   private LinearLayoutManager linearLayoutManager;
   private Items items;
-  private RepliesBasePresenter presenter;
+  private UserRepliesPresenter presenter;
   private int offset;
   private String loginName;
 
@@ -44,7 +44,7 @@ public class MyRepliesActivity extends BaseActivity implements RepliesView {
     ButterKnife.bind(this);
     super.onCreate(savedInstanceState);
 
-    presenter = new RepliesBasePresenter(this);
+    presenter = new UserRepliesPresenter(this);
     items = new Items();
     adapter = new MultiTypeAdapter(items);
     adapter.register(Reply.class, new ReplyViewProvider());
@@ -74,9 +74,9 @@ public class MyRepliesActivity extends BaseActivity implements RepliesView {
 
     loginName = PrefUtil.getMe(this).getLogin();
     if (TextUtils.isEmpty(loginName)) {
-      startActivityForResult(new Intent(MyRepliesActivity.this, SignInActivity.class),
+      startActivityForResult(new Intent(MyUserRepliesActivity.this, SignInActivity.class),
           SignInActivity.REQUEST_CODE);
-      ToastUtil.showText(MyRepliesActivity.this, "请先登录");
+      ToastUtil.showText(MyUserRepliesActivity.this, "请先登录");
     } else {
       getReplies();
     }
@@ -108,7 +108,7 @@ public class MyRepliesActivity extends BaseActivity implements RepliesView {
         if (resultCode == SignInActivity.RESULT_OK) {
           getReplies();
         } else {
-          ToastUtil.showText(MyRepliesActivity.this, "放弃登录");
+          ToastUtil.showText(MyUserRepliesActivity.this, "放弃登录");
           finish();
         }
         break;

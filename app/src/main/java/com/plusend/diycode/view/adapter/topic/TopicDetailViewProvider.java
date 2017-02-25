@@ -44,6 +44,26 @@ public class TopicDetailViewProvider
         .into(holder.avatar);
     holder.topic.setText(topicDetail.getNodeName());
     holder.repliesCount.setText("共收到 " + topicDetail.getRepliesCount() + " 条回复");
+    if (topicDetail.isLiked()) {
+      holder.like.setImageResource(R.drawable.ic_like);
+    } else {
+      holder.like.setImageResource(R.drawable.ic_like_not);
+    }
+    holder.like.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+
+      }
+    });
+    if (topicDetail.getLikesCount() > 0) {
+      holder.likeCount.setText(topicDetail.getLikesCount() + "");
+    }
+    updateFavorite(topicDetail, holder.favorite);
+    holder.favorite.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        topicDetail.setFavorited(!topicDetail.isFavorited());
+        updateFavorite(topicDetail, holder.favorite);
+      }
+    });
     holder.content.loadDetailDataAsync(topicDetail.getBodyHtml(), new Runnable() {
       @Override public void run() {
         EventBus.getDefault().post(new LoadTopicDetailFinishEvent());
@@ -60,6 +80,14 @@ public class TopicDetailViewProvider
     holder.name.setOnClickListener(listener);
   }
 
+  private void updateFavorite(TopicDetail topicDetail, ImageView imageView) {
+    if (topicDetail.isFavorited()) {
+      imageView.setImageResource(R.drawable.ic_favorite);
+    } else {
+      imageView.setImageResource(R.drawable.ic_favorite_not);
+    }
+  }
+
   static class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.avatar) ImageView avatar;
     @BindView(R.id.name) TextView name;
@@ -68,6 +96,9 @@ public class TopicDetailViewProvider
     @BindView(R.id.title) TextView title;
     @BindView(R.id.content) DWebView content;
     @BindView(R.id.replies_count) TextView repliesCount;
+    @BindView(R.id.favorite) ImageView favorite;
+    @BindView(R.id.like_count) TextView likeCount;
+    @BindView(R.id.like) ImageView like;
 
     ViewHolder(View itemView) {
       super(itemView);

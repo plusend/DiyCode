@@ -2,10 +2,6 @@ package com.plusend.diycode.model.topic.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by plusend on 2016/11/24.
- */
-
 public class TopicDetail {
   @SerializedName("id") private int id;
   @SerializedName("title") private String title;
@@ -26,6 +22,9 @@ public class TopicDetail {
   @SerializedName("hits") private int hits;
   @SerializedName("likes_count") private int likesCount;
   @SerializedName("suggested_at") private String suggestedAt;
+  @SerializedName("followed") private boolean followed;
+  @SerializedName("liked") private boolean liked;
+  @SerializedName("favorited") private boolean favorited;
 
   public int getId() {
     return id;
@@ -179,6 +178,30 @@ public class TopicDetail {
     this.suggestedAt = suggestedAt;
   }
 
+  public boolean isFollowed() {
+    return followed;
+  }
+
+  public void setFollowed(boolean followed) {
+    this.followed = followed;
+  }
+
+  public boolean isLiked() {
+    return liked;
+  }
+
+  public void setLiked(boolean liked) {
+    this.liked = liked;
+  }
+
+  public boolean isFavorited() {
+    return favorited;
+  }
+
+  public void setFavorited(boolean favorited) {
+    this.favorited = favorited;
+  }
+
   public static class User {
     @SerializedName("id") private int id;
     @SerializedName("login") private String login;
@@ -216,6 +239,15 @@ public class TopicDetail {
     public void setAvatarUrl(String avatarUrl) {
       this.avatarUrl = avatarUrl;
     }
+
+    @Override public String toString() {
+      return "User{" +
+          "id=" + id +
+          ", login='" + login + '\'' +
+          ", name='" + name + '\'' +
+          ", avatarUrl='" + avatarUrl + '\'' +
+          '}';
+    }
   }
 
   public static class Abilities {
@@ -237,5 +269,39 @@ public class TopicDetail {
     public void setDestroy(boolean destroy) {
       this.destroy = destroy;
     }
+
+    @Override public String toString() {
+      return "Abilities{" +
+          "update=" + update +
+          ", destroy=" + destroy +
+          '}';
+    }
+  }
+
+  @Override public String toString() {
+    return "TopicDetail{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", createdAt='" + createdAt + '\'' +
+        ", updatedAt='" + updatedAt + '\'' +
+        ", repliedAt='" + repliedAt + '\'' +
+        ", repliesCount=" + repliesCount +
+        ", nodeName='" + nodeName + '\'' +
+        ", nodeId=" + nodeId +
+        ", lastReplyUserId=" + lastReplyUserId +
+        ", lastReplyUserLogin='" + lastReplyUserLogin + '\'' +
+        ", user=" + user +
+        ", deleted=" + deleted +
+        ", excellent=" + excellent +
+        ", abilities=" + abilities +
+        ", body='" + body + '\'' +
+        ", bodyHtml='" + bodyHtml + '\'' +
+        ", hits=" + hits +
+        ", likesCount=" + likesCount +
+        ", suggestedAt='" + suggestedAt + '\'' +
+        ", followed=" + followed +
+        ", liked=" + liked +
+        ", favorited=" + favorited +
+        '}';
   }
 }

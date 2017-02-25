@@ -16,7 +16,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.plusend.diycode.R;
 import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.model.user.entity.UserDetailInfo;
-import com.plusend.diycode.model.user.presenter.UserBasePresenter;
+import com.plusend.diycode.model.user.presenter.UserPresenter;
 import com.plusend.diycode.model.user.view.UserView;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import java.util.List;
@@ -32,7 +32,7 @@ public class UserActivity extends BaseActivity implements UserView {
   @BindView(R.id.follow_num) TextView followNum;
   @BindView(R.id.back) ImageView back;
   @BindView(R.id.container) FrameLayout container;
-  private UserBasePresenter userPresenter;
+  private UserPresenter userPresenter;
   private String loginName;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class UserActivity extends BaseActivity implements UserView {
     TopicFragment topicFragment = TopicFragment.newInstance(loginName, TopicFragment.TYPE_CREATE);
     getSupportFragmentManager().beginTransaction().add(R.id.container, topicFragment).commit();
 
-    userPresenter = new UserBasePresenter(this);
+    userPresenter = new UserPresenter(this);
     userPresenter.getUser(loginName);
   }
 

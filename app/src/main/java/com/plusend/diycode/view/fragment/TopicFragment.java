@@ -17,9 +17,9 @@ import butterknife.ButterKnife;
 import com.plusend.diycode.R;
 import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.model.topic.entity.Topic;
-import com.plusend.diycode.model.topic.presenter.TopicsBasePresenter;
+import com.plusend.diycode.model.topic.presenter.TopicsPresenter;
 import com.plusend.diycode.model.topic.view.TopicsView;
-import com.plusend.diycode.model.user.presenter.UserTopicsBasePresenter;
+import com.plusend.diycode.model.user.presenter.UserTopicsPresenter;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.view.widget.DividerListItemDecoration;
 import com.plusend.diycode.view.widget.EmptyRecyclerView;
@@ -104,11 +104,11 @@ public class TopicFragment extends Fragment implements TopicsView {
           ((Footer) items.get(items.size() - 1)).setStatus(Footer.STATUS_LOADING);
           adapter.notifyItemChanged(adapter.getItemCount());
           if (type == TYPE_ALL) {
-            ((TopicsBasePresenter) topicsBasePresenter).getTopics(offset);
+            ((TopicsPresenter) topicsBasePresenter).getTopics(offset);
           } else if (type == TYPE_CREATE) {
-            ((UserTopicsBasePresenter) topicsBasePresenter).getUserCreateTopics(loginName, offset);
+            ((UserTopicsPresenter) topicsBasePresenter).getUserCreateTopics(loginName, offset);
           } else if (type == TYPE_FAVORITE) {
-            ((UserTopicsBasePresenter) topicsBasePresenter).getUserFavoriteTopics(loginName, offset);
+            ((UserTopicsPresenter) topicsBasePresenter).getUserFavoriteTopics(loginName, offset);
           }
         }
       }
@@ -155,23 +155,23 @@ public class TopicFragment extends Fragment implements TopicsView {
     }
 
     if (type == TYPE_ALL) {
-      topicsBasePresenter = new TopicsBasePresenter(this);
+      topicsBasePresenter = new TopicsPresenter(this);
     } else if (type == TYPE_CREATE) {
-      topicsBasePresenter = new UserTopicsBasePresenter(this);
+      topicsBasePresenter = new UserTopicsPresenter(this);
     } else if (type == TYPE_FAVORITE) {
-      topicsBasePresenter = new UserTopicsBasePresenter(this);
+      topicsBasePresenter = new UserTopicsPresenter(this);
     }
     topicsBasePresenter.start();
     Log.v(TAG, "isFirstLoad: " + isFirstLoad);
     if (isFirstLoad) {
       if (!TextUtils.isEmpty(loginName)) {
         if (type != TYPE_FAVORITE) {
-          ((UserTopicsBasePresenter) topicsBasePresenter).getUserCreateTopics(loginName, offset);
+          ((UserTopicsPresenter) topicsBasePresenter).getUserCreateTopics(loginName, offset);
         } else {
-          ((UserTopicsBasePresenter) topicsBasePresenter).getUserFavoriteTopics(loginName, offset);
+          ((UserTopicsPresenter) topicsBasePresenter).getUserFavoriteTopics(loginName, offset);
         }
       } else {
-        ((TopicsBasePresenter) topicsBasePresenter).getTopics(offset);
+        ((TopicsPresenter) topicsBasePresenter).getTopics(offset);
       }
       // 标记 Fragment 已经进行过第一次加载
       isFirstLoad = false;

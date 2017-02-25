@@ -18,6 +18,7 @@ import com.plusend.diycode.util.GlideImageGetter;
 import com.plusend.diycode.util.HtmlUtil;
 import com.plusend.diycode.util.LinkMovementMethodExt;
 import com.plusend.diycode.util.SpanClickListener;
+import com.plusend.diycode.util.TimeUtil;
 import com.plusend.diycode.view.activity.CreateTopicReplyActivity;
 import com.plusend.diycode.view.activity.UserActivity;
 import com.plusend.diycode.view.activity.WebActivity;
@@ -39,6 +40,8 @@ public class TopicReplyViewProvider
     holder.name.setText(topicReply.getTopicReply().getUser().getLogin());
     String floor = String.format(Locale.CHINESE, "%d楼", getPosition());
     holder.position.setText(floor);
+    holder.time.setText(
+        "  ·  " + TimeUtil.computePastTime(topicReply.getTopicReply().getUpdatedAt()));
     Glide.with(holder.avatar.getContext())
         .load(topicReply.getTopicReply().getUser().getAvatarUrl())
         .placeholder(R.mipmap.ic_avatar_error)
@@ -46,6 +49,9 @@ public class TopicReplyViewProvider
         .crossFade()
         .centerCrop()
         .into(holder.avatar);
+    if (topicReply.getTopicReply().getLikesCount() > 0) {
+      holder.likeCount.setText(topicReply.getTopicReply().getLikesCount() + "");
+    }
     holder.content.setText(Html.fromHtml(HtmlUtil.removeP(topicReply.getTopicReply().getBodyHtml()),
         new GlideImageGetter(holder.content.getContext(), holder.content), null));
     holder.content.setMovementMethod(new LinkMovementMethodExt(new SpanClickListener() {
@@ -99,7 +105,10 @@ public class TopicReplyViewProvider
     @BindView(R.id.avatar) ImageView avatar;
     @BindView(R.id.name) TextView name;
     @BindView(R.id.position) TextView position;
+    @BindView(R.id.time) TextView time;
     @BindView(R.id.reply) ImageView reply;
+    @BindView(R.id.like_count) TextView likeCount;
+    @BindView(R.id.like) ImageView like;
     @BindView(R.id.content) TextView content;
 
     ViewHolder(View itemView) {

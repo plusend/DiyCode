@@ -10,12 +10,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class SignInBasePresenter extends BasePresenter {
+public class SignInPresenter extends BasePresenter {
   private static final String TAG = "SignInPresenter";
   private SignInView signInView;
   private BaseData data;
 
-  public SignInBasePresenter(SignInView signInView) {
+  public SignInPresenter(SignInView signInView) {
     this.signInView = signInView;
     this.data = UserDataNetwork.getInstance();
   }

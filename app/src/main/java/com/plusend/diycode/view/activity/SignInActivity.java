@@ -15,8 +15,8 @@ import com.plusend.diycode.R;
 import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.model.user.entity.Token;
 import com.plusend.diycode.model.user.entity.UserDetailInfo;
-import com.plusend.diycode.model.user.presenter.SignInBasePresenter;
-import com.plusend.diycode.model.user.presenter.UserBasePresenter;
+import com.plusend.diycode.model.user.presenter.SignInPresenter;
+import com.plusend.diycode.model.user.presenter.UserPresenter;
 import com.plusend.diycode.model.user.view.SignInView;
 import com.plusend.diycode.model.user.view.UserView;
 import com.plusend.diycode.util.PrefUtil;
@@ -38,16 +38,16 @@ public class SignInActivity extends BaseActivity implements SignInView, UserView
   @BindView(R.id.forget_password) TextView forgetPassword;
   @BindView(R.id.toolbar) Toolbar toolbar;
 
-  private SignInBasePresenter signInPresenter;
-  private UserBasePresenter userPresenter;
+  private SignInPresenter signInPresenter;
+  private UserPresenter userPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_sign_in);
     ButterKnife.bind(this);
     super.onCreate(savedInstanceState);
 
-    signInPresenter = new SignInBasePresenter(this);
-    userPresenter = new UserBasePresenter(this);
+    signInPresenter = new SignInPresenter(this);
+    userPresenter = new UserPresenter(this);
 
     signIn.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {

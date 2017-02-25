@@ -32,7 +32,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.plusend.diycode.R;
 import com.plusend.diycode.model.user.entity.Token;
 import com.plusend.diycode.model.user.entity.UserDetailInfo;
-import com.plusend.diycode.model.user.presenter.UserBasePresenter;
+import com.plusend.diycode.model.user.presenter.UserPresenter;
 import com.plusend.diycode.model.user.view.UserView;
 import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.PrefUtil;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
   private TextView email;
 
   private UserDetailInfo me;
-  private UserBasePresenter userPresenter;
+  private UserPresenter userPresenter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
       }
     });
 
-    userPresenter = new UserBasePresenter(this);
+    userPresenter = new UserPresenter(this);
 
     Token token = PrefUtil.getToken(this);
     if (!TextUtils.isEmpty(token.getAccessToken())) {
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity
       }
     } else if (id == R.id.nav_comment) {
       if(hasSignedIn()) {
-        Intent intent = new Intent(MainActivity.this, MyRepliesActivity.class);
+        Intent intent = new Intent(MainActivity.this, MyUserRepliesActivity.class);
         startActivity(intent);
       }
     } else if (id == R.id.nav_about) {
