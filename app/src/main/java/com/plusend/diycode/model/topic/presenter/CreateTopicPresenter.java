@@ -3,7 +3,7 @@ package com.plusend.diycode.model.topic.presenter;
 import com.plusend.diycode.model.base.BaseData;
 import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.model.topic.data.TopicDataNetwork;
-import com.plusend.diycode.model.topic.event.NewTopicEvent;
+import com.plusend.diycode.model.topic.event.CreateTopicEvent;
 import com.plusend.diycode.model.topic.view.CreateTopicView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -18,8 +18,8 @@ public class CreateTopicPresenter extends BasePresenter {
     this.data = TopicDataNetwork.getInstance();
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void getNewTopic(NewTopicEvent newTopicEvent) {
-    createTopicView.getNewTopic(newTopicEvent.getTopicDetail());
+  @Subscribe(threadMode = ThreadMode.MAIN) public void getNewTopic(CreateTopicEvent createTopicEvent) {
+    createTopicView.getNewTopic(createTopicEvent.getTopicDetail());
   }
 
   public void newTopic(String title, String body, int node_id) {

@@ -19,4 +19,6 @@ public interface TopicView extends BaseView {
   void showLike(boolean bool);
 
   void showUnLike(boolean bool);
+
+  void showSignIn();
 }

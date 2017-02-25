@@ -34,8 +34,6 @@ import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-import static com.plusend.diycode.R.id.topic;
-
 public class TopicActivity extends BaseActivity implements TopicView, TopicRepliesView {
   private static final String TAG = "TopicActivity";
   public static final String ID = "topicId";
@@ -69,24 +67,6 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
     rv.setLayoutManager(linearLayoutManager);
 
     topicPresenter = new TopicPresenter(this);
-
-    View.OnClickListener favoriteListener = new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        String loginName = PrefUtil.getMe(TopicActivity.this).getLogin();
-        if (TextUtils.isEmpty(loginName)) {
-          Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_LONG)
-              .setAction("登录", new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                  startActivityForResult(new Intent(TopicActivity.this, SignInActivity.class),
-                      SignInActivity.REQUEST_CODE);
-                }
-              })
-              .show();
-          return;
-        }
-        topicPresenter.favoriteTopic(topicId);
-      }
-    };
 
     adapter = new MultiTypeAdapter(items);
     adapter.register(TopicDetail.class, new TopicDetailViewProvider());
@@ -125,14 +105,7 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
       @Override public void onClick(View view) {
         String loginName = PrefUtil.getMe(TopicActivity.this).getLogin();
         if (TextUtils.isEmpty(loginName)) {
-          Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_LONG)
-              .setAction("登录", new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                  startActivityForResult(new Intent(TopicActivity.this, SignInActivity.class),
-                      SignInActivity.REQUEST_CODE);
-                }
-              })
-              .show();
+          signIn();
           return;
         }
         Intent intent = new Intent(TopicActivity.this, CreateTopicReplyActivity.class);
@@ -165,19 +138,9 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
   }
 
   @Override public void showFavorite(boolean bool) {
-    if (bool) {
-      ((TopicDetail) items.get(0)).setFavorited(true);
-      adapter.notifyItemChanged(0);
-    } else {
-      Snackbar.make(coordinator, "收藏失败", Snackbar.LENGTH_LONG).show();
-    }
   }
 
   @Override public void showUnFavorite(boolean bool) {
-    if (bool) {
-      ((TopicDetail) items.get(0)).setFavorited(false);
-      adapter.notifyItemChanged(0);
-    }
   }
 
   @Override public void showFollow(boolean bool) {
@@ -194,6 +157,10 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
 
   @Override public void showUnLike(boolean bool) {
 
+  }
+
+  @Override public void showSignIn() {
+    signIn();
   }
 
   private void requestReplies() {
@@ -273,5 +240,16 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
       topicPresenter.unFavoriteTopic(topicId);
     }
     super.onPause();
+  }
+
+  private void signIn() {
+    Snackbar.make(coordinator, "请先登录", Snackbar.LENGTH_LONG)
+        .setAction("登录", new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            startActivityForResult(new Intent(TopicActivity.this, SignInActivity.class),
+                SignInActivity.REQUEST_CODE);
+          }
+        })
+        .show();
   }
 }

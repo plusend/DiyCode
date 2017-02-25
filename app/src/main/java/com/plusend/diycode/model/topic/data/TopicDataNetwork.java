@@ -11,7 +11,7 @@ import com.plusend.diycode.model.topic.entity.UnFollowTopic;
 import com.plusend.diycode.model.topic.event.CreateTopicReplyEvent;
 import com.plusend.diycode.model.topic.event.FavoriteEvent;
 import com.plusend.diycode.model.topic.event.FollowEvent;
-import com.plusend.diycode.model.topic.event.NewTopicEvent;
+import com.plusend.diycode.model.topic.event.CreateTopicEvent;
 import com.plusend.diycode.model.topic.event.TopicDetailEvent;
 import com.plusend.diycode.model.topic.event.TopicRepliesEvent;
 import com.plusend.diycode.model.topic.event.TopicsEvent;
@@ -134,17 +134,17 @@ public class TopicDataNetwork implements TopicData {
         if (response.isSuccessful()) {
           TopicDetail topicDetail = response.body();
           Log.v(TAG, "topicDetail: " + topicDetail);
-          EventBus.getDefault().postSticky(new NewTopicEvent(topicDetail));
-          EventBus.getDefault().post(new NewTopicEvent(topicDetail));
+          EventBus.getDefault().postSticky(new CreateTopicEvent(topicDetail));
+          EventBus.getDefault().post(new CreateTopicEvent(topicDetail));
         } else {
           Log.e(TAG, "newTopic STATUS: " + response.code());
-          EventBus.getDefault().post(new NewTopicEvent(null));
+          EventBus.getDefault().post(new CreateTopicEvent(null));
         }
       }
 
       @Override public void onFailure(Call<TopicDetail> call, Throwable t) {
         Log.e(TAG, t.getMessage());
-        EventBus.getDefault().post(new NewTopicEvent(null));
+        EventBus.getDefault().post(new CreateTopicEvent(null));
       }
     });
   }

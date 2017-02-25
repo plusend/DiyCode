@@ -4,10 +4,11 @@ import android.util.Log;
 import com.plusend.diycode.model.base.BaseData;
 import com.plusend.diycode.model.base.BasePresenter;
 import com.plusend.diycode.model.topic.data.TopicDataNetwork;
+import com.plusend.diycode.model.topic.event.CreateTopicEvent;
 import com.plusend.diycode.model.topic.event.FavoriteEvent;
 import com.plusend.diycode.model.topic.event.FollowEvent;
 import com.plusend.diycode.model.topic.event.LoadTopicDetailFinishEvent;
-import com.plusend.diycode.model.topic.event.NewTopicEvent;
+import com.plusend.diycode.model.topic.event.SignInEvent;
 import com.plusend.diycode.model.topic.event.TopicDetailEvent;
 import com.plusend.diycode.model.topic.event.UnFavoriteEvent;
 import com.plusend.diycode.model.topic.event.UnFollowEvent;
@@ -59,10 +60,10 @@ public class TopicPresenter extends BasePresenter {
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-  public void showNewTopic(NewTopicEvent newTopicEvent) {
+  public void showNewTopic(CreateTopicEvent createTopicEvent) {
     Log.d(TAG, "showNewTopic");
-    topicView.showTopic(newTopicEvent.getTopicDetail());
-    EventBus.getDefault().removeStickyEvent(newTopicEvent);
+    topicView.showTopic(createTopicEvent.getTopicDetail());
+    EventBus.getDefault().removeStickyEvent(createTopicEvent);
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN) public void showFavorite(FavoriteEvent event) {
@@ -79,6 +80,10 @@ public class TopicPresenter extends BasePresenter {
 
   @Subscribe(threadMode = ThreadMode.MAIN) public void showUnFollow(UnFollowEvent event) {
     topicView.showUnFollow(event.isResult());
+  }
+
+  @Subscribe(threadMode = ThreadMode.MAIN) public void showSignIn(SignInEvent event) {
+    topicView.showSignIn();
   }
 
   @Override public void start() {

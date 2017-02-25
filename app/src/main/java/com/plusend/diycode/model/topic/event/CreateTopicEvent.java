@@ -6,10 +6,10 @@ import com.plusend.diycode.model.topic.entity.TopicDetail;
  * Created by plusend on 2016/11/30.
  */
 
-public class NewTopicEvent {
+public class CreateTopicEvent {
   private TopicDetail topicDetail;
 
-  public NewTopicEvent(TopicDetail topicDetail) {
+  public CreateTopicEvent(TopicDetail topicDetail) {
     this.topicDetail = topicDetail;
   }
 

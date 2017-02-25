@@ -2,7 +2,9 @@ package com.plusend.diycode.view.adapter.topic;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +16,17 @@ import com.bumptech.glide.Glide;
 import com.plusend.diycode.R;
 import com.plusend.diycode.model.topic.entity.TopicDetail;
 import com.plusend.diycode.model.topic.event.LoadTopicDetailFinishEvent;
+import com.plusend.diycode.model.topic.event.SignInEvent;
+import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.util.TimeUtil;
+import com.plusend.diycode.view.activity.SignInActivity;
+import com.plusend.diycode.view.activity.TopicActivity;
 import com.plusend.diycode.view.activity.UserActivity;
 import com.plusend.diycode.view.widget.DWebView;
 import me.drakeet.multitype.ItemViewProvider;
 import org.greenrobot.eventbus.EventBus;
+
+import static com.plusend.diycode.R.id.coordinator;
 
 public class TopicDetailViewProvider
     extends ItemViewProvider<TopicDetail, TopicDetailViewProvider.ViewHolder> {
@@ -57,11 +65,10 @@ public class TopicDetailViewProvider
     if (topicDetail.getLikesCount() > 0) {
       holder.likeCount.setText(topicDetail.getLikesCount() + "");
     }
-    updateFavorite(topicDetail, holder.favorite);
+    updateFavorite(topicDetail, holder.favorite, false);
     holder.favorite.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        topicDetail.setFavorited(!topicDetail.isFavorited());
-        updateFavorite(topicDetail, holder.favorite);
+        updateFavorite(topicDetail, holder.favorite, true);
       }
     });
     holder.content.loadDetailDataAsync(topicDetail.getBodyHtml(), new Runnable() {
@@ -80,7 +87,15 @@ public class TopicDetailViewProvider
     holder.name.setOnClickListener(listener);
   }
 
-  private void updateFavorite(TopicDetail topicDetail, ImageView imageView) {
+  private void updateFavorite(TopicDetail topicDetail, ImageView imageView, boolean reverse) {
+    String loginName = PrefUtil.getMe(imageView.getContext()).getLogin();
+    if (TextUtils.isEmpty(loginName) && reverse) {
+      EventBus.getDefault().post(new SignInEvent());
+      return;
+    }
+    if (reverse) {
+      topicDetail.setFavorited(!topicDetail.isFavorited());
+    }
     if (topicDetail.isFavorited()) {
       imageView.setImageResource(R.drawable.ic_favorite);
     } else {
