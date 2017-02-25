@@ -61,25 +61,25 @@
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_reply"
         />
-    <TextView
-        android:id="@+id/like_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="24dp"
-        android:layout_toStartOf="@id/reply"
-        android:textColor="@color/colorSubTitle"
-        android:textSize="12sp"
-        />
-    <ImageView
-        android:id="@+id/like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        android:layout_toStartOf="@id/like_count"
-        android:src="@drawable/ic_like_not"
-        />
+    <!--<TextView-->
+    <!--android:id="@+id/like_count"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginEnd="24dp"-->
+    <!--android:layout_toStartOf="@id/reply"-->
+    <!--android:textColor="@color/colorSubTitle"-->
+    <!--android:textSize="12sp"-->
+    <!--/>-->
+    <!--<ImageView-->
+    <!--android:id="@+id/like"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_toStartOf="@id/like_count"-->
+    <!--android:src="@drawable/ic_like_not"-->
+    <!--/>-->
   </RelativeLayout>
   <TextView
       android:id="@+id/content"

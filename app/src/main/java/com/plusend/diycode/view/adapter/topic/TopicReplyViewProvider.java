@@ -49,9 +49,9 @@ public class TopicReplyViewProvider
         .crossFade()
         .centerCrop()
         .into(holder.avatar);
-    if (topicReply.getTopicReply().getLikesCount() > 0) {
-      holder.likeCount.setText(topicReply.getTopicReply().getLikesCount() + "");
-    }
+    //if (topicReply.getTopicReply().getLikesCount() > 0) {
+    //  holder.likeCount.setText(topicReply.getTopicReply().getLikesCount() + "");
+    //}
     holder.content.setText(Html.fromHtml(HtmlUtil.removeP(topicReply.getTopicReply().getBodyHtml()),
         new GlideImageGetter(holder.content.getContext(), holder.content), null));
     holder.content.setMovementMethod(new LinkMovementMethodExt(new SpanClickListener() {
@@ -107,8 +107,8 @@ public class TopicReplyViewProvider
     @BindView(R.id.position) TextView position;
     @BindView(R.id.time) TextView time;
     @BindView(R.id.reply) ImageView reply;
-    @BindView(R.id.like_count) TextView likeCount;
-    @BindView(R.id.like) ImageView like;
+    //@BindView(R.id.like_count) TextView likeCount;
+    //@BindView(R.id.like) ImageView like;
     @BindView(R.id.content) TextView content;
 
     ViewHolder(View itemView) {
