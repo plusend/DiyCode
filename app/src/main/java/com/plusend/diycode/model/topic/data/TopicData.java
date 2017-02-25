@@ -68,6 +68,22 @@ public interface TopicData extends BaseData {
   void unFollow(int id);
 
   /**
+   * 赞
+   *
+   * @param obj_type ["topic", "reply", "news"]
+   * @param obj_id id
+   */
+  void like(String obj_type, Integer obj_id);
+
+  /**
+   * 取消赞
+   *
+   * @param obj_type ["topic", "reply", "news"]
+   * @param obj_id id
+   */
+  void unLike(String obj_type, Integer obj_id);
+
+  /**
    * 创建回帖
    *
    * @param id 帖子 id

@@ -239,6 +239,12 @@ public class TopicActivity extends BaseActivity implements TopicView, TopicRepli
     } else {
       topicPresenter.unFavoriteTopic(topicId);
     }
+
+    if (topicDetail.isLiked()) {
+      topicPresenter.like(topicId);
+    } else {
+      topicPresenter.unLike(topicId);
+    }
     super.onPause();
   }
 

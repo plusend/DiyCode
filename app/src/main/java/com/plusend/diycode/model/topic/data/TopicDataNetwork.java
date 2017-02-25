@@ -3,6 +3,7 @@ package com.plusend.diycode.model.topic.data;
 import android.util.Log;
 import com.plusend.diycode.model.topic.entity.FavoriteTopic;
 import com.plusend.diycode.model.topic.entity.FollowTopic;
+import com.plusend.diycode.model.topic.entity.Like;
 import com.plusend.diycode.model.topic.entity.Topic;
 import com.plusend.diycode.model.topic.entity.TopicDetail;
 import com.plusend.diycode.model.topic.entity.TopicReply;
@@ -12,11 +13,13 @@ import com.plusend.diycode.model.topic.event.CreateTopicReplyEvent;
 import com.plusend.diycode.model.topic.event.FavoriteEvent;
 import com.plusend.diycode.model.topic.event.FollowEvent;
 import com.plusend.diycode.model.topic.event.CreateTopicEvent;
+import com.plusend.diycode.model.topic.event.LikeEvent;
 import com.plusend.diycode.model.topic.event.TopicDetailEvent;
 import com.plusend.diycode.model.topic.event.TopicRepliesEvent;
 import com.plusend.diycode.model.topic.event.TopicsEvent;
 import com.plusend.diycode.model.topic.event.UnFavoriteEvent;
 import com.plusend.diycode.model.topic.event.UnFollowEvent;
+import com.plusend.diycode.model.topic.event.UnLikeEvent;
 import com.plusend.diycode.util.Constant;
 import java.io.IOException;
 import java.util.List;
@@ -230,6 +233,48 @@ public class TopicDataNetwork implements TopicData {
       @Override public void onFailure(Call<UnFollowTopic> call, Throwable t) {
         Log.e(TAG, t.getMessage());
         EventBus.getDefault().post(new UnFollowEvent(false));
+      }
+    });
+  }
+
+  @Override public void like(String obj_type, Integer obj_id) {
+    Call<Like> call = service.like(obj_type, obj_id);
+    call.enqueue(new Callback<Like>() {
+      @Override public void onResponse(Call<Like> call, Response<Like> response) {
+        if (response.isSuccessful()) {
+          Like like = response.body();
+          Log.v(TAG, "like: " + like);
+          EventBus.getDefault().post(new LikeEvent(like));
+        } else {
+          Log.e(TAG, "like STATUS: " + response.code());
+          EventBus.getDefault().post(new LikeEvent(null));
+        }
+      }
+
+      @Override public void onFailure(Call<Like> call, Throwable t) {
+        Log.e(TAG, t.getMessage());
+        EventBus.getDefault().post(new LikeEvent(null));
+      }
+    });
+  }
+
+  @Override public void unLike(String obj_type, Integer obj_id) {
+    Call<Like> call = service.unLike(obj_type, obj_id);
+    call.enqueue(new Callback<Like>() {
+      @Override public void onResponse(Call<Like> call, Response<Like> response) {
+        if (response.isSuccessful()) {
+          Like like = response.body();
+          Log.v(TAG, "unLike: " + like);
+          EventBus.getDefault().post(new UnLikeEvent(like));
+        } else {
+          Log.e(TAG, "unLike STATUS: " + response.code());
+          EventBus.getDefault().post(new UnLikeEvent(null));
+        }
+      }
+
+      @Override public void onFailure(Call<Like> call, Throwable t) {
+        Log.e(TAG, t.getMessage());
+        EventBus.getDefault().post(new UnLikeEvent(null));
       }
     });
   }

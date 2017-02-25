@@ -19,6 +19,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class TopicPresenter extends BasePresenter {
   private static final String TAG = "TopicPresenter";
+  private static final String LIKE_OBJ_TYPE_TOPIC = "topic";
   private BaseData data;
   private TopicView topicView;
 
@@ -45,6 +46,14 @@ public class TopicPresenter extends BasePresenter {
 
   public void unFollowTopic(int id) {
     ((TopicDataNetwork) data).unFollow(id);
+  }
+
+  public void like(Integer id) {
+    ((TopicDataNetwork) data).like(LIKE_OBJ_TYPE_TOPIC, id);
+  }
+
+  public void unLike(Integer id) {
+    ((TopicDataNetwork) data).unLike(LIKE_OBJ_TYPE_TOPIC, id);
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN)

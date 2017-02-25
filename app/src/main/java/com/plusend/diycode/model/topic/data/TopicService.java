@@ -2,6 +2,7 @@ package com.plusend.diycode.model.topic.data;
 
 import com.plusend.diycode.model.topic.entity.FavoriteTopic;
 import com.plusend.diycode.model.topic.entity.FollowTopic;
+import com.plusend.diycode.model.topic.entity.Like;
 import com.plusend.diycode.model.topic.entity.Topic;
 import com.plusend.diycode.model.topic.entity.TopicDetail;
 import com.plusend.diycode.model.topic.entity.TopicReply;
@@ -9,9 +10,11 @@ import com.plusend.diycode.model.topic.entity.UnFavoriteTopic;
 import com.plusend.diycode.model.topic.entity.UnFollowTopic;
 import java.util.List;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -74,6 +77,22 @@ interface TopicService {
    * 取消关注话题
    */
   @POST("topics/{id}/unfollow.json") Call<UnFollowTopic> unFollowTopic(@Path("id") int id);
+
+  /**
+   * 赞
+   *
+   * @param obj_type ["topic", "reply", "news"]
+   */
+  @POST("likes.json") @FormUrlEncoded Call<Like> like(@Field("obj_type") String obj_type,
+      @Field("obj_id") Integer obj_id);
+
+  /**
+   * 取消赞
+   *
+   * @param obj_type ["topic", "reply", "news"]
+   */
+  @HTTP(method = "DELETE", path = "likes.json", hasBody = true) @FormUrlEncoded Call<Like> unLike(
+      @Field("obj_type") String obj_type, @Field("obj_id") Integer obj_id);
 
   /**
    * 创建回帖

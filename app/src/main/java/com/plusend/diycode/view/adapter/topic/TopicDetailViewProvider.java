@@ -52,14 +52,10 @@ public class TopicDetailViewProvider
         .into(holder.avatar);
     holder.topic.setText(topicDetail.getNodeName());
     holder.repliesCount.setText("共收到 " + topicDetail.getRepliesCount() + " 条回复");
-    if (topicDetail.isLiked()) {
-      holder.like.setImageResource(R.drawable.ic_like);
-    } else {
-      holder.like.setImageResource(R.drawable.ic_like_not);
-    }
+    updateLike(topicDetail, holder.like, holder.likeCount, false);
     holder.like.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-
+        updateLike(topicDetail, holder.like, holder.likeCount, true);
       }
     });
     if (topicDetail.getLikesCount() > 0) {
@@ -100,6 +96,36 @@ public class TopicDetailViewProvider
       imageView.setImageResource(R.drawable.ic_favorite);
     } else {
       imageView.setImageResource(R.drawable.ic_favorite_not);
+    }
+  }
+
+  private void updateLike(TopicDetail topicDetail, ImageView imageView, TextView textView,
+      boolean click) {
+    String loginName = PrefUtil.getMe(imageView.getContext()).getLogin();
+    if (TextUtils.isEmpty(loginName) && click) {
+      EventBus.getDefault().post(new SignInEvent());
+      return;
+    }
+    if (click) {
+      topicDetail.setLiked(!topicDetail.isLiked());
+      if (topicDetail.isLiked()) {
+        topicDetail.setLikesCount(topicDetail.getLikesCount() + 1);
+        textView.setText(topicDetail.getLikesCount() + "");
+      } else {
+        topicDetail.setLikesCount(topicDetail.getLikesCount() - 1);
+        if (topicDetail.getLikesCount() > 0) {
+          textView.setText(topicDetail.getLikesCount() + "");
+        }
+      }
+    } else {
+      if (topicDetail.getLikesCount() > 0) {
+        textView.setText(topicDetail.getLikesCount() + "");
+      }
+    }
+    if (topicDetail.isLiked()) {
+      imageView.setImageResource(R.drawable.ic_like);
+    } else {
+      imageView.setImageResource(R.drawable.ic_like_not);
     }
   }
 
