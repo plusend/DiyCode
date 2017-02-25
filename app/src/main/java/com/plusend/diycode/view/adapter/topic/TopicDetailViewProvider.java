@@ -115,6 +115,8 @@ public class TopicDetailViewProvider
         topicDetail.setLikesCount(topicDetail.getLikesCount() - 1);
         if (topicDetail.getLikesCount() > 0) {
           textView.setText(topicDetail.getLikesCount() + "");
+        } else if (topicDetail.getLikesCount() == 0) {
+          textView.setText("");
         }
       }
     } else {
