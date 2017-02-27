@@ -2,7 +2,12 @@
 ## 动机
 [深夜发布个小消息，Diycode 社区、项目、News、sites 的 API 发布了 - DiyCode](https://www.diycode.cc/topics/411)
 
+## 开发记录
+
+[项目结构和功能点整理](http://plusend.com/2017/02/27/Diycode/)
+
 ## 下载
+
 [![](screenshot/ic_launcher.png)](https://www.pgyer.com/diycode)
 
 ## 预览
