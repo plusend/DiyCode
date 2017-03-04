@@ -134,7 +134,7 @@
 
     <meta-data
         android:name="PGYER_APPID"
-        android:value="047d244d4b05e157bef49f4255ece514">
+        android:value="${PGYER_APPID}">
     </meta-data>
     <provider
         android:name="android.support.v4.content.FileProvider"
