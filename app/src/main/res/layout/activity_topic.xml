@@ -53,6 +53,7 @@
       android:layout_margin="@dimen/fab_margin"
       android:visibility="gone"
       app:backgroundTint="#62646c"
+      app:layout_behavior="com.plusend.diycode.view.widget.ScrollAwareFABBehavior"
       app:srcCompat="@drawable/ic_menu_reply"
       />
 </android.support.design.widget.CoordinatorLayout>

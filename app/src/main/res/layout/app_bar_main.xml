@@ -6,7 +6,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:paddingTop="25dp"
     tools:context="com.plusend.diycode.view.activity.MainActivity"
     >
 
@@ -19,7 +19,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:minHeight="0dp"
         android:theme="@style/ThemeToolbar"
+        app:layout_scrollFlags="scroll|enterAlways"
         />
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -42,6 +44,7 @@
       android:layout_margin="@dimen/fab_margin"
       android:tint="@color/white"
       app:backgroundTint="@color/blue"
+      app:layout_behavior="com.plusend.diycode.view.widget.ScrollAwareFABBehavior"
       app:srcCompat="@drawable/ic_menu_add"
       />
 
