@@ -193,7 +193,9 @@ public class MainActivity extends AppCompatActivity
       case R.id.action_search:
         break;
       case R.id.action_notification:
-        startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+        if (hasSignedIn()) {
+          startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+        }
         break;
     }
 
