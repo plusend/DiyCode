@@ -13,6 +13,15 @@
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
     <item name="drawerArrowStyle">@style/DrawerArrow</item>
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:windowTranslucentStatus">true</item>
+  </style>
+
+  <!-- 用于开启滑动返回功能的 Activity -->
+  <style name="AppTheme.NoActionBar.Transparent">
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowIsTranslucent">true</item>
   </style>
 
   <style name="DrawerArrow" parent="Base.Widget.AppCompat.DrawerArrowToggle">
@@ -164,10 +173,6 @@
     <item name="android:textColor">@color/about_page_hint</item>
   </style>
 
-  <!-- 用于开启滑动返回功能的 Activity -->
-  <style name="AppTheme.NoActionBar.Transparent">
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowIsTranslucent">true</item>
-  </style>
+
 
 </resources>
