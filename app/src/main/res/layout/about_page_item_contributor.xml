@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/AboutPage.Item.Card">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:background="@drawable/about_page_card"
+    android:paddingBottom="16dp"
+    android:paddingEnd="12dp"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    >
 
-    <ImageView
-        style="@style/AboutPage.ContributorAvatar"
-        android:id="@+id/avatar"
-        tools:ignore="ContentDescription"
-        tools:src="#000000"/>
+  <ImageView
+      android:id="@+id/avatar"
+      android:layout_width="38dp"
+      android:layout_height="38dp"
+      android:layout_marginEnd="16dp"
+      tools:ignore="ContentDescription"
+      />
 
-    <TextView
-        style="@style/AboutPage.ContributorName"
-        android:id="@+id/name"
-        android:layout_toRightOf="@id/avatar"
-        android:layout_toEndOf="@id/avatar"
-        android:layout_alignTop="@id/avatar"
-        tools:text="drakeet"/>
+  <TextView
+      android:id="@+id/name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignTop="@id/avatar"
+      android:layout_toEndOf="@id/avatar"
+      android:textColor="#424242"
+      />
 
-    <TextView
-        style="@style/AboutPage.ContributorDesc"
-        android:id="@+id/desc"
-        android:layout_below="@id/name"
-        android:layout_toRightOf="@id/avatar"
-        android:layout_toEndOf="@id/avatar"
-        tools:text="Developer and Designer"/>
+  <TextView
+      android:id="@+id/desc"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/name"
+      android:layout_toEndOf="@id/avatar"
+      android:textColor="#757575"
+      tools:text="Developer and Designer"
+      />
 
 </RelativeLayout>

@@ -10,7 +10,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.plusend.diycode.BuildConfig;
@@ -24,16 +23,11 @@ import com.plusend.diycode.view.adapter.about.Contributor;
 import com.plusend.diycode.view.adapter.about.ContributorViewProvider;
 import com.plusend.diycode.view.adapter.about.License;
 import com.plusend.diycode.view.adapter.about.LicenseViewProvider;
-import com.plusend.diycode.view.adapter.about.Line;
-import com.plusend.diycode.view.adapter.about.LineViewProvider;
 import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-/**
- * @author drakeet
- */
-public class AboutActivity extends BaseActivity implements View.OnClickListener {
+public class AboutActivity extends BaseActivity {
 
   protected Toolbar toolbar;
   protected CollapsingToolbarLayout collapsingToolbar;
@@ -52,15 +46,11 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
   protected void onItemsCreated(@NonNull Items items) {
     items.add(new Category("介绍"));
-    items.add(new Card(getString(R.string.card_content), "Diycode"));
-
-    items.add(new Line());
+    items.add(new Card(getString(R.string.card_content)));
 
     items.add(new Category("Developers"));
     items.add(new Contributor(R.mipmap.avatar_plusend, "plusend", "Android Developer",
         "https://github.com/plusend"));
-
-    items.add(new Line());
 
     items.add(new Category("Open Source Licenses"));
     items.add(new License("MultiType", "drakeet", License.APACHE_2,
@@ -86,9 +76,6 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
   @Nullable protected CharSequence onCreateTitle() {
     return null;
-  }
-
-  protected void onActionClick(View action) {
   }
 
   @SuppressWarnings("ConstantConditions") @Override
@@ -127,8 +114,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     onItemsCreated(items);
     adapter = new MultiTypeAdapter(items);
     adapter.register(Category.class, new CategoryViewProvider());
-    adapter.register(Card.class, new CardViewProvider(this));
-    adapter.register(Line.class, new LineViewProvider());
+    adapter.register(Card.class, new CardViewProvider());
     adapter.register(Contributor.class, new ContributorViewProvider());
     adapter.register(License.class, new LicenseViewProvider());
     recyclerView.setAdapter(adapter);
@@ -173,12 +159,5 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
   @Override public void setTitle(CharSequence title) {
     collapsingToolbar.setTitle(title);
-  }
-
-  @Override public void onClick(View v) {
-    int id = v.getId();
-    if (id == R.id.action) {
-      onActionClick(v);
-    }
   }
 }

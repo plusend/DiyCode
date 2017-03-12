@@ -10,7 +10,7 @@
   <android.support.design.widget.AppBarLayout
       android:id="@+id/header_layout"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/about_page_header_height"
+      android:layout_height="230dp"
       android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
       >
 
@@ -33,20 +33,27 @@
 
         <ImageView
             android:id="@+id/icon"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             tools:ignore="ContentDescription"
-            tools:src="#000000"
-            style="@style/AboutPage.Header.Icon"
             />
 
         <TextView
             android:id="@+id/slogan"
-            style="@style/AboutPage.Header.Slogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             />
 
         <TextView
             android:id="@+id/version"
-            tools:text="Version 1.2.3"
-            style="@style/AboutPage.Header.Version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
             />
       </LinearLayout>
 

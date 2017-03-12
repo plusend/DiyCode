@@ -109,8 +109,7 @@
     </activity>
     <activity
         android:name=".view.activity.AboutActivity"
-        android:label="关于"
-        android:theme="@style/AppTheme.About">
+        android:label="关于">
     </activity>
 
     <activity
