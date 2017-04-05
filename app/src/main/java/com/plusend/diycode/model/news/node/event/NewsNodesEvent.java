@@ -4,13 +4,13 @@ import com.plusend.diycode.model.news.node.entity.NewsNode;
 import java.util.List;
 
 public class NewsNodesEvent {
-  private List<NewsNode> newsNodeList;
+    private List<NewsNode> newsNodeList;
 
-  public NewsNodesEvent(List<NewsNode> newsNodeList) {
-    this.newsNodeList = newsNodeList;
-  }
+    public NewsNodesEvent(List<NewsNode> newsNodeList) {
+        this.newsNodeList = newsNodeList;
+    }
 
-  public List<NewsNode> getNewsNodeList() {
-    return newsNodeList;
-  }
+    public List<NewsNode> getNewsNodeList() {
+        return newsNodeList;
+    }
 }

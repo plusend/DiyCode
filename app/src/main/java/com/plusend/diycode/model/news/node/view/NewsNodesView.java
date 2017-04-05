@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface NewsNodesView extends BaseView {
-  void showNodes(List<NewsNode> newsNodeList);
+    void showNodes(List<NewsNode> newsNodeList);
 }

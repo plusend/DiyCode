@@ -13,14 +13,14 @@ import com.plusend.diycode.R;
 
 public class DividerListItemDecoration extends RecyclerView.ItemDecoration {
 
-  private Drawable divider;
+    private Drawable divider;
 
-  public DividerListItemDecoration(Context context) {
-    divider = context.getResources().getDrawable(R.drawable.item_divider_vertical);
-  }
+    public DividerListItemDecoration(Context context) {
+        divider = context.getResources().getDrawable(R.drawable.item_divider_vertical);
+    }
 
-  @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-      RecyclerView.State state) {
-    outRect.set(0, 0, 0, divider.getIntrinsicHeight());
-  }
+    @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+        RecyclerView.State state) {
+        outRect.set(0, 0, 0, divider.getIntrinsicHeight());
+    }
 }

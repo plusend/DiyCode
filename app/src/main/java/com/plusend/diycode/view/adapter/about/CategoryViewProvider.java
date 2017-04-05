@@ -15,24 +15,24 @@ import me.drakeet.multitype.ItemViewProvider;
 public class CategoryViewProvider
     extends ItemViewProvider<Category, CategoryViewProvider.ViewHolder> {
 
-  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-      @NonNull ViewGroup parent) {
-    View root = inflater.inflate(R.layout.about_page_item_category, parent, false);
-    return new ViewHolder(root);
-  }
-
-  @Override
-  protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Category category) {
-    holder.category.setText(category.value);
-  }
-
-  static class ViewHolder extends RecyclerView.ViewHolder {
-
-    TextView category;
-
-    ViewHolder(View itemView) {
-      super(itemView);
-      category = (TextView) itemView.findViewById(R.id.category);
+    @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+        @NonNull ViewGroup parent) {
+        View root = inflater.inflate(R.layout.about_page_item_category, parent, false);
+        return new ViewHolder(root);
     }
-  }
+
+    @Override
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Category category) {
+        holder.category.setText(category.value);
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView category;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            category = (TextView) itemView.findViewById(R.id.category);
+        }
+    }
 }

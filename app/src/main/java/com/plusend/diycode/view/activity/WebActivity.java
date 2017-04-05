@@ -25,199 +25,197 @@ import com.plusend.diycode.model.base.BasePresenter;
 import java.util.List;
 
 public class WebActivity extends BaseActivity {
-  private static final String TAG = "WebActivity";
-  public static final String URL = "url";
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.webview) WebView webView;
-  @BindView(R.id.progress_bar) ProgressBar progressBar;
-  private String mUrl;
+    public static final String URL = "url";
+    private static final String TAG = "WebActivity";
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.webview) WebView webView;
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
+    WebViewClient webViewClient = new WebViewClient() {
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    setContentView(R.layout.activity_web);
-    ButterKnife.bind(this);
-    super.onCreate(savedInstanceState);
+        /**
+         * 多页面在同一个WebView中打开，就是不新建activity或者调用系统浏览器打开
+         */
+        @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Log.d(TAG, "shouldOverrideUrlLoading: " + url);
+            return super.shouldOverrideUrlLoading(view, url);
+        }
 
-    initWebView(webView);
+        @Override public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            toolbar.setTitle(view.getTitle());
+        }
+    };
+    WebChromeClient webChromeClient = new WebChromeClient() {
+        @Override public void onProgressChanged(WebView view, int progress) {
+            Log.d(TAG, "progress: " + progress);
+            if (progress < 100) {
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setProgress(progress);
+            } else if (progress == 100) {
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        }
 
-    Intent intent = getIntent();
-    mUrl = intent.getStringExtra(URL);
-    Log.d(TAG, "mUrl: " + mUrl);
-    toolbar.setTitle(mUrl);
-    webView.loadUrl(mUrl);
-  }
+        @Override public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            toolbar.setTitle(title);
+        }
 
-  @Override protected Toolbar getToolbar() {
-    return toolbar;
-  }
+        //=========HTML5定位==========================================================
+        //需要先加入权限
+        //<uses-permission android:name="android.permission.INTERNET"/>
+        //<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+        //<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+        @Override public void onReceivedIcon(WebView view, Bitmap icon) {
+            super.onReceivedIcon(view, icon);
+        }
 
-  @Override protected List<BasePresenter> getPresenter() {
-    return null;
-  }
+        @Override public void onGeolocationPermissionsHidePrompt() {
+            super.onGeolocationPermissionsHidePrompt();
+        }
 
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-      case R.id.action_browser:
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(mUrl));
-        startActivity(intent);
-        break;
-      case R.id.action_share:
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, toolbar.getTitle());
-        shareIntent.putExtra(Intent.EXTRA_TEXT, mUrl);
-        shareIntent.setType("text/plain");
-        startActivity(shareIntent);
-        break;
+        @Override public void onGeolocationPermissionsShowPrompt(final String origin,
+            final GeolocationPermissions.Callback callback) {
+            callback.invoke(origin, true, false);//注意个函数，第二个参数就是是否同意定位权限，第三个是是否希望内核记住
+            super.onGeolocationPermissionsShowPrompt(origin, callback);
+        }
+        //=========HTML5定位==========================================================
+
+        //=========多窗口的问题==========================================================
+        @Override public boolean onCreateWindow(WebView view, boolean isDialog,
+            boolean isUserGesture, Message resultMsg) {
+            WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+            transport.setWebView(view);
+            resultMsg.sendToTarget();
+            return true;
+        }
+        //=========多窗口的问题==========================================================
+    };
+    private String mUrl;
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_web);
+        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
+
+        initWebView(webView);
+
+        Intent intent = getIntent();
+        mUrl = intent.getStringExtra(URL);
+        Log.d(TAG, "mUrl: " + mUrl);
+        toolbar.setTitle(mUrl);
+        webView.loadUrl(mUrl);
     }
-    return super.onOptionsItemSelected(item);
-  }
 
-  @Override public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.activity_web, menu);
-    return super.onCreateOptionsMenu(menu);
-  }
+    @Override protected Toolbar getToolbar() {
+        return toolbar;
+    }
 
-  public void initWebView(WebView webview) {
-    WebSettings mWebSettings = webview.getSettings();
-    mWebSettings.setSupportZoom(true);
-    mWebSettings.setLoadWithOverviewMode(true);
-    mWebSettings.setUseWideViewPort(true);
-    mWebSettings.setDefaultTextEncodingName("utf-8");
-    mWebSettings.setLoadsImagesAutomatically(true);
+    @Override protected List<BasePresenter> getPresenter() {
+        return null;
+    }
 
-    //调用JS方法.安卓版本大于17,加上注解 @JavascriptInterface
-    mWebSettings.setJavaScriptEnabled(true);
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_browser:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(mUrl));
+                startActivity(intent);
+                break;
+            case R.id.action_share:
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, toolbar.getTitle());
+                shareIntent.putExtra(Intent.EXTRA_TEXT, mUrl);
+                shareIntent.setType("text/plain");
+                startActivity(shareIntent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-    saveData(mWebSettings);
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_web, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-    newWin(mWebSettings);
+    public void initWebView(WebView webview) {
+        WebSettings mWebSettings = webview.getSettings();
+        mWebSettings.setSupportZoom(true);
+        mWebSettings.setLoadWithOverviewMode(true);
+        mWebSettings.setUseWideViewPort(true);
+        mWebSettings.setDefaultTextEncodingName("utf-8");
+        mWebSettings.setLoadsImagesAutomatically(true);
 
-    webview.setWebChromeClient(webChromeClient);
-    webview.setWebViewClient(webViewClient);
-  }
+        //调用JS方法.安卓版本大于17,加上注解 @JavascriptInterface
+        mWebSettings.setJavaScriptEnabled(true);
 
-  @Override public void onPause() {
-    super.onPause();
-    webView.onPause();
-    // 暂时删除，否则影响 DWebView 的使用
-    //webView.pauseTimers(); //小心这个！！！暂停整个 WebView 所有布局、解析、JS。
-  }
+        saveData(mWebSettings);
 
-  @Override public void onResume() {
-    super.onResume();
-    webView.onResume();
-    //webView.resumeTimers();
-  }
+        newWin(mWebSettings);
 
-  /**
-   * 多窗口的问题
-   */
-  private void newWin(WebSettings mWebSettings) {
-    //html中的_bank标签就是新建窗口打开，有时会打不开，需要加以下
-    //然后 复写 WebChromeClient的onCreateWindow方法
-    mWebSettings.setSupportMultipleWindows(false);
-    mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-  }
+        webview.setWebChromeClient(webChromeClient);
+        webview.setWebViewClient(webViewClient);
+    }
 
-  /**
-   * HTML5数据存储
-   */
-  private void saveData(WebSettings mWebSettings) {
-    //有时候网页需要自己保存一些关键数据,Android WebView 需要自己设置
-    mWebSettings.setDomStorageEnabled(true);
-    mWebSettings.setDatabaseEnabled(true);
-    mWebSettings.setAppCacheEnabled(true);
-    String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
-    mWebSettings.setAppCachePath(appCachePath);
-  }
+    @Override public void onPause() {
+        super.onPause();
+        webView.onPause();
+        // 暂时删除，否则影响 DWebView 的使用
+        //webView.pauseTimers(); //小心这个！！！暂停整个 WebView 所有布局、解析、JS。
+    }
 
-  WebViewClient webViewClient = new WebViewClient() {
+    @Override public void onResume() {
+        super.onResume();
+        webView.onResume();
+        //webView.resumeTimers();
+    }
 
     /**
-     * 多页面在同一个WebView中打开，就是不新建activity或者调用系统浏览器打开
+     * 多窗口的问题
      */
-    @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-      Log.d(TAG, "shouldOverrideUrlLoading: " + url);
-      return super.shouldOverrideUrlLoading(view, url);
+    private void newWin(WebSettings mWebSettings) {
+        //html中的_bank标签就是新建窗口打开，有时会打不开，需要加以下
+        //然后 复写 WebChromeClient的onCreateWindow方法
+        mWebSettings.setSupportMultipleWindows(false);
+        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
     }
 
-    @Override public void onPageFinished(WebView view, String url) {
-      super.onPageFinished(view, url);
-      toolbar.setTitle(view.getTitle());
-    }
-  };
-
-  WebChromeClient webChromeClient = new WebChromeClient() {
-    @Override public void onProgressChanged(WebView view, int progress) {
-      Log.d(TAG, "progress: " + progress);
-      if (progress < 100) {
-        progressBar.setVisibility(View.VISIBLE);
-        progressBar.setProgress(progress);
-      } else if (progress == 100) {
-        progressBar.setVisibility(View.INVISIBLE);
-      }
+    /**
+     * HTML5数据存储
+     */
+    private void saveData(WebSettings mWebSettings) {
+        //有时候网页需要自己保存一些关键数据,Android WebView 需要自己设置
+        mWebSettings.setDomStorageEnabled(true);
+        mWebSettings.setDatabaseEnabled(true);
+        mWebSettings.setAppCacheEnabled(true);
+        String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
+        mWebSettings.setAppCachePath(appCachePath);
     }
 
-    @Override public void onReceivedTitle(WebView view, String title) {
-      super.onReceivedTitle(view, title);
-      toolbar.setTitle(title);
+    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            webView.goBack();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
-    //=========HTML5定位==========================================================
-    //需要先加入权限
-    //<uses-permission android:name="android.permission.INTERNET"/>
-    //<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    //<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    @Override public void onReceivedIcon(WebView view, Bitmap icon) {
-      super.onReceivedIcon(view, icon);
+    @Override protected void onDestroy() {
+        super.onDestroy();
+
+        if (webView != null) {
+            webView.clearHistory();
+            ((ViewGroup) webView.getParent()).removeView(webView);
+            webView.loadUrl("about:blank");
+            webView.stopLoading();
+            webView.setWebChromeClient(null);
+            webView.setWebViewClient(null);
+            webView.destroy();
+            webView = null;
+        }
     }
-
-    @Override public void onGeolocationPermissionsHidePrompt() {
-      super.onGeolocationPermissionsHidePrompt();
-    }
-
-    @Override public void onGeolocationPermissionsShowPrompt(final String origin,
-        final GeolocationPermissions.Callback callback) {
-      callback.invoke(origin, true, false);//注意个函数，第二个参数就是是否同意定位权限，第三个是是否希望内核记住
-      super.onGeolocationPermissionsShowPrompt(origin, callback);
-    }
-    //=========HTML5定位==========================================================
-
-    //=========多窗口的问题==========================================================
-    @Override public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture,
-        Message resultMsg) {
-      WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
-      transport.setWebView(view);
-      resultMsg.sendToTarget();
-      return true;
-    }
-    //=========多窗口的问题==========================================================
-  };
-
-  @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-      webView.goBack();
-      return true;
-    }
-
-    return super.onKeyDown(keyCode, event);
-  }
-
-  @Override protected void onDestroy() {
-    super.onDestroy();
-
-    if (webView != null) {
-      webView.clearHistory();
-      ((ViewGroup) webView.getParent()).removeView(webView);
-      webView.loadUrl("about:blank");
-      webView.stopLoading();
-      webView.setWebChromeClient(null);
-      webView.setWebViewClient(null);
-      webView.destroy();
-      webView = null;
-    }
-  }
 }

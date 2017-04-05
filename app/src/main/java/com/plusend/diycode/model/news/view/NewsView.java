@@ -1,7 +1,7 @@
 package com.plusend.diycode.model.news.view;
 
-import com.plusend.diycode.model.news.entity.News;
 import com.plusend.diycode.model.base.BaseView;
+import com.plusend.diycode.model.news.entity.News;
 import java.util.List;
 
 /**
@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface NewsView extends BaseView {
-  void showNews(List<News>newsList);
+    void showNews(List<News> newsList);
 }

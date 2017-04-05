@@ -30,142 +30,142 @@ import java.util.Set;
 
 public class CreateTopicActivity extends BaseActivity implements CreateTopicView, NodesView {
 
-  @BindView(R.id.title) EditText title;
-  @BindView(R.id.content) EditText content;
-  @BindView(R.id.section_name) Spinner sectionName;
-  @BindView(R.id.node_name) Spinner nodeName;
-  @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.title) EditText title;
+    @BindView(R.id.content) EditText content;
+    @BindView(R.id.section_name) Spinner sectionName;
+    @BindView(R.id.node_name) Spinner nodeName;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
-  private List<Node> nodeList;
-  private String[] sectionNames;
-  private String[] nodeNames;
+    private List<Node> nodeList;
+    private String[] sectionNames;
+    private String[] nodeNames;
 
-  private CreateTopicPresenter createTopicPresenter;
-  private NodesBasePresenter nodesPresenter;
+    private CreateTopicPresenter createTopicPresenter;
+    private NodesBasePresenter nodesPresenter;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    setContentView(R.layout.activity_new_topic);
-    ButterKnife.bind(this);
-    super.onCreate(savedInstanceState);
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_new_topic);
+        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
-    nodesPresenter = new NodesBasePresenter(this);
-    createTopicPresenter = new CreateTopicPresenter(this);
+        nodesPresenter = new NodesBasePresenter(this);
+        createTopicPresenter = new CreateTopicPresenter(this);
 
-    nodesPresenter.readNodes();
-  }
-
-  private void createTopic() {
-    String section = sectionName.getDisplay().getName();
-    int id = 45;
-    for (Node node : nodeList) {
-      if (node.getName().equals(section)) {
-        id = node.getId();
-      }
+        nodesPresenter.readNodes();
     }
-    if (TextUtils.isEmpty(title.getText())) {
-      ToastUtil.showText(this, "请输入标题");
-      return;
-    } else if (TextUtils.isEmpty(content.getText())) {
-      ToastUtil.showText(this, "请输入发帖内容");
-      return;
+
+    private void createTopic() {
+        String section = sectionName.getDisplay().getName();
+        int id = 45;
+        for (Node node : nodeList) {
+            if (node.getName().equals(section)) {
+                id = node.getId();
+            }
+        }
+        if (TextUtils.isEmpty(title.getText())) {
+            ToastUtil.showText(this, "请输入标题");
+            return;
+        } else if (TextUtils.isEmpty(content.getText())) {
+            ToastUtil.showText(this, "请输入发帖内容");
+            return;
+        }
+        createTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
     }
-    createTopicPresenter.newTopic(title.getText().toString(), content.getText().toString(), id);
-  }
 
-  @Override protected Toolbar getToolbar() {
-    return toolbar;
-  }
-
-  @Override protected List<BasePresenter> getPresenter() {
-    List<BasePresenter> list = new ArrayList<>();
-    list.add(nodesPresenter);
-    list.add(createTopicPresenter);
-    return list;
-  }
-
-  @Override public void getNewTopic(TopicDetail topicDetail) {
-    if (topicDetail != null) {
-      startActivity(new Intent(CreateTopicActivity.this, TopicActivity.class));
-      finish();
-    } else {
-      ToastUtil.showText(this, "发布失败");
+    @Override protected Toolbar getToolbar() {
+        return toolbar;
     }
-  }
 
-  @Override public void showNodes(final List<Node> nodeList) {
-    if (nodeList == null || nodeList.isEmpty()) {
-      return;
+    @Override protected List<BasePresenter> getPresenter() {
+        List<BasePresenter> list = new ArrayList<>();
+        list.add(nodesPresenter);
+        list.add(createTopicPresenter);
+        return list;
     }
-    this.nodeList = nodeList;
-    List<String> temp = getSectionNames(nodeList);
-    sectionNames = temp.toArray(new String[temp.size()]);
-    // Create an ArrayAdapter using the string array and a default spinner layout
-    ArrayAdapter<String> adapter =
-        new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sectionNames);
-    // Specify the layout to use when the list of choices appears
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // Apply the adapter to the spinner
-    sectionName.setAdapter(adapter);
-    //nodeNames = nodeList.toArray(new String[nodeList.size()]);
-    sectionName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-      @Override public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String name = sectionNames[i];
-        List<String> temp2 = getNodeNames(nodeList, name);
-        nodeNames = temp2.toArray(new String[temp2.size()]);
+
+    @Override public void getNewTopic(TopicDetail topicDetail) {
+        if (topicDetail != null) {
+            startActivity(new Intent(CreateTopicActivity.this, TopicActivity.class));
+            finish();
+        } else {
+            ToastUtil.showText(this, "发布失败");
+        }
+    }
+
+    @Override public void showNodes(final List<Node> nodeList) {
+        if (nodeList == null || nodeList.isEmpty()) {
+            return;
+        }
+        this.nodeList = nodeList;
+        List<String> temp = getSectionNames(nodeList);
+        sectionNames = temp.toArray(new String[temp.size()]);
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> adapter =
-            new ArrayAdapter<>(CreateTopicActivity.this, android.R.layout.simple_spinner_item,
-                nodeNames);
+            new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sectionNames);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        nodeName.setAdapter(adapter);
-      }
+        sectionName.setAdapter(adapter);
+        //nodeNames = nodeList.toArray(new String[nodeList.size()]);
+        sectionName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String name = sectionNames[i];
+                List<String> temp2 = getNodeNames(nodeList, name);
+                nodeNames = temp2.toArray(new String[temp2.size()]);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(CreateTopicActivity.this,
+                    android.R.layout.simple_spinner_item, nodeNames);
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                // Apply the adapter to the spinner
+                nodeName.setAdapter(adapter);
+            }
 
-      @Override public void onNothingSelected(AdapterView<?> adapterView) {
+            @Override public void onNothingSelected(AdapterView<?> adapterView) {
 
-      }
-    });
-  }
-
-  private List<String> getSectionNames(List<Node> nodeList) {
-    List<String> parents = new ArrayList<>();
-    Set<String> set = new HashSet<>();
-    for (Node node : nodeList) {
-      String element = node.getSectionName();
-      if (set.add(element)) parents.add(element);
+            }
+        });
     }
-    return parents;
-  }
 
-  private List<String> getNodeNames(List<Node> nodeList, String sectionName) {
-    List<String> nodeNameList = new ArrayList<>();
-    for (Node node : nodeList) {
-      String element = node.getSectionName();
-      if (element.equals(sectionName)) {
-        nodeNameList.add(node.getName());
-      }
+    private List<String> getSectionNames(List<Node> nodeList) {
+        List<String> parents = new ArrayList<>();
+        Set<String> set = new HashSet<>();
+        for (Node node : nodeList) {
+            String element = node.getSectionName();
+            if (set.add(element)) parents.add(element);
+        }
+        return parents;
     }
-    return nodeNameList;
-  }
 
-  @Override public Context getContext() {
-    return this;
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-      case R.id.action_send:
-        createTopic();
-        break;
+    private List<String> getNodeNames(List<Node> nodeList, String sectionName) {
+        List<String> nodeNameList = new ArrayList<>();
+        for (Node node : nodeList) {
+            String element = node.getSectionName();
+            if (element.equals(sectionName)) {
+                nodeNameList.add(node.getName());
+            }
+        }
+        return nodeNameList;
     }
-    return super.onOptionsItemSelected(item);
-  }
 
-  @Override public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.activity_create_topic, menu);
-    return super.onCreateOptionsMenu(menu);
-  }
+    @Override public Context getContext() {
+        return this;
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_send:
+                createTopic();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_create_topic, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }

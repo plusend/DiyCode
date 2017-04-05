@@ -11,30 +11,30 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class SignInPresenter extends BasePresenter {
-  private static final String TAG = "SignInPresenter";
-  private SignInView signInView;
-  private BaseData data;
+    private static final String TAG = "SignInPresenter";
+    private SignInView signInView;
+    private BaseData data;
 
-  public SignInPresenter(SignInView signInView) {
-    this.signInView = signInView;
-    this.data = UserDataNetwork.getInstance();
-  }
+    public SignInPresenter(SignInView signInView) {
+        this.signInView = signInView;
+        this.data = UserDataNetwork.getInstance();
+    }
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void getToken(TokenEvent tokenEvent) {
-    signInView.getToken(tokenEvent.getToken());
-  }
+    @Subscribe(threadMode = ThreadMode.MAIN) public void getToken(TokenEvent tokenEvent) {
+        signInView.getToken(tokenEvent.getToken());
+    }
 
-  public void getToken(String username, String password) {
-    ((UserDataNetwork) data).getToken(username, password);
-  }
+    public void getToken(String username, String password) {
+        ((UserDataNetwork) data).getToken(username, password);
+    }
 
-  @Override public void start() {
-    Log.d(TAG, "register");
-    EventBus.getDefault().register(this);
-  }
+    @Override public void start() {
+        Log.d(TAG, "register");
+        EventBus.getDefault().register(this);
+    }
 
-  @Override public void stop() {
-    Log.d(TAG, "unregister");
-    EventBus.getDefault().unregister(this);
-  }
+    @Override public void stop() {
+        Log.d(TAG, "unregister");
+        EventBus.getDefault().unregister(this);
+    }
 }

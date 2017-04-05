@@ -1,7 +1,7 @@
 package com.plusend.diycode.model.site.view;
 
-import com.plusend.diycode.model.site.entity.Site;
 import com.plusend.diycode.model.base.BaseView;
+import com.plusend.diycode.model.site.entity.Site;
 import java.util.List;
 
 /**
@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface SiteView extends BaseView {
-  void showSite(List<Site> siteList);
+    void showSite(List<Site> siteList);
 }

@@ -1,7 +1,7 @@
 package com.plusend.diycode.model.topic.view;
 
-import com.plusend.diycode.model.topic.entity.Topic;
 import com.plusend.diycode.model.base.BaseView;
+import com.plusend.diycode.model.topic.entity.Topic;
 import java.util.List;
 
 /**
@@ -9,5 +9,7 @@ import java.util.List;
  */
 
 public interface TopicsView extends BaseView {
-  void showTopics(List<Topic> topicList);
+    void showTopics(List<Topic> topicList);
+
+    void showTopTopics(List<Topic> topicList);
 }

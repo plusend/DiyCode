@@ -1,7 +1,7 @@
 package com.plusend.diycode.model.notification.view;
 
-import com.plusend.diycode.model.notification.entity.Notification;
 import com.plusend.diycode.model.base.BaseView;
+import com.plusend.diycode.model.notification.entity.Notification;
 import java.util.List;
 
 /**
@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface NotificationsView extends BaseView {
-  void showNotifications(List<Notification> notificationList);
+    void showNotifications(List<Notification> notificationList);
 }

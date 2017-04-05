@@ -7,13 +7,13 @@ import com.plusend.diycode.model.topic.entity.TopicDetail;
  */
 
 public class CreateTopicEvent {
-  private TopicDetail topicDetail;
+    private TopicDetail topicDetail;
 
-  public CreateTopicEvent(TopicDetail topicDetail) {
-    this.topicDetail = topicDetail;
-  }
+    public CreateTopicEvent(TopicDetail topicDetail) {
+        this.topicDetail = topicDetail;
+    }
 
-  public TopicDetail getTopicDetail() {
-    return topicDetail;
-  }
+    public TopicDetail getTopicDetail() {
+        return topicDetail;
+    }
 }

@@ -4,13 +4,13 @@ import com.plusend.diycode.model.user.entity.UserInfo;
 import java.util.List;
 
 public class UserFollowersEvent {
-  private List<UserInfo> userInfoList;
+    private List<UserInfo> userInfoList;
 
-  public UserFollowersEvent(List<UserInfo> userInfoList) {
-    this.userInfoList = userInfoList;
-  }
+    public UserFollowersEvent(List<UserInfo> userInfoList) {
+        this.userInfoList = userInfoList;
+    }
 
-  public List<UserInfo> getUserInfoList() {
-    return userInfoList;
-  }
+    public List<UserInfo> getUserInfoList() {
+        return userInfoList;
+    }
 }

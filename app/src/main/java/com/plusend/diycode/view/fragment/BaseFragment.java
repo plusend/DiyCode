@@ -7,67 +7,67 @@ import android.util.Log;
 import com.plusend.diycode.model.base.BasePresenter;
 
 public abstract class BaseFragment extends Fragment {
-  private static final String TAG = "BaseFragment";
-  private OnFragmentInteractionListener mListener;
+    private static final String TAG = "BaseFragment";
+    private OnFragmentInteractionListener mListener;
 
-  public BaseFragment() {
-    // Required empty public constructor
-  }
-
-  protected abstract BasePresenter getPresenter();
-
-  @Override public void onAttach(Context context) {
-    super.onAttach(context);
-    if (context instanceof OnFragmentInteractionListener) {
-      mListener = (OnFragmentInteractionListener) context;
-    } else {
-      // TODO
-      //throw new RuntimeException(
-      //    context.toString() + " must implement OnFragmentInteractionListener");
+    public BaseFragment() {
+        // Required empty public constructor
     }
-  }
 
-  @Override public void onDetach() {
+    protected abstract BasePresenter getPresenter();
 
-    super.onDetach();
-    mListener = null;
-  }
-
-  @Override public void onStart() {
-    super.onStart();
-    if (getPresenter() != null) {
-      getPresenter().start();
-    } else {
-      Log.d(TAG, "onStart getPresenter() == null");
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            // TODO
+            //throw new RuntimeException(
+            //    context.toString() + " must implement OnFragmentInteractionListener");
+        }
     }
-  }
 
-  @Override public void onStop() {
-    if (getPresenter() != null) {
-      getPresenter().stop();
-    } else {
-      Log.d(TAG, "onStop getPresenter() == null");
+    @Override public void onDetach() {
+
+        super.onDetach();
+        mListener = null;
     }
-    super.onStop();
-  }
 
-  /**
-   * This interface must be implemented by activities that contain this
-   * fragment to allow an interaction in this fragment to be communicated
-   * to the activity and potentially other fragments contained in that
-   * activity.
-   * <p>
-   * See the Android Training lesson <a href=
-   * "http://developer.android.com/training/basics/fragments/communicating.html"
-   * >Communicating with Other Fragments</a> for more information.
-   */
-  public interface OnFragmentInteractionListener {
-    void onFragmentInteraction(Uri uri);
-  }
-
-  public void onButtonPressed(Uri uri) {
-    if (mListener != null) {
-      mListener.onFragmentInteraction(uri);
+    @Override public void onStart() {
+        super.onStart();
+        if (getPresenter() != null) {
+            getPresenter().start();
+        } else {
+            Log.d(TAG, "onStart getPresenter() == null");
+        }
     }
-  }
+
+    @Override public void onStop() {
+        if (getPresenter() != null) {
+            getPresenter().stop();
+        } else {
+            Log.d(TAG, "onStop getPresenter() == null");
+        }
+        super.onStop();
+    }
+
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
+    }
 }

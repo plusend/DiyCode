@@ -1,16 +1,16 @@
-package com.plusend.diycode.model.user.event;
+package com.plusend.diycode.model.topic.event;
 
 import com.plusend.diycode.model.topic.entity.Topic;
 import java.util.List;
 
 /**
- * Created by plusend on 2016/11/29.
+ * Created by plusend on 2016/11/24.
  */
 
-public class UserTopicsEvent {
+public class TopTopicsEvent {
     private List<Topic> topicList;
 
-    public UserTopicsEvent(List<Topic> topicList) {
+    public TopTopicsEvent(List<Topic> topicList) {
         this.topicList = topicList;
     }
 

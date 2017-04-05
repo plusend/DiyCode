@@ -8,13 +8,13 @@ import java.util.List;
  */
 
 public class NewsEvent {
-  private List<News> newsList;
+    private List<News> newsList;
 
-  public NewsEvent(List<News> newsList) {
-    this.newsList = newsList;
-  }
+    public NewsEvent(List<News> newsList) {
+        this.newsList = newsList;
+    }
 
-  public List<News> getNewsList() {
-    return newsList;
-  }
+    public List<News> getNewsList() {
+        return newsList;
+    }
 }

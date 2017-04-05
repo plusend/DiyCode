@@ -22,51 +22,51 @@ import me.drakeet.multitype.ItemViewProvider;
 public class NotificationReplyViewProvider
     extends ItemViewProvider<NotificationReply, NotificationReplyViewProvider.ViewHolder> {
 
-  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-      @NonNull ViewGroup parent) {
-    View root = inflater.inflate(R.layout.item_notification_reply, parent, false);
-    return new ViewHolder(root);
-  }
-
-  @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
-      @NonNull NotificationReply notificationReply) {
-    holder.reply = notificationReply;
-    Glide.with(holder.avatar.getContext())
-        .load(notificationReply.getAvatarUrl().replace("large_", ""))
-        .placeholder(R.mipmap.ic_avatar_error)
-        .error(R.mipmap.ic_avatar_error)
-        .centerCrop()
-        .crossFade()
-        .into(holder.avatar);
-    String header = notificationReply.getLogin()
-        + "<font color='#9e9e9e'> 在帖子 </font>"
-        + notificationReply.getTopicTitle()
-        + "<font color='#9e9e9e'> 回复了：</font>";
-    holder.header.setText(Html.fromHtml(header));
-    holder.body.setText(Html.fromHtml(HtmlUtil.removeP(notificationReply.getBodyHtml()),
-        new GlideImageGetter(holder.body.getContext(), holder.body), null));
-  }
-
-  static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.avatar) ImageView avatar;
-    @BindView(R.id.header) TextView header;
-    @BindView(R.id.body) TextView body;
-
-    private NotificationReply reply;
-    private Context context;
-
-    ViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
-      context = itemView.getContext();
-
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View view) {
-          Intent intent = new Intent(context, TopicActivity.class);
-          intent.putExtra(TopicActivity.ID, reply.getTopicId());
-          context.startActivity(intent);
-        }
-      });
+    @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+        @NonNull ViewGroup parent) {
+        View root = inflater.inflate(R.layout.item_notification_reply, parent, false);
+        return new ViewHolder(root);
     }
-  }
+
+    @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
+        @NonNull NotificationReply notificationReply) {
+        holder.reply = notificationReply;
+        Glide.with(holder.avatar.getContext())
+            .load(notificationReply.getAvatarUrl().replace("large_", ""))
+            .placeholder(R.mipmap.ic_avatar_error)
+            .error(R.mipmap.ic_avatar_error)
+            .centerCrop()
+            .crossFade()
+            .into(holder.avatar);
+        String header = notificationReply.getLogin()
+            + "<font color='#9e9e9e'> 在帖子 </font>"
+            + notificationReply.getTopicTitle()
+            + "<font color='#9e9e9e'> 回复了：</font>";
+        holder.header.setText(Html.fromHtml(header));
+        holder.body.setText(Html.fromHtml(HtmlUtil.removeP(notificationReply.getBodyHtml()),
+            new GlideImageGetter(holder.body.getContext(), holder.body), null));
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.avatar) ImageView avatar;
+        @BindView(R.id.header) TextView header;
+        @BindView(R.id.body) TextView body;
+
+        private NotificationReply reply;
+        private Context context;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View view) {
+                    Intent intent = new Intent(context, TopicActivity.class);
+                    intent.putExtra(TopicActivity.ID, reply.getTopicId());
+                    context.startActivity(intent);
+                }
+            });
+        }
+    }
 }

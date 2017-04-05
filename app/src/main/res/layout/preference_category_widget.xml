@@ -6,15 +6,15 @@
     android:orientation="vertical"
     >
 
-  <TextView
-      android:id="@android:id/title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingBottom="4dp"
-      android:paddingStart="8dp"
-      android:paddingTop="16dp"
-      android:textColor="@color/colorAccent"
-      android:textSize="14sp"
-      />
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:paddingStart="8dp"
+        android:paddingTop="16dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        />
 
 </LinearLayout>

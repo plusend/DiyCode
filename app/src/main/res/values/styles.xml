@@ -1,50 +1,49 @@
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light">
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
-    <item name="android:windowBackground">@color/windowBackground</item>
-  </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+    </style>
 
-  <style name="AppTheme.NoActionBar">
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
-    <item name="drawerArrowStyle">@style/DrawerArrow</item>
-    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:windowTranslucentStatus">true</item>
-  </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="drawerArrowStyle">@style/DrawerArrow</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 
-  <!-- 用于开启滑动返回功能的 Activity -->
-  <style name="AppTheme.NoActionBar.Transparent">
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowIsTranslucent">true</item>
-  </style>
+    <!-- 用于开启滑动返回功能的 Activity -->
+    <style name="AppTheme.NoActionBar.Transparent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 
-  <style name="DrawerArrow" parent="Base.Widget.AppCompat.DrawerArrowToggle">
-    <item name="color">@color/colorMenuIcon</item>
-  </style>
+    <style name="DrawerArrow" parent="Base.Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/colorMenuIcon</item>
+    </style>
 
-  <style name="ThemeToolbar" parent="ThemeOverlay.AppCompat.Light">
+    <style name="ThemeToolbar" parent="ThemeOverlay.AppCompat.Light">
 
-    <!-- navigation icon color -->
-    <item name="colorControlNormal">@color/colorMenuIcon</item>
+        <!-- navigation icon color -->
+        <item name="colorControlNormal">@color/colorMenuIcon</item>
 
-    <!-- color of the menu overflow icon -->
-    <item name="android:textColorSecondary">@color/colorMenuIcon</item>
-    <item name="android:textColorPrimary">@color/colorTitle</item>
+        <!-- color of the menu overflow icon -->
+        <item name="android:textColorSecondary">@color/colorMenuIcon</item>
+        <item name="android:textColorPrimary">@color/colorTitle</item>
 
-  </style>
+    </style>
 
-  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-  <style name="AboutPage.Header.ToolbarTitleExpanded"
-      parent="@android:style/TextAppearance">
-    <item name="android:textColor">#00000000</item>
-  </style>
-
+    <style name="AboutPage.Header.ToolbarTitleExpanded"
+        parent="@android:style/TextAppearance">
+        <item name="android:textColor">#00000000</item>
+    </style>
 
 </resources>

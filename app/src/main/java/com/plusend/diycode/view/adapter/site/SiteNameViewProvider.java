@@ -17,23 +17,23 @@ import me.drakeet.multitype.ItemViewProvider;
 public class SiteNameViewProvider
     extends ItemViewProvider<SiteName, SiteNameViewProvider.ViewHolder> {
 
-  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-      @NonNull ViewGroup parent) {
-    View root = inflater.inflate(R.layout.item_site_name, parent, false);
-    return new ViewHolder(root);
-  }
-
-  @Override
-  protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull SiteName siteName) {
-    holder.title.setText(siteName.getName());
-  }
-
-  static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.title) TextView title;
-
-    ViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
+    @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+        @NonNull ViewGroup parent) {
+        View root = inflater.inflate(R.layout.item_site_name, parent, false);
+        return new ViewHolder(root);
     }
-  }
+
+    @Override
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull SiteName siteName) {
+        holder.title.setText(siteName.getName());
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.title) TextView title;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
 }

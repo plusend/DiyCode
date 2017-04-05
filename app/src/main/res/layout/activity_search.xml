@@ -9,27 +9,27 @@
     android:orientation="vertical"
     tools:context="com.plusend.diycode.view.activity.SearchActivity"
     >
-  <include
-      layout="@layout/toolbar"
-      />
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="100dp"
-      android:gravity="center"
-      android:text="你想搜索的是："
-      />
-  <TextView
-      android:id="@+id/result"
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:gravity="center"
-      android:textColor="@color/colorAccent"
-      android:textSize="24sp"
-      />
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="100dp"
-      android:gravity="center"
-      android:text="但是我还没准备好"
-      />
+    <include
+        layout="@layout/toolbar"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="你想搜索的是："
+        />
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="但是我还没准备好"
+        />
 </LinearLayout>

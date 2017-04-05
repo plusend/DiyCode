@@ -21,44 +21,44 @@ import me.drakeet.multitype.ItemViewProvider;
 
 public class ReplyViewProvider extends ItemViewProvider<Reply, ReplyViewProvider.ViewHolder> {
 
-  private static final String TAG = "ReplyViewProvider";
+    private static final String TAG = "ReplyViewProvider";
 
-  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-      @NonNull ViewGroup parent) {
-    View root = inflater.inflate(R.layout.item_reply, parent, false);
-    return new ViewHolder(root);
-  }
-
-  @Override protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Reply reply) {
-    holder.reply = reply;
-    holder.topicTitle.setText(Html.fromHtml("<font color='#ff0099cc'> 在帖子 </font>"
-        + reply.getTopicTitle()
-        + "<font color='#ff0099cc'> 发表了回复：</font>"));
-    holder.body.setText(Html.fromHtml(HtmlUtil.removeP(reply.getBodyHtml()),
-        new GlideImageGetter(holder.body.getContext(), holder.body), null));
-    holder.time.setText(TimeUtil.formatTime(reply.getUpdatedAt()));
-  }
-
-  static class ViewHolder extends RecyclerView.ViewHolder {
-
-    @BindView(R.id.topic_title) TextView topicTitle;
-    @BindView(R.id.body) TextView body;
-    @BindView(R.id.time) TextView time;
-    private Context context;
-    private Reply reply;
-
-    ViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
-      context = itemView.getContext();
-
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View view) {
-          Intent intent = new Intent(context, TopicActivity.class);
-          intent.putExtra(TopicActivity.ID, reply.getTopicId());
-          context.startActivity(intent);
-        }
-      });
+    @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+        @NonNull ViewGroup parent) {
+        View root = inflater.inflate(R.layout.item_reply, parent, false);
+        return new ViewHolder(root);
     }
-  }
+
+    @Override protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Reply reply) {
+        holder.reply = reply;
+        holder.topicTitle.setText(Html.fromHtml("<font color='#ff0099cc'> 在帖子 </font>"
+            + reply.getTopicTitle()
+            + "<font color='#ff0099cc'> 发表了回复：</font>"));
+        holder.body.setText(Html.fromHtml(HtmlUtil.removeP(reply.getBodyHtml()),
+            new GlideImageGetter(holder.body.getContext(), holder.body), null));
+        holder.time.setText(TimeUtil.formatTime(reply.getUpdatedAt()));
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.topic_title) TextView topicTitle;
+        @BindView(R.id.body) TextView body;
+        @BindView(R.id.time) TextView time;
+        private Context context;
+        private Reply reply;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View view) {
+                    Intent intent = new Intent(context, TopicActivity.class);
+                    intent.putExtra(TopicActivity.ID, reply.getTopicId());
+                    context.startActivity(intent);
+                }
+            });
+        }
+    }
 }

@@ -7,27 +7,27 @@
     android:paddingEnd="12dp"
     android:paddingTop="12dp"
     >
-  <ImageView
-      android:id="@+id/avatar"
-      android:layout_width="24dp"
-      android:layout_height="24dp"
-      android:layout_marginStart="12dp"
-      />
-  <TextView
-      android:id="@+id/login"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="48dp"
-      android:textColor="@android:color/holo_blue_light"
-      android:textSize="14sp"
-      />
-  <TextView
-      android:id="@+id/body"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/login"
-      android:layout_marginStart="48dp"
-      android:text="开始关注你了。"
-      android:textSize="14sp"
-      />
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        />
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login"
+        android:layout_marginStart="48dp"
+        android:text="开始关注你了。"
+        android:textSize="14sp"
+        />
 </RelativeLayout>

@@ -1,7 +1,7 @@
 package com.plusend.diycode.model.topic.view;
 
-import com.plusend.diycode.model.topic.entity.TopicReply;
 import com.plusend.diycode.model.base.BaseView;
+import com.plusend.diycode.model.topic.entity.TopicReply;
 import java.util.List;
 
 /**
@@ -9,7 +9,9 @@ import java.util.List;
  */
 
 public interface TopicRepliesView extends BaseView {
-  void showReplies(List<TopicReply> topicReplyList);
-  void addReplies(List<TopicReply> topicReplyList);
-  void showNewReply();
+    void showReplies(List<TopicReply> topicReplyList);
+
+    void addReplies(List<TopicReply> topicReplyList);
+
+    void showNewReply();
 }

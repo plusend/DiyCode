@@ -4,8 +4,8 @@ import com.plusend.diycode.model.base.BaseData;
 
 public interface NewsNodeData extends BaseData {
 
-  /**
-   * 获取节点列表
-   */
-  void readNewsNodes();
+    /**
+     * 获取节点列表
+     */
+    void readNewsNodes();
 }

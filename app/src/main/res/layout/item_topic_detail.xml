@@ -9,112 +9,112 @@
     android:descendantFocusability="blocksDescendants"
     tools:ignore="WebViewLayout"
     >
-  <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:paddingStart="16dp"
-      >
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        />
-    <TextView
-        android:id="@+id/name"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/colorTitle"
-        android:textSize="13sp"
-        />
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        >
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorTitle"
+            android:textSize="13sp"
+            />
+        <TextView
+            android:id="@+id/topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/colorSubTitle"
+            android:textSize="13sp"
+            />
+
+    </LinearLayout>
     <TextView
-        android:id="@+id/topic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:textColor="@color/colorSubTitle"
-        android:textSize="13sp"
-        />
-
-  </LinearLayout>
-  <TextView
-      android:id="@+id/time"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentEnd="true"
-      android:layout_marginTop="16dp"
-      android:paddingEnd="20dp"
-      android:textColor="@color/colorSubTitle"
-      android:textSize="12sp"
-      />
-
-  <TextView
-      android:id="@+id/title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="56dp"
-      android:paddingEnd="20dp"
-      android:paddingStart="20dp"
-      android:textColor="@color/colorTitle"
-      android:textSize="22sp"
-      />
-  <com.plusend.diycode.view.widget.DWebView
-      android:id="@+id/content"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/title"
-      android:scrollbars="none"
-      />
-
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/content"
-      android:orientation="horizontal"
-      >
-    <TextView
-        android:id="@+id/replies_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:paddingBottom="11dp"
-        android:paddingStart="20dp"
-        android:paddingTop="8dp"
-        android:textColor="@color/colorSubTitle"
-        android:textSize="12sp"
-        />
-    <ImageView
-        android:id="@+id/favorite"
+        android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="32dp"
-        android:src="@drawable/ic_favorite_not"
-        />
-    <TextView
-        android:id="@+id/like_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="24dp"
-        android:layout_toStartOf="@id/favorite"
+        android:layout_marginTop="16dp"
+        android:paddingEnd="20dp"
         android:textColor="@color/colorSubTitle"
         android:textSize="12sp"
         />
-    <ImageView
-        android:id="@+id/like"
-        android:layout_width="wrap_content"
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        android:layout_toStartOf="@id/like_count"
-        android:src="@drawable/ic_like_not"
+        android:layout_marginTop="56dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:textColor="@color/colorTitle"
+        android:textSize="22sp"
+        />
+    <com.plusend.diycode.view.widget.DWebView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:scrollbars="none"
         />
 
-  </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/replies_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingBottom="11dp"
+            android:paddingStart="20dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/colorSubTitle"
+            android:textSize="12sp"
+            />
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/ic_favorite_not"
+            />
+        <TextView
+            android:id="@+id/like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="24dp"
+            android:layout_toStartOf="@id/favorite"
+            android:textColor="@color/colorSubTitle"
+            android:textSize="12sp"
+            />
+        <ImageView
+            android:id="@+id/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/like_count"
+            android:src="@drawable/ic_like_not"
+            />
+
+    </RelativeLayout>
 
 </RelativeLayout>

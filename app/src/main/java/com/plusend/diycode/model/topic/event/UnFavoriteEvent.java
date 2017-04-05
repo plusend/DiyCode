@@ -5,13 +5,13 @@ package com.plusend.diycode.model.topic.event;
  */
 
 public class UnFavoriteEvent {
-  private boolean result;
+    private boolean result;
 
-  public UnFavoriteEvent(boolean result) {
-    this.result = result;
-  }
+    public UnFavoriteEvent(boolean result) {
+        this.result = result;
+    }
 
-  public boolean isResult() {
-    return result;
-  }
+    public boolean isResult() {
+        return result;
+    }
 }

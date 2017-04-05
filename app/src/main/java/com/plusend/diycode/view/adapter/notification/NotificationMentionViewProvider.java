@@ -22,50 +22,50 @@ import me.drakeet.multitype.ItemViewProvider;
 public class NotificationMentionViewProvider
     extends ItemViewProvider<NotificationMention, NotificationMentionViewProvider.ViewHolder> {
 
-  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-      @NonNull ViewGroup parent) {
-    View root = inflater.inflate(R.layout.item_notification_mention, parent, false);
-    return new ViewHolder(root);
-  }
-
-  @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
-      @NonNull NotificationMention notificationMention) {
-    holder.mention = notificationMention;
-    Glide.with(holder.avatar.getContext())
-        .load(notificationMention.getAvatarUrl().replace("large_", ""))
-        .placeholder(R.mipmap.ic_avatar_error)
-        .error(R.mipmap.ic_avatar_error)
-        .crossFade()
-        .centerCrop()
-        .into(holder.avatar);
-    String header = notificationMention.getLogin()
-        + "<font color='#9e9e9e'> 在 </font>"
-        + notificationMention.getTopicTitle()
-        + "<font color='#9e9e9e'> 提及你：</font>";
-    holder.header.setText(Html.fromHtml(header));
-    holder.body.setText(Html.fromHtml(HtmlUtil.removeP(notificationMention.getBodyHtml()),
-        new GlideImageGetter(holder.body.getContext(), holder.body), null));
-  }
-
-  static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.avatar) ImageView avatar;
-    @BindView(R.id.header) TextView header;
-    @BindView(R.id.body) TextView body;
-
-    private NotificationMention mention;
-    private Context context;
-
-    ViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
-      context = itemView.getContext();
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View view) {
-          Intent intent = new Intent(context, TopicActivity.class);
-          intent.putExtra(TopicActivity.ID, mention.getTopicId());
-          context.startActivity(intent);
-        }
-      });
+    @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+        @NonNull ViewGroup parent) {
+        View root = inflater.inflate(R.layout.item_notification_mention, parent, false);
+        return new ViewHolder(root);
     }
-  }
+
+    @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
+        @NonNull NotificationMention notificationMention) {
+        holder.mention = notificationMention;
+        Glide.with(holder.avatar.getContext())
+            .load(notificationMention.getAvatarUrl().replace("large_", ""))
+            .placeholder(R.mipmap.ic_avatar_error)
+            .error(R.mipmap.ic_avatar_error)
+            .crossFade()
+            .centerCrop()
+            .into(holder.avatar);
+        String header = notificationMention.getLogin()
+            + "<font color='#9e9e9e'> 在 </font>"
+            + notificationMention.getTopicTitle()
+            + "<font color='#9e9e9e'> 提及你：</font>";
+        holder.header.setText(Html.fromHtml(header));
+        holder.body.setText(Html.fromHtml(HtmlUtil.removeP(notificationMention.getBodyHtml()),
+            new GlideImageGetter(holder.body.getContext(), holder.body), null));
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.avatar) ImageView avatar;
+        @BindView(R.id.header) TextView header;
+        @BindView(R.id.body) TextView body;
+
+        private NotificationMention mention;
+        private Context context;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View view) {
+                    Intent intent = new Intent(context, TopicActivity.class);
+                    intent.putExtra(TopicActivity.ID, mention.getTopicId());
+                    context.startActivity(intent);
+                }
+            });
+        }
+    }
 }

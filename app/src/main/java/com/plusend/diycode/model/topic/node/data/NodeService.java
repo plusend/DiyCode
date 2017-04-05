@@ -7,8 +7,8 @@ import retrofit2.http.GET;
 
 interface NodeService {
 
-  /**
-   * 获取节点列表
-   */
-  @GET("nodes.json") Call<List<Node>> readNodes();
+    /**
+     * 获取节点列表
+     */
+    @GET("nodes.json") Call<List<Node>> readNodes();
 }

@@ -8,13 +8,13 @@ import java.util.List;
  */
 
 public class TopicRepliesEvent {
-  private List<TopicReply> topicReplyList;
+    private List<TopicReply> topicReplyList;
 
-  public TopicRepliesEvent(List<TopicReply> topicReplyList) {
-    this.topicReplyList = topicReplyList;
-  }
+    public TopicRepliesEvent(List<TopicReply> topicReplyList) {
+        this.topicReplyList = topicReplyList;
+    }
 
-  public List<TopicReply> getTopicReplyList() {
-    return topicReplyList;
-  }
+    public List<TopicReply> getTopicReplyList() {
+        return topicReplyList;
+    }
 }

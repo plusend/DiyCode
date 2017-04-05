@@ -7,26 +7,26 @@
     android:paddingEnd="12dp"
     android:paddingTop="12dp"
     >
-  <ImageView
-      android:id="@+id/avatar"
-      android:layout_width="24dp"
-      android:layout_height="24dp"
-      android:layout_marginStart="12dp"
-      />
-  <TextView
-      android:id="@+id/header"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="48dp"
-      android:textColor="@color/replyTips"
-      android:textSize="14sp"
-      />
-  <TextView
-      android:id="@+id/body"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/header"
-      android:layout_marginStart="48dp"
-      android:textSize="14sp"
-      />
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        />
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:textColor="@color/replyTips"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:layout_marginStart="48dp"
+        android:textSize="14sp"
+        />
 </RelativeLayout>

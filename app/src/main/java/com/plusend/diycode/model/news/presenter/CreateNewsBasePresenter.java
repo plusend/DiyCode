@@ -10,27 +10,27 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class CreateNewsBasePresenter extends BasePresenter {
-  private BaseData mData;
-  private CreateNewsView mView;
+    private BaseData mData;
+    private CreateNewsView mView;
 
-  public CreateNewsBasePresenter(CreateNewsView createNewsView) {
-    this.mView = createNewsView;
-    mData = NewsDataNetwork.getInstance();
-  }
+    public CreateNewsBasePresenter(CreateNewsView createNewsView) {
+        this.mView = createNewsView;
+        mData = NewsDataNetwork.getInstance();
+    }
 
-  @Override public void start() {
-    EventBus.getDefault().register(this);
-  }
+    @Override public void start() {
+        EventBus.getDefault().register(this);
+    }
 
-  @Override public void stop() {
-    EventBus.getDefault().unregister(this);
-  }
+    @Override public void stop() {
+        EventBus.getDefault().unregister(this);
+    }
 
-  public void createNews(String title, String address, Integer node_id) {
-    ((NewsDataNetwork) mData).createNews(title, address, node_id);
-  }
+    public void createNews(String title, String address, Integer node_id) {
+        ((NewsDataNetwork) mData).createNews(title, address, node_id);
+    }
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void showNews(CreateNewsEvent event) {
-    mView.showNews(event.getNews());
-  }
+    @Subscribe(threadMode = ThreadMode.MAIN) public void showNews(CreateNewsEvent event) {
+        mView.showNews(event.getNews());
+    }
 }

@@ -2,148 +2,148 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.plusend.diycode">
 
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-  <!-- 蒲公英 -->
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- 获取网络状态 -->
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>  <!-- 获取设备信息 -->
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- 获取MAC地址-->
-  <uses-permission android:name="android.permission.RECORD_AUDIO"/> <!-- 允许程序录制音频 -->
+    <!-- 蒲公英 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- 获取网络状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>  <!-- 获取设备信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- 获取MAC地址-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/> <!-- 允许程序录制音频 -->
 
-  <!-- 可选-->
-  <uses-permission android:name="android.permission.READ_LOGS"/> <!-- 获取logcat日志 -->
+    <!-- 可选-->
+    <uses-permission android:name="android.permission.READ_LOGS"/> <!-- 获取logcat日志 -->
 
-  <application
-      android:name=".app.DiyCodeApplication"
-      android:icon="@mipmap/ic_launcher"
-      android:label="@string/app_name"
-      android:supportsRtl="true"
-      android:theme="@style/AppTheme.NoActionBar.Transparent">
-    <activity
-        android:name=".view.activity.MainActivity"
+    <application
+        android:name=".app.DiyCodeApplication"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme.NoActionBar">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar.Transparent">
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-      <intent-filter>
-        <action android:name="com.plusend.diycode.Logout"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.plusend.diycode.Logout"/>
 
-        <category android:name="android.intent.category.DEFAULT"/>
-      </intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
 
-      <meta-data
-          android:name="android.app.default_searchable"
-          android:value=".view.activity.SearchActivity"/>
-    </activity>
-    <activity
-        android:name=".view.activity.SignUpActivity"
-        android:label="注册">
-    </activity>
-    <activity
-        android:name=".view.activity.SignInActivity"
-        android:label="登录"
-        android:screenOrientation="portrait">
-    </activity>
-    <activity
-        android:name=".view.activity.TopicActivity"
-        android:label="话题">
-    </activity>
-    <activity
-        android:name=".view.activity.MyTopicsActivity"
-        android:label="我的帖子">
-    </activity>
-    <activity
-        android:name=".view.activity.CreateTopicActivity"
-        android:label="发起讨论"
-        android:windowSoftInputMode="stateVisible|adjustResize">
-    </activity>
-    <activity
-        android:name=".view.activity.CreateTopicReplyActivity"
-        android:label="评论"
-        android:windowSoftInputMode="stateVisible|adjustResize">
-    </activity>
-    <activity
-        android:name=".view.activity.SearchActivity"
-        android:label="搜索"
-        android:launchMode="singleTop">
-      <intent-filter>
-        <action android:name="android.intent.action.SEARCH"/>
-      </intent-filter>
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".view.activity.SearchActivity"/>
+        </activity>
+        <activity
+            android:name=".view.activity.SignUpActivity"
+            android:label="注册">
+        </activity>
+        <activity
+            android:name=".view.activity.SignInActivity"
+            android:label="登录"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.TopicActivity"
+            android:label="话题">
+        </activity>
+        <activity
+            android:name=".view.activity.MyTopicsActivity"
+            android:label="我的帖子">
+        </activity>
+        <activity
+            android:name=".view.activity.CreateTopicActivity"
+            android:label="发起讨论"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+        </activity>
+        <activity
+            android:name=".view.activity.CreateTopicReplyActivity"
+            android:label="评论"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+        </activity>
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:label="搜索"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
 
-      <meta-data
-          android:name="android.app.searchable"
-          android:resource="@xml/searchable"/>
-    </activity>
-    <activity
-        android:name=".view.activity.UserActivity"
-        android:label="@string/title_activity_user">
-    </activity>
-    <activity
-        android:name=".view.activity.NotificationActivity"
-        android:label="通知">
-    </activity>
-    <activity
-        android:name=".view.activity.TestActivity"
-        android:label="测试">
-      <intent-filter>
-        <action android:name="com.plusend.diycode.Test"/>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+        <activity
+            android:name=".view.activity.UserActivity"
+            android:label="@string/title_activity_user">
+        </activity>
+        <activity
+            android:name=".view.activity.NotificationActivity"
+            android:label="通知">
+        </activity>
+        <activity
+            android:name=".view.activity.TestActivity"
+            android:label="测试">
+            <intent-filter>
+                <action android:name="com.plusend.diycode.Test"/>
 
-        <category android:name="android.intent.category.DEFAULT"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name=".view.activity.MyUserRepliesActivity"
-        android:label="我的评论">
-    </activity>
-    <activity
-        android:name=".view.activity.WebActivity"
-        android:label="">
-    </activity>
-    <activity
-        android:name=".view.activity.SettingsActivity"
-        android:label="@string/title_activity_settings">
-    </activity>
-    <activity
-        android:name=".view.activity.AboutActivity"
-        android:label="关于">
-    </activity>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.activity.MyUserRepliesActivity"
+            android:label="我的评论">
+        </activity>
+        <activity
+            android:name=".view.activity.WebActivity"
+            android:label="">
+        </activity>
+        <activity
+            android:name=".view.activity.SettingsActivity"
+            android:label="@string/title_activity_settings">
+        </activity>
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:label="关于">
+        </activity>
 
-    <activity
-        android:name=".view.activity.CreateNewsActivity"
-        android:label="分享新链接"
-        android:windowSoftInputMode="stateVisible|adjustResize">
-      <intent-filter>
-        <action android:name="android.intent.action.SEND"/>
+        <activity
+            android:name=".view.activity.CreateNewsActivity"
+            android:label="分享新链接"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
 
-        <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
 
-        <data android:mimeType="text/plain"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name=".view.activity.ImageActivity"
-        android:label="查看图片">
-    </activity>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.activity.ImageActivity"
+            android:label="查看图片">
+        </activity>
 
-    <activity android:name="com.pgyersdk.activity.FeedbackActivity"/>
+        <activity android:name="com.pgyersdk.activity.FeedbackActivity"/>
 
-    <meta-data
-        android:name="PGYER_APPID"
-        android:value="${PGYER_APPID}">
-    </meta-data>
-    <provider
-        android:name="android.support.v4.content.FileProvider"
-        android:authorities="@string/file_provider"
-        android:exported="false"
-        android:grantUriPermissions="true">
-      <meta-data
-          android:name="android.support.FILE_PROVIDER_PATHS"
-          android:resource="@xml/provider_paths"/>
-    </provider>
-  </application>
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="${PGYER_APPID}">
+        </meta-data>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="@string/file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+    </application>
 
 </manifest>

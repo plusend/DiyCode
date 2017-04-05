@@ -10,44 +10,44 @@
     android:padding="16dp"
     >
 
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
 
-    <TextView
-        android:id="@android:id/title"
+        <TextView
+            android:id="@android:id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:maxLines="1"
+            android:text="title"
+            android:textColor="@color/item_color"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@android:id/summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@android:id/title"
+            android:text="summary"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@android:id/widget_frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="marquee"
-        android:fadingEdge="horizontal"
-        android:maxLines="1"
-        android:text="title"
-        android:textColor="@color/item_color"
-        android:textSize="16sp"
-        />
+        android:layout_gravity="end|center_vertical"
+        android:orientation="vertical"
+        >
 
-    <TextView
-        android:id="@android:id/summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@android:id/title"
-        android:text="summary"
-        android:textColor="#AAAAAA"
-        android:textSize="14sp"
-        />
-
-  </RelativeLayout>
-
-  <LinearLayout
-      android:id="@android:id/widget_frame"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="end|center_vertical"
-      android:orientation="vertical"
-      >
-
-  </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

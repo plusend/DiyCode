@@ -17,38 +17,38 @@ import me.drakeet.multitype.ItemViewProvider;
 public class NotificationFollowViewProvider
     extends ItemViewProvider<NotificationFollow, NotificationFollowViewProvider.ViewHolder> {
 
-  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-      @NonNull ViewGroup parent) {
-    View root = inflater.inflate(R.layout.item_notification_follow, parent, false);
-    return new ViewHolder(root);
-  }
-
-  @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
-      @NonNull final NotificationFollow notificationFollow) {
-    Glide.with(holder.avatar.getContext())
-        .load(notificationFollow.getAvatarUrl())
-        .placeholder(R.mipmap.ic_avatar_error)
-        .error(R.mipmap.ic_avatar_error)
-        .centerCrop()
-        .crossFade()
-        .into(holder.avatar);
-    holder.login.setText(notificationFollow.getLogin());
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        IntentUtil.startUserActivity(v.getContext(), notificationFollow.getLogin());
-      }
-    };
-    holder.avatar.setOnClickListener(onClickListener);
-    holder.login.setOnClickListener(onClickListener);
-  }
-
-  static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.avatar) ImageView avatar;
-    @BindView(R.id.login) TextView login;
-
-    ViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
+    @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+        @NonNull ViewGroup parent) {
+        View root = inflater.inflate(R.layout.item_notification_follow, parent, false);
+        return new ViewHolder(root);
     }
-  }
+
+    @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
+        @NonNull final NotificationFollow notificationFollow) {
+        Glide.with(holder.avatar.getContext())
+            .load(notificationFollow.getAvatarUrl())
+            .placeholder(R.mipmap.ic_avatar_error)
+            .error(R.mipmap.ic_avatar_error)
+            .centerCrop()
+            .crossFade()
+            .into(holder.avatar);
+        holder.login.setText(notificationFollow.getLogin());
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                IntentUtil.startUserActivity(v.getContext(), notificationFollow.getLogin());
+            }
+        };
+        holder.avatar.setOnClickListener(onClickListener);
+        holder.login.setOnClickListener(onClickListener);
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.avatar) ImageView avatar;
+        @BindView(R.id.login) TextView login;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
 }

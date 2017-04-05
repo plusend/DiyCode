@@ -11,31 +11,31 @@ import java.util.regex.Pattern;
  */
 
 public class UrlUtil {
-  /**
-   * 获取 URL 的 Host
-   */
-  public static String getHost(String urlString) {
-    String result = urlString;
-    try {
-      URL url = new URL(urlString);
-      result = url.getHost();
-    } catch (MalformedURLException e) {
-      e.printStackTrace();
+    /**
+     * 获取 URL 的 Host
+     */
+    public static String getHost(String urlString) {
+        String result = urlString;
+        try {
+            URL url = new URL(urlString);
+            result = url.getHost();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
-    return result;
-  }
-
-  /**
-   * 提取文本中的链接
-   */
-  public static String getUrl(String text) {
-    Pattern p = Patterns.WEB_URL;
-    Matcher matcher = p.matcher(text);
-    if (matcher.find()) {
-      return matcher.group();
-    } else {
-      return null;
+    /**
+     * 提取文本中的链接
+     */
+    public static String getUrl(String text) {
+        Pattern p = Patterns.WEB_URL;
+        Matcher matcher = p.matcher(text);
+        if (matcher.find()) {
+            return matcher.group();
+        } else {
+            return null;
+        }
     }
-  }
 }

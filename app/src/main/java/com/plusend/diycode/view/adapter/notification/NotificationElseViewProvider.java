@@ -14,23 +14,23 @@ import me.drakeet.multitype.ItemViewProvider;
 public class NotificationElseViewProvider
     extends ItemViewProvider<NotificationElse, NotificationElseViewProvider.ViewHolder> {
 
-  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-      @NonNull ViewGroup parent) {
-    View root = inflater.inflate(R.layout.item_notification_else, parent, false);
-    return new ViewHolder(root);
-  }
-
-  @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
-      @NonNull NotificationElse notificationElse) {
-    holder.content.setText(notificationElse.getType());
-  }
-
-  static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.content) TextView content;
-
-    ViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
+    @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+        @NonNull ViewGroup parent) {
+        View root = inflater.inflate(R.layout.item_notification_else, parent, false);
+        return new ViewHolder(root);
     }
-  }
+
+    @Override protected void onBindViewHolder(@NonNull ViewHolder holder,
+        @NonNull NotificationElse notificationElse) {
+        holder.content.setText(notificationElse.getType());
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.content) TextView content;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
 }

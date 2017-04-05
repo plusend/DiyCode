@@ -7,5 +7,5 @@ import com.plusend.diycode.model.base.BaseView;
  */
 
 public interface CreateTopicReplyView extends BaseView {
-  void getResult(boolean isSuccessful);
+    void getResult(boolean isSuccessful);
 }

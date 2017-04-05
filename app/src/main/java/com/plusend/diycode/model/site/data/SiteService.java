@@ -7,8 +7,8 @@ import retrofit2.http.GET;
 
 interface SiteService {
 
-  /**
-   * 获取酷站信息
-   */
-  @GET("sites.json") Call<List<Site>> getSite();
+    /**
+     * 获取酷站信息
+     */
+    @GET("sites.json") Call<List<Site>> getSite();
 }

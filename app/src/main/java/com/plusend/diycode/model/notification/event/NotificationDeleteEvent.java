@@ -7,13 +7,13 @@ import com.plusend.diycode.model.notification.entity.NotificationDelete;
  */
 
 public class NotificationDeleteEvent {
-  private NotificationDelete notificationDelete;
+    private NotificationDelete notificationDelete;
 
-  public NotificationDeleteEvent(NotificationDelete notificationDelete) {
-    this.notificationDelete = notificationDelete;
-  }
+    public NotificationDeleteEvent(NotificationDelete notificationDelete) {
+        this.notificationDelete = notificationDelete;
+    }
 
-  public NotificationDelete getNotificationDelete() {
-    return notificationDelete;
-  }
+    public NotificationDelete getNotificationDelete() {
+        return notificationDelete;
+    }
 }

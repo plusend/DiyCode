@@ -5,13 +5,13 @@ package com.plusend.diycode.model.topic.event;
  */
 
 public class FollowEvent {
-  private boolean result;
+    private boolean result;
 
-  public FollowEvent(boolean result) {
-    this.result = result;
-  }
+    public FollowEvent(boolean result) {
+        this.result = result;
+    }
 
-  public boolean isResult() {
-    return result;
-  }
+    public boolean isResult() {
+        return result;
+    }
 }

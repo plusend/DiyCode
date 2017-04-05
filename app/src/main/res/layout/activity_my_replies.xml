@@ -9,28 +9,28 @@
     android:orientation="vertical"
     tools:context="com.plusend.diycode.view.activity.MyUserRepliesActivity"
     >
-  <include
-      layout="@layout/toolbar"
-      />
-  <FrameLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-    <com.plusend.diycode.view.widget.EmptyRecyclerView
-        android:id="@+id/rv_replies"
+    <include
+        layout="@layout/toolbar"
+        />
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:overScrollMode="never"
-        />
-    <TextView
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="评论为空"
-        android:textSize="24sp"
-        />
-  </FrameLayout>
+        >
+        <com.plusend.diycode.view.widget.EmptyRecyclerView
+            android:id="@+id/rv_replies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:overScrollMode="never"
+            />
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="评论为空"
+            android:textSize="24sp"
+            />
+    </FrameLayout>
 </LinearLayout>

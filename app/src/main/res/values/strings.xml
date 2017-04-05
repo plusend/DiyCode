@@ -1,19 +1,19 @@
 <resources>
-  <string name="app_name">Diycode</string>
+    <string name="app_name">Diycode</string>
 
-  <string name="navigation_drawer_open">Open navigation drawer</string>
-  <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
-  <string name="action_settings">设置</string>
-  <string name="title_activity_user">UserActivity</string>
-  <string name="title_activity_settings">设置</string>
+    <string name="action_settings">设置</string>
+    <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_settings">设置</string>
 
-  <string name="logout_intent_action">com.plusend.diycode.Logout</string>
-  <string name="test_intent_action">com.plusend.diycode.Test</string>
-  <string name="card_content">Diycode由众多开发者共同维护，致力于构建开发工程师高端交流分享社区。</string>
+    <string name="logout_intent_action">com.plusend.diycode.Logout</string>
+    <string name="test_intent_action">com.plusend.diycode.Test</string>
+    <string name="card_content">Diycode由众多开发者共同维护，致力于构建开发工程师高端交流分享社区。</string>
 
-  <string name="pref_key_check_update">pref_key_check_update</string>
-  <string name="pref_key_feedback">pref_key_feedback</string>
-  <string name="pref_key_sign_out">pref_key_sign_out</string>
-  <string name="file_provider">com.pgyersdk.provider</string>
+    <string name="pref_key_check_update">pref_key_check_update</string>
+    <string name="pref_key_feedback">pref_key_feedback</string>
+    <string name="pref_key_sign_out">pref_key_sign_out</string>
+    <string name="file_provider">com.pgyersdk.provider</string>
 </resources>

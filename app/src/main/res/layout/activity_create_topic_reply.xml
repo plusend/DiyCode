@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,42 +9,42 @@
     android:orientation="vertical"
     tools:context="com.plusend.diycode.view.activity.CreateTopicReplyActivity"
     >
-  <include
-      layout="@layout/toolbar"
-      />
-  <RelativeLayout
-      android:id="@+id/activity_create_topic_reply"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:paddingLeft="@dimen/activity_horizontal_margin"
-      android:paddingRight="@dimen/activity_horizontal_margin"
-      >
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textColor="#4d4d4d"
-        android:textSize="22sp"
+    <include
+        layout="@layout/toolbar"
         />
-
-    <View
+    <RelativeLayout
+        android:id="@+id/activity_create_topic_reply"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="8dp"
-        android:background="#999999"
-        />
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
 
-    <EditText
-        android:id="@+id/body"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginTop="16dp"
-        android:hint="在此输入评论内容"
-        />
-    
-  </RelativeLayout>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="#4d4d4d"
+            android:textSize="22sp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="8dp"
+            android:background="#999999"
+            />
+
+        <EditText
+            android:id="@+id/body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginTop="16dp"
+            android:hint="在此输入评论内容"
+            />
+
+    </RelativeLayout>
 </LinearLayout>

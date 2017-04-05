@@ -20,77 +20,76 @@ import java.util.List;
 
 public class CreateTopicReplyActivity extends BaseActivity implements CreateTopicReplyView {
 
-  @BindView(R.id.title) TextView title;
-  @BindView(R.id.body) EditText body;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  public static final String TO = "toSb";
-  public static final String TOPIC_ID = "topicId";
-  public static final String TOPIC_TITLE = "topicTitle";
+    public static final String TO = "toSb";
+    public static final String TOPIC_ID = "topicId";
+    public static final String TOPIC_TITLE = "topicTitle";
+    @BindView(R.id.title) TextView title;
+    @BindView(R.id.body) EditText body;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    private CreateTopicReplyPresenter createTopicReplyPresenter;
+    private int id;
 
-  private CreateTopicReplyPresenter createTopicReplyPresenter;
-  private int id;
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_create_topic_reply);
+        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    setContentView(R.layout.activity_create_topic_reply);
-    ButterKnife.bind(this);
-    super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        id = intent.getIntExtra(TOPIC_ID, 0);
+        String titleString = intent.getStringExtra(TOPIC_TITLE);
+        title.setText(titleString);
+        String contentPrefix = intent.getStringExtra(TO);
+        if (!TextUtils.isEmpty(contentPrefix)) {
+            body.setText(contentPrefix);
+            body.setSelection(contentPrefix.length());
+        }
+        body.requestFocus();
 
-    Intent intent = getIntent();
-    id = intent.getIntExtra(TOPIC_ID, 0);
-    String titleString = intent.getStringExtra(TOPIC_TITLE);
-    title.setText(titleString);
-    String contentPrefix = intent.getStringExtra(TO);
-    if (!TextUtils.isEmpty(contentPrefix)) {
-      body.setText(contentPrefix);
-      body.setSelection(contentPrefix.length());
+        createTopicReplyPresenter = new CreateTopicReplyPresenter(this);
     }
-    body.requestFocus();
 
-    createTopicReplyPresenter = new CreateTopicReplyPresenter(this);
-  }
-
-  private void send() {
-    if (TextUtils.isEmpty(body.getText())) {
-      ToastUtil.showText(this, "评论内容不能为空");
-      return;
+    private void send() {
+        if (TextUtils.isEmpty(body.getText())) {
+            ToastUtil.showText(this, "评论内容不能为空");
+            return;
+        }
+        createTopicReplyPresenter.createTopicReply(id, body.getText().toString());
     }
-    createTopicReplyPresenter.createTopicReply(id, body.getText().toString());
-  }
 
-  @Override protected Toolbar getToolbar() {
-    return toolbar;
-  }
-
-  @Override protected List<BasePresenter> getPresenter() {
-    return super.addPresenter(createTopicReplyPresenter);
-  }
-
-  @Override public void getResult(boolean isSuccessful) {
-    if (isSuccessful) {
-      finish();
-    } else {
-      ToastUtil.showText(this, "发布失败");
+    @Override protected Toolbar getToolbar() {
+        return toolbar;
     }
-  }
 
-  @Override public Context getContext() {
-    return this;
-  }
-
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        break;
-      case R.id.action_send:
-        send();
-        break;
+    @Override protected List<BasePresenter> getPresenter() {
+        return super.addPresenter(createTopicReplyPresenter);
     }
-    return super.onOptionsItemSelected(item);
-  }
 
-  @Override public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.activity_create_topic_reply, menu);
-    return super.onCreateOptionsMenu(menu);
-  }
+    @Override public void getResult(boolean isSuccessful) {
+        if (isSuccessful) {
+            finish();
+        } else {
+            ToastUtil.showText(this, "发布失败");
+        }
+    }
+
+    @Override public Context getContext() {
+        return this;
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_send:
+                send();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_create_topic_reply, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }

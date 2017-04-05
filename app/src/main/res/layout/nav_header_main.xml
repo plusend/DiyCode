@@ -9,24 +9,24 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     >
 
-  <ImageView
-      android:id="@+id/avatar"
-      android:layout_width="64dp"
-      android:layout_height="64dp"
-      android:layout_marginStart="47dp"
-      android:layout_marginTop="49dp"
-      android:src="@mipmap/ic_launcher"
-      />
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="49dp"
+        android:src="@mipmap/ic_launcher"
+        />
 
-  <TextView
-      android:id="@+id/email"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="26dp"
-      android:layout_marginStart="47dp"
-      android:layout_marginTop="35dp"
-      android:text="点击图片登录"
-      android:textSize="14sp"
-      />
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="26dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="35dp"
+        android:text="点击图片登录"
+        android:textSize="14sp"
+        />
 
 </LinearLayout>

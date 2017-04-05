@@ -9,18 +9,18 @@
     android:orientation="vertical"
     tools:context="com.plusend.diycode.view.activity.MyTopicsActivity"
     >
-  <include
-      layout="@layout/toolbar"
-      />
-  <RelativeLayout
-      android:id="@+id/activity_my_topics"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-    <FrameLayout
-        android:id="@+id/container"
+    <include
+        layout="@layout/toolbar"
+        />
+    <RelativeLayout
+        android:id="@+id/activity_my_topics"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
-  </RelativeLayout>
+        >
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </RelativeLayout>
 </LinearLayout>

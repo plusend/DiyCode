@@ -12,20 +12,20 @@
     android:paddingTop="16dp"
     >
 
-  <TextView
-      android:id="@+id/content"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="#424242"
-      />
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#424242"
+        />
 
-  <TextView
-      android:id="@+id/hint"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/content"
-      android:textColor="#757575"
-      android:textSize="13sp"
-      />
+    <TextView
+        android:id="@+id/hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content"
+        android:textColor="#757575"
+        android:textSize="13sp"
+        />
 
 </RelativeLayout>

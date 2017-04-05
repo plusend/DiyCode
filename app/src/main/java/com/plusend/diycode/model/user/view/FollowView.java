@@ -7,6 +7,7 @@ import com.plusend.diycode.model.base.BaseView;
  */
 
 public interface FollowView extends BaseView {
-  void setFollow(boolean isFollowed);
-  void setFavorite(boolean isFavorite);
+    void setFollow(boolean isFollowed);
+
+    void setFavorite(boolean isFavorite);
 }

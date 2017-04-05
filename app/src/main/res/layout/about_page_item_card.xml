@@ -14,15 +14,15 @@
     tools:ignore="RtlHardcoded"
     >
 
-  <TextView
-      android:id="@+id/content"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:autoLink="web"
-      android:paddingBottom="8dp"
-      android:textColor="#424242"
-      android:textColorLink="@android:color/black"
-      android:textSize="14sp"
-      />
-  
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:paddingBottom="8dp"
+        android:textColor="#424242"
+        android:textColorLink="@android:color/black"
+        android:textSize="14sp"
+        />
+
 </RelativeLayout>

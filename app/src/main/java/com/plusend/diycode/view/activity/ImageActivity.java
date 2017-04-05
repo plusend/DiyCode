@@ -18,9 +18,8 @@ import com.plusend.diycode.model.base.BasePresenter;
 import java.util.List;
 
 public class ImageActivity extends BaseActivity {
-    private static final String TAG = "ImageActivity";
     public static final String URL = "url";
-
+    private static final String TAG = "ImageActivity";
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @BindView(R.id.image) PhotoView image;

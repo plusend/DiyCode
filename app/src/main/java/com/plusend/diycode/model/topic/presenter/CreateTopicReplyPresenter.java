@@ -11,30 +11,30 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class CreateTopicReplyPresenter extends BasePresenter {
-  private static final String TAG = "CreateTopicReplyPresent";
-  private CreateTopicReplyView createTopicReplyView;
-  private BaseData data;
+    private static final String TAG = "CreateTopicReplyPresent";
+    private CreateTopicReplyView createTopicReplyView;
+    private BaseData data;
 
-  public CreateTopicReplyPresenter(CreateTopicReplyView createTopicReplyView) {
-    this.createTopicReplyView = createTopicReplyView;
-    data = TopicDataNetwork.getInstance();
-  }
+    public CreateTopicReplyPresenter(CreateTopicReplyView createTopicReplyView) {
+        this.createTopicReplyView = createTopicReplyView;
+        data = TopicDataNetwork.getInstance();
+    }
 
-  public void createTopicReply(int id, String body) {
-    ((TopicDataNetwork) data).createReply(id, body);
-  }
+    public void createTopicReply(int id, String body) {
+        ((TopicDataNetwork) data).createReply(id, body);
+    }
 
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  public void getResult(CreateTopicReplyEvent createTopicReplyEvent) {
-    Log.d(TAG, "getResult");
-    createTopicReplyView.getResult(createTopicReplyEvent.isSuccessful());
-  }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getResult(CreateTopicReplyEvent createTopicReplyEvent) {
+        Log.d(TAG, "getResult");
+        createTopicReplyView.getResult(createTopicReplyEvent.isSuccessful());
+    }
 
-  @Override public void start() {
-    EventBus.getDefault().register(this);
-  }
+    @Override public void start() {
+        EventBus.getDefault().register(this);
+    }
 
-  @Override public void stop() {
-    EventBus.getDefault().unregister(this);
-  }
+    @Override public void stop() {
+        EventBus.getDefault().unregister(this);
+    }
 }

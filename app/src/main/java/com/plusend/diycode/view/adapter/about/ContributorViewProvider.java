@@ -18,40 +18,40 @@ import me.drakeet.multitype.ItemViewProvider;
 public class ContributorViewProvider
     extends ItemViewProvider<Contributor, ContributorViewProvider.ViewHolder> {
 
-  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
-      @NonNull ViewGroup parent) {
-    View root = inflater.inflate(R.layout.about_page_item_contributor, parent, false);
-    return new ViewHolder(root);
-  }
-
-  @Override
-  protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Contributor contributor) {
-    holder.avatar.setImageResource(contributor.avatarResId);
-    holder.name.setText(contributor.name);
-    holder.desc.setText(contributor.desc);
-    holder.url = contributor.url;
-  }
-
-  static class ViewHolder extends RecyclerView.ViewHolder {
-
-    ImageView avatar;
-    TextView name;
-    TextView desc;
-    String url;
-
-    ViewHolder(View itemView) {
-      super(itemView);
-      avatar = (ImageView) itemView.findViewById(R.id.avatar);
-      name = (TextView) itemView.findViewById(R.id.name);
-      desc = (TextView) itemView.findViewById(R.id.desc);
-
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View view) {
-          Intent intent = new Intent(view.getContext(), WebActivity.class);
-          intent.putExtra(WebActivity.URL, url);
-          view.getContext().startActivity(intent);
-        }
-      });
+    @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+        @NonNull ViewGroup parent) {
+        View root = inflater.inflate(R.layout.about_page_item_contributor, parent, false);
+        return new ViewHolder(root);
     }
-  }
+
+    @Override
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Contributor contributor) {
+        holder.avatar.setImageResource(contributor.avatarResId);
+        holder.name.setText(contributor.name);
+        holder.desc.setText(contributor.desc);
+        holder.url = contributor.url;
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView avatar;
+        TextView name;
+        TextView desc;
+        String url;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            avatar = (ImageView) itemView.findViewById(R.id.avatar);
+            name = (TextView) itemView.findViewById(R.id.name);
+            desc = (TextView) itemView.findViewById(R.id.desc);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), WebActivity.class);
+                    intent.putExtra(WebActivity.URL, url);
+                    view.getContext().startActivity(intent);
+                }
+            });
+        }
+    }
 }

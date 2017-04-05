@@ -8,13 +8,13 @@ import java.util.List;
  */
 
 public class SiteEvent {
-  private List<Site> siteList;
+    private List<Site> siteList;
 
-  public SiteEvent(List<Site> siteList) {
-    this.siteList = siteList;
-  }
+    public SiteEvent(List<Site> siteList) {
+        this.siteList = siteList;
+    }
 
-  public List<Site> getSiteList() {
-    return siteList;
-  }
+    public List<Site> getSiteList() {
+        return siteList;
+    }
 }

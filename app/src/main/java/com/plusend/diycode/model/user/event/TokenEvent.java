@@ -7,13 +7,13 @@ import com.plusend.diycode.model.user.entity.Token;
  */
 
 public class TokenEvent {
-  private Token token;
+    private Token token;
 
-  public TokenEvent(Token token) {
-    this.token = token;
-  }
+    public TokenEvent(Token token) {
+        this.token = token;
+    }
 
-  public Token getToken() {
-    return token;
-  }
+    public Token getToken() {
+        return token;
+    }
 }

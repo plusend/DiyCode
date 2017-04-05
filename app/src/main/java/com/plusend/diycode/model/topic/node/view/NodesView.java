@@ -1,7 +1,7 @@
 package com.plusend.diycode.model.topic.node.view;
 
-import com.plusend.diycode.model.topic.node.entity.Node;
 import com.plusend.diycode.model.base.BaseView;
+import com.plusend.diycode.model.topic.node.entity.Node;
 import java.util.List;
 
 /**
@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface NodesView extends BaseView {
-  void showNodes(List<Node> nodeList);
+    void showNodes(List<Node> nodeList);
 }

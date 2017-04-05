@@ -8,5 +8,5 @@ package com.plusend.diycode.util;
  * @date 2016/04/05
  */
 public interface SpanClickListener {
-  void onClick(int type, String url);
+    void onClick(int type, String url);
 }

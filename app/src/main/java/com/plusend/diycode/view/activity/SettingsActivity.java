@@ -11,25 +11,25 @@ import com.plusend.diycode.view.fragment.SettingsFragment;
 import java.util.List;
 
 public class SettingsActivity extends BaseActivity {
-  private static final String TAG = "SettingsActivity";
-  @BindView(R.id.container) FrameLayout container;
-  @BindView(R.id.toolbar) Toolbar toolbar;
+    private static final String TAG = "SettingsActivity";
+    @BindView(R.id.container) FrameLayout container;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    setContentView(R.layout.activity_settings);
-    ButterKnife.bind(this);
-    super.onCreate(savedInstanceState);
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_settings);
+        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
-    getFragmentManager().beginTransaction()
-        .replace(R.id.container, new SettingsFragment())
-        .commit();
-  }
+        getFragmentManager().beginTransaction()
+            .replace(R.id.container, new SettingsFragment())
+            .commit();
+    }
 
-  @Override protected Toolbar getToolbar() {
-    return toolbar;
-  }
+    @Override protected Toolbar getToolbar() {
+        return toolbar;
+    }
 
-  @Override protected List<BasePresenter> getPresenter() {
-    return null;
-  }
+    @Override protected List<BasePresenter> getPresenter() {
+        return null;
+    }
 }

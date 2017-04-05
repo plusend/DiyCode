@@ -7,13 +7,13 @@ import com.plusend.diycode.model.user.entity.UserDetailInfo;
  */
 
 public class MeEvent {
-  private UserDetailInfo userDetailInfo;
+    private UserDetailInfo userDetailInfo;
 
-  public MeEvent(UserDetailInfo userDetailInfo) {
-    this.userDetailInfo = userDetailInfo;
-  }
+    public MeEvent(UserDetailInfo userDetailInfo) {
+        this.userDetailInfo = userDetailInfo;
+    }
 
-  public UserDetailInfo getUserDetailInfo() {
-    return userDetailInfo;
-  }
+    public UserDetailInfo getUserDetailInfo() {
+        return userDetailInfo;
+    }
 }

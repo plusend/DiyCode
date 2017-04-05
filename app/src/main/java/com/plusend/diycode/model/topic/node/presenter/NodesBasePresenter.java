@@ -11,31 +11,31 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class NodesBasePresenter extends BasePresenter {
-  private static final String TAG = "NodesPresenter";
-  private NodesView nodesView;
-  private BaseData data;
+    private static final String TAG = "NodesPresenter";
+    private NodesView nodesView;
+    private BaseData data;
 
-  public NodesBasePresenter(NodesView nodesView) {
-    this.nodesView = nodesView;
-    data = NodeDataNetwork.getInstance();
-  }
+    public NodesBasePresenter(NodesView nodesView) {
+        this.nodesView = nodesView;
+        data = NodeDataNetwork.getInstance();
+    }
 
-  public void readNodes() {
-    ((NodeDataNetwork) data).readNodes();
-  }
+    public void readNodes() {
+        ((NodeDataNetwork) data).readNodes();
+    }
 
-  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-  public void showNodes(NodesEvent nodesEvent) {
-    Log.d(TAG, "showNodes");
-    nodesView.showNodes(nodesEvent.getNodeList());
-    EventBus.getDefault().removeStickyEvent(nodesEvent);
-  }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void showNodes(NodesEvent nodesEvent) {
+        Log.d(TAG, "showNodes");
+        nodesView.showNodes(nodesEvent.getNodeList());
+        EventBus.getDefault().removeStickyEvent(nodesEvent);
+    }
 
-  @Override public void start() {
-    EventBus.getDefault().register(this);
-  }
+    @Override public void start() {
+        EventBus.getDefault().register(this);
+    }
 
-  @Override public void stop() {
-    EventBus.getDefault().unregister(this);
-  }
+    @Override public void stop() {
+        EventBus.getDefault().unregister(this);
+    }
 }

@@ -23,71 +23,72 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class UserActivity extends BaseActivity implements UserView {
-  private static final String TAG = "UserActivity";
-  public static final String LOGIN_NAME = "loginName";
-  @BindView(R.id.avatar) ImageView avatar;
-  @BindView(R.id.name) TextView name;
-  @BindView(R.id.topic_num) TextView topicNum;
-  @BindView(R.id.favorite_num) TextView favoriteNum;
-  @BindView(R.id.follow_num) TextView followNum;
-  @BindView(R.id.back) ImageView back;
-  @BindView(R.id.container) FrameLayout container;
-  private UserPresenter userPresenter;
-  private String loginName;
+    public static final String LOGIN_NAME = "loginName";
+    private static final String TAG = "UserActivity";
+    @BindView(R.id.avatar) ImageView avatar;
+    @BindView(R.id.name) TextView name;
+    @BindView(R.id.topic_num) TextView topicNum;
+    @BindView(R.id.favorite_num) TextView favoriteNum;
+    @BindView(R.id.follow_num) TextView followNum;
+    @BindView(R.id.back) ImageView back;
+    @BindView(R.id.container) FrameLayout container;
+    private UserPresenter userPresenter;
+    private String loginName;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    setContentView(R.layout.activity_user);
-    StatusBarUtil.setColorForSwipeBack(this, 0x284fbb);
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_user);
+        StatusBarUtil.setColorForSwipeBack(this, 0x284fbb);
 
-    ButterKnife.bind(this);
-    super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    back.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        finish();
-      }
-    });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                finish();
+            }
+        });
 
-    Intent intent = getIntent();
-    loginName = intent.getStringExtra(LOGIN_NAME);
+        Intent intent = getIntent();
+        loginName = intent.getStringExtra(LOGIN_NAME);
 
-    TopicFragment topicFragment = TopicFragment.newInstance(loginName, TopicFragment.TYPE_CREATE);
-    getSupportFragmentManager().beginTransaction().add(R.id.container, topicFragment).commit();
+        TopicFragment topicFragment =
+            TopicFragment.newInstance(loginName, TopicFragment.TYPE_CREATE);
+        getSupportFragmentManager().beginTransaction().add(R.id.container, topicFragment).commit();
 
-    userPresenter = new UserPresenter(this);
-    userPresenter.getUser(loginName);
-  }
-
-  @Override protected Toolbar getToolbar() {
-    return null;
-  }
-
-  @Override protected List<BasePresenter> getPresenter() {
-    return super.addPresenter(userPresenter);
-  }
-
-  @Override public void getMe(UserDetailInfo userDetailInfo) {
-  }
-
-  @Override public void getUser(UserDetailInfo userDetailInfo) {
-    Log.d(TAG, "getUser: " + userDetailInfo);
-    if (userDetailInfo != null) {
-      name.setText(userDetailInfo.getLogin());
-      topicNum.setText(String.valueOf(userDetailInfo.getTopicsCount()));
-      followNum.setText(String.valueOf(userDetailInfo.getFollowingCount()));
-      favoriteNum.setText(String.valueOf(userDetailInfo.getFavoritesCount()));
-      Glide.with(this)
-          .load(userDetailInfo.getAvatarUrl())
-          .bitmapTransform(new CropCircleTransformation(this))
-          .crossFade()
-          .into(avatar);
+        userPresenter = new UserPresenter(this);
+        userPresenter.getUser(loginName);
     }
-  }
 
-  @Override public Context getContext() {
-    return this;
-  }
+    @Override protected Toolbar getToolbar() {
+        return null;
+    }
+
+    @Override protected List<BasePresenter> getPresenter() {
+        return super.addPresenter(userPresenter);
+    }
+
+    @Override public void getMe(UserDetailInfo userDetailInfo) {
+    }
+
+    @Override public void getUser(UserDetailInfo userDetailInfo) {
+        Log.d(TAG, "getUser: " + userDetailInfo);
+        if (userDetailInfo != null) {
+            name.setText(userDetailInfo.getLogin());
+            topicNum.setText(String.valueOf(userDetailInfo.getTopicsCount()));
+            followNum.setText(String.valueOf(userDetailInfo.getFollowingCount()));
+            favoriteNum.setText(String.valueOf(userDetailInfo.getFavoritesCount()));
+            Glide.with(this)
+                .load(userDetailInfo.getAvatarUrl())
+                .bitmapTransform(new CropCircleTransformation(this))
+                .crossFade()
+                .into(avatar);
+        }
+    }
+
+    @Override public Context getContext() {
+        return this;
+    }
 }

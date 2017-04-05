@@ -9,18 +9,18 @@
     android:orientation="vertical"
     tools:context="com.plusend.diycode.view.activity.WebActivity"
     >
-  <include
-      layout="@layout/toolbar"
-      />
-  <ProgressBar
-      android:id="@+id/progress_bar"
-      android:layout_width="match_parent"
-      android:layout_height="2dp"
-      style="@android:style/Widget.ProgressBar.Horizontal"
-      />
-  <WebView
-      android:id="@+id/webview"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      />
+    <include
+        layout="@layout/toolbar"
+        />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        />
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>
