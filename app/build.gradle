@@ -7,8 +7,8 @@ android {
         applicationId "com.plusend.diycode"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 17
-        versionName "0.4.7"
+        versionCode 18
+        versionName "0.4.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         manifestPlaceholders = [PGYER_APPID: "${PGYER_APPID_VALUE}"]
