@@ -12,11 +12,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.plusend.diycode.R;
 import com.plusend.diycode.model.topic.entity.Topic;
 import com.plusend.diycode.util.TimeUtil;
 import com.plusend.diycode.view.activity.TopicActivity;
 import me.drakeet.multitype.ItemViewProvider;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class TopicViewProvider extends ItemViewProvider<Topic, TopicViewProvider.ViewHolder> {
 
@@ -43,9 +46,9 @@ public class TopicViewProvider extends ItemViewProvider<Topic, TopicViewProvider
         }
         Glide.with(holder.avatar.getContext())
             .load(topic.getUser().getAvatarUrl())
-            .placeholder(R.mipmap.ic_avatar_error)
-            .error(R.mipmap.ic_avatar_error)
-            .crossFade()
+            .apply(new RequestOptions().placeholder(R.mipmap.ic_avatar_error)
+                .error(R.mipmap.ic_avatar_error))
+            .transition(withCrossFade())
             .into(holder.avatar);
         holder.itemTopic.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

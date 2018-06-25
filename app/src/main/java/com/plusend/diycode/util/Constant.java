@@ -3,9 +3,9 @@ package com.plusend.diycode.util;
 public class Constant {
 
     public static final String KEYSTORE_KEY_ALIAS = "DiyCode";
-    public static final String VALUE_CLIENT_ID = "5e9268a6";
+    public static final String VALUE_CLIENT_ID = "c2b56685";
     public static final String VALUE_CLIENT_SECRET =
-        "1feed4136daa95b76e53236cb937b63995c725dd33cd6705639384b9b34ea130";
+        "869e0541ea80b2c48eea4a5c710d79448f2f9133abfbe203995801a8bc644068";
     public static final String VALUE_GRANT_TYPE_PASSWORD = "password";
     public static final String VALUE_GRANT_TYPE_REFRESH_TOKEN = "refresh_token";
     public static final String KEY_TOKEN = "Authorization";

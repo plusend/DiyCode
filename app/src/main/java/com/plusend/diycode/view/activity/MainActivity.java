@@ -28,6 +28,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.plusend.diycode.R;
 import com.plusend.diycode.model.user.entity.Token;
 import com.plusend.diycode.model.user.entity.UserDetailInfo;
@@ -37,7 +40,8 @@ import com.plusend.diycode.util.Constant;
 import com.plusend.diycode.util.PrefUtil;
 import com.plusend.diycode.view.adapter.main.MainPagerAdapter;
 import com.plusend.diycode.view.fragment.TopicFragment;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener, UserView {
@@ -251,11 +255,12 @@ public class MainActivity extends AppCompatActivity
 
     private void showMe(UserDetailInfo userDetailInfo) {
         email.setText(userDetailInfo.getEmail());
+        RequestOptions myOptions = new RequestOptions().error(R.mipmap.ic_launcher)
+            .transforms(new CenterCrop(), new RoundedCorners(20));
         Glide.with(this)
             .load(userDetailInfo.getAvatarUrl())
-            .crossFade()
-            .bitmapTransform(new CropCircleTransformation(this))
-            .error(R.mipmap.ic_launcher)
+            .transition(withCrossFade())
+            .apply(myOptions)
             .into(avatar);
     }
 

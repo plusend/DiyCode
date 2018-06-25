@@ -12,6 +12,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.plusend.diycode.R;
 import com.plusend.diycode.model.topic.entity.TopicDetail;
 import com.plusend.diycode.model.topic.event.LoadTopicDetailFinishEvent;
@@ -22,6 +25,8 @@ import com.plusend.diycode.view.activity.UserActivity;
 import com.plusend.diycode.view.widget.DWebView;
 import me.drakeet.multitype.ItemViewProvider;
 import org.greenrobot.eventbus.EventBus;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class TopicDetailViewProvider
     extends ItemViewProvider<TopicDetail, TopicDetailViewProvider.ViewHolder> {
@@ -40,10 +45,10 @@ public class TopicDetailViewProvider
         holder.title.setText(topicDetail.getTitle());
         Glide.with(holder.avatar.getContext())
             .load(topicDetail.getUser().getAvatarUrl())
-            .placeholder(R.mipmap.ic_avatar_error)
-            .error(R.mipmap.ic_avatar_error)
-            .crossFade()
-            .centerCrop()
+            .apply(new RequestOptions().placeholder(R.mipmap.ic_avatar_error)
+                .error(R.mipmap.ic_avatar_error)
+                .transforms(new CenterCrop(), new RoundedCorners(20)))
+            .transition(withCrossFade())
             .into(holder.avatar);
         holder.topic.setText(topicDetail.getNodeName());
         holder.repliesCount.setText("共收到 " + topicDetail.getRepliesCount() + " 条回复");

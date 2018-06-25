@@ -12,6 +12,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.jaeger.library.StatusBarUtil;
 import com.plusend.diycode.R;
 import com.plusend.diycode.model.base.BasePresenter;
@@ -20,7 +23,8 @@ import com.plusend.diycode.model.user.presenter.UserPresenter;
 import com.plusend.diycode.model.user.view.UserView;
 import com.plusend.diycode.view.fragment.TopicFragment;
 import java.util.List;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class UserActivity extends BaseActivity implements UserView {
     public static final String LOGIN_NAME = "loginName";
@@ -80,10 +84,12 @@ public class UserActivity extends BaseActivity implements UserView {
             topicNum.setText(String.valueOf(userDetailInfo.getTopicsCount()));
             followNum.setText(String.valueOf(userDetailInfo.getFollowingCount()));
             favoriteNum.setText(String.valueOf(userDetailInfo.getFavoritesCount()));
+            RequestOptions options =
+                new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20));
             Glide.with(this)
                 .load(userDetailInfo.getAvatarUrl())
-                .bitmapTransform(new CropCircleTransformation(this))
-                .crossFade()
+                .apply(options)
+                .transition(withCrossFade())
                 .into(avatar);
         }
     }

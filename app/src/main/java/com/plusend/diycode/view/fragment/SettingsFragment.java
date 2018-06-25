@@ -67,7 +67,8 @@ import permissions.dispatcher.RuntimePermissions;
             findPreference(getResources().getString(R.string.pref_key_check_update));
         myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                SettingsFragmentPermissionsDispatcher.checkUpdateWithCheck(SettingsFragment.this);
+                SettingsFragmentPermissionsDispatcher.checkUpdateWithPermissionCheck(
+                    SettingsFragment.this);
                 return true;
             }
         });
@@ -77,7 +78,8 @@ import permissions.dispatcher.RuntimePermissions;
         Preference myPref = findPreference(getResources().getString(R.string.pref_key_feedback));
         myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-                SettingsFragmentPermissionsDispatcher.feedbackWithCheck(SettingsFragment.this);
+                SettingsFragmentPermissionsDispatcher.feedbackWithPermissionCheck(
+                    SettingsFragment.this);
                 return true;
             }
         });

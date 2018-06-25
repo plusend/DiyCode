@@ -12,9 +12,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.plusend.diycode.R;
 import com.plusend.diycode.view.activity.WebActivity;
 import me.drakeet.multitype.ItemViewProvider;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
  * Created by plusend on 2016/12/13.
@@ -34,8 +39,8 @@ public class SitesNameViewProvider
         holder.title.setText(sitesName.getName());
         Glide.with(holder.icon.getContext())
             .load(sitesName.getAvatarUrl())
-            .crossFade()
-            .centerCrop()
+            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20)))
+            .transition(withCrossFade())
             .into(holder.icon);
     }
 
