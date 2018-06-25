@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.Request;
-import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.plusend.diycode.R;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +42,7 @@ public final class GlideImageGetter implements Html.ImageGetter, Drawable.Callba
         if (prev == null) return;
 
         for (ImageGetterViewTarget target : prev.mTargets) {
-            Glide.clear(target);
+            Glide.with(mContext).clear(target);
         }
     }
 
@@ -52,7 +52,7 @@ public final class GlideImageGetter implements Html.ImageGetter, Drawable.Callba
         System.out.println("Downloading from: " + url);
         Glide.with(mContext)
             .load(url)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
             .into(new ImageGetterViewTarget(mTextView, urlDrawable));
 
         return urlDrawable;
@@ -70,7 +70,7 @@ public final class GlideImageGetter implements Html.ImageGetter, Drawable.Callba
 
     }
 
-    private class ImageGetterViewTarget extends ViewTarget<TextView, GlideDrawable> {
+    private class ImageGetterViewTarget extends ViewTarget<TextView, Drawable> {
 
         private final UrlDrawable mDrawable;
         private Request request;
@@ -81,8 +81,12 @@ public final class GlideImageGetter implements Html.ImageGetter, Drawable.Callba
             this.mDrawable = drawable;
         }
 
-        @Override public void onResourceReady(GlideDrawable resource,
-            GlideAnimation<? super GlideDrawable> glideAnimation) {
+        @Override public Request getRequest() {
+            return request;
+        }
+
+        @Override
+        public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
             Rect rect;
             if (resource.getIntrinsicWidth() > 100) {
                 float width;
@@ -110,18 +114,14 @@ public final class GlideImageGetter implements Html.ImageGetter, Drawable.Callba
             mDrawable.setBounds(rect);
             mDrawable.setDrawable(resource);
 
-            if (resource.isAnimated()) {
-                mDrawable.setCallback(get(getView()));
-                resource.setLoopCount(GlideDrawable.LOOP_FOREVER);
-                resource.start();
-            }
+            //if (resource.isAnimated()) {
+            //    mDrawable.setCallback(get(getView()));
+            //    resource.setLoopCount(Drawable.LOOP_FOREVER);
+            //    resource.start();
+            //}
 
             getView().setText(getView().getText());
             getView().invalidate();
-        }
-
-        @Override public Request getRequest() {
-            return request;
         }
 
         @Override public void setRequest(Request request) {

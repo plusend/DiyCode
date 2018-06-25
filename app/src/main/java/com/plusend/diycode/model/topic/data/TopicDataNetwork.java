@@ -35,9 +35,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TopicDataNetwork implements TopicData {
     private static final String TAG = "NetworkData";

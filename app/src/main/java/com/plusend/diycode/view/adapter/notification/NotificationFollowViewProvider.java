@@ -10,9 +10,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.plusend.diycode.R;
 import com.plusend.diycode.util.IntentUtil;
 import me.drakeet.multitype.ItemViewProvider;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class NotificationFollowViewProvider
     extends ItemViewProvider<NotificationFollow, NotificationFollowViewProvider.ViewHolder> {
@@ -27,10 +32,10 @@ public class NotificationFollowViewProvider
         @NonNull final NotificationFollow notificationFollow) {
         Glide.with(holder.avatar.getContext())
             .load(notificationFollow.getAvatarUrl())
-            .placeholder(R.mipmap.ic_avatar_error)
-            .error(R.mipmap.ic_avatar_error)
-            .centerCrop()
-            .crossFade()
+            .apply(new RequestOptions().placeholder(R.mipmap.ic_avatar_error)
+                .error(R.mipmap.ic_avatar_error)
+                .transforms(new CenterCrop(), new RoundedCorners(20)))
+            .transition(withCrossFade())
             .into(holder.avatar);
         holder.login.setText(notificationFollow.getLogin());
         View.OnClickListener onClickListener = new View.OnClickListener() {

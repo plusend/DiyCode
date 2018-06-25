@@ -3,11 +3,10 @@ package com.plusend.diycode.util;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 
 public class UrlDrawable extends Drawable implements Drawable.Callback {
 
-    private GlideDrawable mDrawable;
+    private Drawable mDrawable;
 
     @Override public void draw(Canvas canvas) {
         if (mDrawable != null) {
@@ -34,7 +33,7 @@ public class UrlDrawable extends Drawable implements Drawable.Callback {
         return 0;
     }
 
-    public void setDrawable(GlideDrawable drawable) {
+    public void setDrawable(Drawable drawable) {
         if (this.mDrawable != null) {
             this.mDrawable.setCallback(null);
         }
