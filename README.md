@@ -4,7 +4,7 @@
 
 ## 开发记录
 
-[项目结构和功能点整理](http://plusend.com/2017/02/27/Diycode/)
+[项目结构和功能点整理](https://plusend.com/%E5%BC%80%E5%8F%91-diycode-android-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E8%AE%B0%E5%BD%95/)
 
 ## 下载
 
